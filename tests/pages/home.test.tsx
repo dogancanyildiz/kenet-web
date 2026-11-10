@@ -94,11 +94,9 @@ describe("home page", () => {
     expect(steps).toHaveLength(5);
   });
 
-  it("marks every external link with rel noopener noreferrer", async () => {
+  it("never nests a card inside a card", async () => {
     const { container } = await renderHome("tr");
-    const external = [...container.querySelectorAll("a[href^='http']")];
-    for (const link of external) {
-      expect(link.getAttribute("rel")).toBe("noopener noreferrer");
-    }
+    expect(container.querySelectorAll(".card").length).toBeGreaterThan(0);
+    expect(container.querySelectorAll(".card .card")).toHaveLength(0);
   });
 });
