@@ -7,21 +7,25 @@
 | Öğe | Yer | Davranış |
 |---|---|---|
 | İçeriğe geç bağlantısı | Belgenin ilk odaklanabilir öğesi | Odaklanınca görünür |
-| Üst bilgi | Marka işareti ve "Kenet" solda; Gizlilik, Destek ve dil bağlantısı sağda | Dil bağlantısı aynı sayfanın öteki dilini açar |
+| Üst bilgi | Sabit (sticky), `paper` %85 ve bulanıklık; Saydamlığı Azalt'ta opak. Marka işareti 24 px ve "Kenet"; Gizlilik, Destek ve dil bağlantısı sağda, 44 px | Dil bağlantısı aynı sayfanın öteki dilini açar; `scroll-padding-top` üst bilgi kadar |
 | Ana içerik | `main#main` | Odak hedefidir |
 | Alt bilgi | Telif aralığı; geliştirici sitesi, kaynak kodu, derleme bilgisi | Derleme bilgisi değişken boşsa gizlenir |
 
 ## Ana sayfa `/`
 
+Şablon düzeni (üst satır, başlık, üç eşit kart, numaralı liste) 2026-11-10'da kaldırıldı; sayfa ürünü
+anlatmak yerine gösterir. Bölüm başlığı kalıbı: küçük etiket `p` ve altında cümle `h2` (`SectionHeading`).
+
 | Sıra | Bölüm | İçerik |
 |---|---|---|
-| 1 | Giriş (kart) | Üst satır "iPhone, iPad ve Mac için"; h1 vaat cümlesi; bir paragraf; künye satırı "3 vaat, 6 ilke, 1 kasa" (sayı ve sözcük metin renginde yarı kalın, ayraçlar ikincil); App Store düğmesi (mağaza yoksa "Yakında App Store'da" pasif) |
-| 2 | Üç vaat | Üç kart: Veri senin, Hiçbir şey kaybolmaz, Başka platforma taşınabilir |
-| 3 | Nasıl çalışır | Tek kartta numaralı beş adım, kullanıcı günü akışından: yaz, tanı, emin değilse sor, bağla, önce dosyaya yaz sonra indeksi güncelle |
-| 4 | Platformlar | Tek kart, üç sütun: iPhone, iPad, Mac; "Mac uygulaması mağazaya sonra girer" notu. Ekran görüntüsü yok (Aşama 4) |
-| 5 | Kapanış | h2 "Obsidian": kasa aynı biçimde, var olan kasa yerinde açılır; mağaza düğmesinin tekrarı |
+| 1 | Hero | Solda h1 vaat cümlesi (40/48/56 px), bir cümle lead, mağaza düğmesi ve yanında "iPhone, iPad ve Mac"; sağda `DeviceFrame` içinde gerçek Bugün ekranı (açık ve koyu çift, `picture` ile tek indirme, preload). Mobilde telefon altta, üst 340 px görünür ve zemine solar. Parıltı iki tonlu (mürdüm ve kehribar), yalnız üst 900 px |
+| 2 | Nasıl çalışır | h2 "Sen yaz. Kişiyi, konumu ve zamanı Kenet bağlasın." Tek kart, üç satır, `rule` ile ayrılır: Yazdığın (hızlı giriş kapsülü, Olay seçili), Gördüğün (aynı cümle; `Ece` düz mavi, `Kadıköy` noktalı yeşil alt çizgi, ek `'de` çizgi dışında), Dosyada (mono: `- 09:41 [[Ece Yalın|Ece]] ile [[Kadıköy]]'de kahve ^a1b2c3`) |
+| 3 | Üç vaat | h2 "Dosyalar hep senin." Tek kart, üç satır, solda 44 px işaret sütunu (belge, görev kutusu, çift ok; inline SVG), başlık ve bir cümle |
+| 4 | Ekranlar | h2 "Her gün açılan ekran sade kalır; ayrıntı öteki sekmelerde." Üç telefon (Bugün, Görevler listesi, Kanban) `lg` ve üstünde yan yana, altında yatay şerit; `WindowFrame` içinde Mac Kanban (yalnız açık görsel, koyu modda `elevated` zemin ve `line` sınır) ve alt yazı |
+| 5 | Kasa | h2 "Obsidian ile aynı kasa. Dışa aktarma yok." Tek kart iki sütun: klasör ağacı ve gün dosyası örneği (`kenet/docs/vault-format.md` örneğinin dile göre kısaltılmışı, blok kimlikli; Obsidian Tasks emoji'leri dosyanın parçası). Altında "SQLite yalnız indekstir; gerçek kaynak bu dosyalar." |
+| 6 | Kapanış | Kart yok: "iPhone, iPad ve Mac için." (32 px `p`), mağaza düğmesi, altında "Veri düz Markdown dosyaları olarak hep senin." |
 
-Bileşenler `src/components/home/` altında: `intro`, `masthead`, `promises`, `how-it-works`, `platforms`, `closing`. Test `tests/pages/home.test.tsx` başlık düzeylerini, h2 sırasını ve kart sayısını ölçer.
+Görseller `public/screens/*.webp` (Kenet snapshot testlerinden, `scripts/optimize-screens.mjs`; 780×1688 ve 1600×1047, toplam 316 KB); hepsi eager yüklenir. Bileşenler `src/components/home/`: `hero`, `mechanism`, `promises`, `promise-icons`, `screens`, `vault`, `closing`, `device-frame`, `window-frame`. Testler `tests/pages/home.test.tsx` ve `tests/design/compiled-css.test.ts` (derlenmiş CSS: maske, parıltı yüksekliği, KA ve Saydamlığı Azalt'ta parıltı kapalı).
 
 ## Gizlilik `/gizlilik`
 
