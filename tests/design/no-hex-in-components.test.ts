@@ -23,7 +23,7 @@ describe("component sources", () => {
     const offenders = sourceFiles(root).filter((file) => {
       // The layout restates the page background for theme-color on purpose
       // and tests/design/tokens.test.ts keeps it in sync with the stylesheet.
-      if (file.endsWith("layout.tsx")) return false;
+      if (file === join(root, "app", "[lang]", "layout.tsx")) return false;
       return HEX.test(readFileSync(file, "utf8"));
     });
     expect(offenders).toEqual([]);

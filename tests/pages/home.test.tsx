@@ -94,6 +94,15 @@ describe("home page", () => {
     expect(steps).toHaveLength(5);
   });
 
+  it("marks any external link noopener noreferrer", async () => {
+    const { container } = await renderHome("tr");
+    // No external link today (the store badge is a span); the guard stays
+    // for the day one is added.
+    for (const link of container.querySelectorAll("a[href^='http']")) {
+      expect(link.getAttribute("rel")).toBe("noopener noreferrer");
+    }
+  });
+
   it("never nests a card inside a card", async () => {
     const { container } = await renderHome("tr");
     expect(container.querySelectorAll(".card").length).toBeGreaterThan(0);
