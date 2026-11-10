@@ -23,7 +23,11 @@ export function DataAccessList({
   labelledBy,
 }: DataAccessListProps) {
   return (
-    <ul aria-labelledby={labelledBy} className="mt-6 divide-y divide-rule">
+    <ul
+      role="list"
+      aria-labelledby={labelledBy}
+      className="mt-6 divide-y divide-rule"
+    >
       {rows.map((row) => (
         <li
           key={row.data}

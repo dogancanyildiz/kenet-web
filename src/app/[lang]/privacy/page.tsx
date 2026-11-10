@@ -128,7 +128,7 @@ export default async function PrivacyPage({ params }: PageProps) {
           })}
         </p>
       </div>
-      <PageSection>
+      <PageSection as="div">
         <div className="grid gap-6">
           <PrivacySection id="summary" title={t("summaryTitle")}>
             <ul className={listClass}>

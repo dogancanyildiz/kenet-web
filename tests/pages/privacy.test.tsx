@@ -134,6 +134,16 @@ describe.each(cases)("privacy page ($lang)", (c) => {
     expect(link.getAttribute("href")).toBe(c.supportHref);
   });
 
+  it("has a non empty value for every privacy message key", async () => {
+    const messages = (await loadMessages(c.lang)) as {
+      privacy: Record<string, string>;
+    };
+    const empty = Object.entries(messages.privacy)
+      .filter(([, value]) => value.trim() === "")
+      .map(([key]) => key);
+    expect(empty).toEqual([]);
+  });
+
   it("marks every external link noopener noreferrer", async () => {
     const { container } = await renderPage(c.lang);
     const external = [...container.querySelectorAll("a[href]")].filter((a) =>
