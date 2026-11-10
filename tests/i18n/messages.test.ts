@@ -164,9 +164,7 @@ describe("message catalogs", () => {
   // catalogs are the only place user facing prose lives.
   it("carry no em dash in any catalog", () => {
     const offenders = [...enLeaves, ...trLeaves]
-      .filter(
-        ([, value]) => typeof value === "string" && value.includes("\u2014")
-      )
+      .filter(([, value]) => String(value).includes("\u2014"))
       .map(([key]) => key);
     expect(offenders, offenders.join(", ")).toEqual([]);
   });
