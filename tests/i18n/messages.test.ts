@@ -160,6 +160,15 @@ describe("message catalogs", () => {
     expect(unused, `unconsumed keys: ${unused.join(", ")}`).toEqual([]);
   });
 
+  // AGENTS.md language rule: no em dash anywhere the reader sees. The
+  // catalogs are the only place user facing prose lives.
+  it("carry no em dash in any catalog", () => {
+    const offenders = [...enLeaves, ...trLeaves]
+      .filter(([, value]) => String(value).includes("\u2014"))
+      .map(([key]) => key);
+    expect(offenders, offenders.join(", ")).toEqual([]);
+  });
+
   it("uses the same ICU placeholders in en and tr for every shared key", () => {
     const sharedKeys = enKeys.filter((key) => trLeaves.has(key));
     const mismatches = sharedKeys

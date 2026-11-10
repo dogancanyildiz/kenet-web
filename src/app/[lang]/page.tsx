@@ -3,7 +3,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { resolveLocale } from "@/lib/route-params";
 import { buildPageMetadata } from "@/lib/seo";
 import { PageSection } from "@/components/layout/page-section";
-import { StoreBadge } from "@/components/store-badge";
+import { Intro } from "@/components/home/intro";
+import { Promises } from "@/components/home/promises";
+import { HowItWorks } from "@/components/home/how-it-works";
+import { Platforms } from "@/components/home/platforms";
+import { Closing } from "@/components/home/closing";
 
 type PageProps = { params: Promise<{ lang: string }> };
 
@@ -29,55 +33,50 @@ export default async function HomePage({ params }: PageProps) {
     { title: t("promise2Title"), body: t("promise2Body") },
     { title: t("promise3Title"), body: t("promise3Body") },
   ];
-  const principles = [t("principle1"), t("principle2"), t("principle3")];
+  const steps = [t("step1"), t("step2"), t("step3"), t("step4"), t("step5")];
+  const platforms = [t("platformIphone"), t("platformIpad"), t("platformMac")];
+  const mastheadItems = [
+    t("mastheadItem1"),
+    t("mastheadItem2"),
+    t("mastheadItem3"),
+  ] as const;
 
   return (
     <>
       <PageSection as="header" className="pt-16 sm:pt-24">
-        <p className="text-sm font-medium text-text-secondary">
-          {t("eyebrow")}
-        </p>
-        <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-          {t("title")}
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-text-secondary">
-          {t("lead")}
-        </p>
-        <div className="mt-8">
-          <StoreBadge label={t("storeBadge")} soonLabel={t("storeBadgeSoon")} />
-        </div>
+        <Intro
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          lead={t("lead")}
+          mastheadItems={mastheadItems}
+          storeBadge={t("storeBadge")}
+          storeBadgeSoon={t("storeBadgeSoon")}
+        />
       </PageSection>
 
       <PageSection>
-        <h2 className="text-sm font-medium text-text-secondary">
-          {t("promisesTitle")}
-        </h2>
-        <ul className="mt-3 grid gap-4 sm:grid-cols-3">
-          {promises.map((promise) => (
-            <li key={promise.title} className="card p-6">
-              <h3 className="text-lg font-semibold">{promise.title}</h3>
-              <p className="mt-2 leading-7 text-text-secondary">
-                {promise.body}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <Promises title={t("promisesTitle")} items={promises} />
       </PageSection>
 
       <PageSection>
-        <h2 className="text-sm font-medium text-text-secondary">
-          {t("principlesTitle")}
-        </h2>
-        <ol className="card mt-3 divide-y divide-rule">
-          {principles.map((principle, index) => (
-            <li key={principle} className="flex gap-4 px-6 py-4">
-              <span className="w-6 shrink-0 font-semibold text-accent tabular-nums">
-                {index + 1}
-              </span>
-              <span className="leading-7">{principle}</span>
-            </li>
-          ))}
-        </ol>
+        <HowItWorks title={t("howTitle")} steps={steps} />
+      </PageSection>
+
+      <PageSection>
+        <Platforms
+          title={t("platformsTitle")}
+          platforms={platforms}
+          note={t("platformsNote")}
+        />
+      </PageSection>
+
+      <PageSection>
+        <Closing
+          title={t("closingTitle")}
+          body={t("closingBody")}
+          storeBadge={t("storeBadge")}
+          storeBadgeSoon={t("storeBadgeSoon")}
+        />
       </PageSection>
     </>
   );
