@@ -4,15 +4,15 @@
 
 ## Aktif aşama
 
-**Aşama 2: Sayfalar.** Aşama 1 2026-11-10'da bitti.
+**Aşama 3: Yayın.** Aşama 1 ve 2 2026-11-10'da bitti; Aşama 2'nin görsel doğrulaması kullanıcıda.
 
 ## Aşamalar
 
 | No | Aşama | Durum | Çıkış ölçütü |
 |---|---|---|---|
 | 1 | İskelet | Bitti, 2026-11-10 | Üç sayfa iki dilde statik üretilir; CI, Dockerfile, güvenlik başlıkları ve belirteç testleri yeşil |
-| 2 | Sayfalar | Aktif | Ana sayfa, gizlilik ve destek metinleri iki dilde tamam; Opus incelemesi orta ve üstü bulgu bırakmadı |
-| 3 | Yayın | Açık | `kenet.app` Coolify'da yayında, TLS ve başlıklar canlıda doğrulandı, mağaza kaydı adresleri çalışıyor |
+| 2 | Sayfalar | Bitti, 2026-11-10 | Ana sayfa, gizlilik ve destek metinleri iki dilde tamam (PR #1, #4, #7); iki Opus turu, orta bulgular düzeltildi |
+| 3 | Yayın | Aktif | `kenet.app` Coolify'da yayında, TLS ve başlıklar canlıda doğrulandı, mağaza kaydı adresleri çalışıyor |
 | 4 | Mağaza sonrası | Açık | App Store bağlantısı, ekran görüntüleri, sürüm notları sayfası |
 
 ## Aşama 1: İskelet
@@ -28,17 +28,15 @@
 
 | Madde | Durum | Kanıt |
 |---|---|---|
-| Ana sayfa metni ve bölümleri | Açık; iskelet metin var | - |
-| Gizlilik politikası | Açık; yer tutucu | Kaynak: `kenet/docs/product.md` vaatler, uygulamanın eriştiği veriler (takvim, konum, bildirim, iCloud) |
-| Destek sayfası | Açık; iki kanal var | GitHub konuları ve geliştirici iletişimi; e-posta adresi kullanıcı kararı |
-| Görsel doğrulama | Açık | Açık ve koyu modda, Kontrastı Artır açıkken ekran görüntüsü |
+| Ana sayfa metni ve bölümleri | Bitti | PR #1: beş bölüm, künye satırı, 46 test |
+| Gizlilik politikası | Bitti | PR #7: 10 satırlı veri erişim listesi, her satır Kenet kodundan kanıtlı; kanıt tablosu PR açıklamasında |
+| Destek sayfası | Bitti | PR #4: kanallar, hata bildirirken, dört SSS |
+| İnceleme | Bitti | Opus iki tur: 0 yüksek; 6 orta ve 25 düşük düzeltildi ya da ürün sorusu olarak PR gövdesine yazıldı |
+| Görsel doğrulama | Kullanıcıda | Açık ve koyu modda, Kontrastı Artır açıkken bakılacak; tarayıcı aracı yok |
 
-- [ ] Ana sayfa: vaat cümlesi, üç vaat, nasıl çalışır, platformlar, App Store yer tutucu
-- [ ] Gizlilik: uygulamanın hangi veriye hangi amaçla eriştiği, nereye yazdığı, neyi toplamadığı; sitenin kendisi için çerezsiz bildirim; iletişim
-- [ ] Destek: kanal, hata bildirirken verilecek bilgi, sık sorulanlar (kasa nerede, Obsidian ile açılır mı, veri nasıl taşınır)
-- [ ] İki dilde dil ve tutarlılık turu
+Ürün sahibine kalan sorular (PR #7 ve #4 gövdelerinde): erişim günlüğü saklama süresi, Apple'ın kendi tanılama paylaşımının anılması, "uygulama silinse de dosyalar kalır" vaadinin iOS yerel kasasıyla çelişkisi, günlük önerileri ilk sürümde kapalıysa 10. satır, Mac sürümünde yeniden gözden geçirme, künyedeki "6 ilke" sayısının sayfada karşılığı olmaması.
 
-**Çıkış ölçütü:** Üç sayfa iki dilde yayına hazır; CI yeşil; Opus incelemesi orta ve üstü bulgu bırakmadı.
+**Çıkış ölçütü:** Üç sayfa iki dilde yayına hazır; CI yeşil; Opus incelemesi orta ve üstü bulgu bırakmadı. Sağlandı.
 
 ## Aşama 3: Yayın
 
