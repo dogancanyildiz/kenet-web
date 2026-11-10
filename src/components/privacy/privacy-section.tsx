@@ -13,11 +13,11 @@ type PrivacySectionProps = {
 export function PrivacySection({ id, title, children }: PrivacySectionProps) {
   const headingId = `${id}-title`;
   return (
-    <section aria-labelledby={headingId} className="card p-6 sm:p-8">
-      <h2 id={headingId} className="text-xl font-semibold tracking-tight">
+    <section aria-labelledby={headingId}>
+      <h2 id={headingId} className="text-sm font-medium text-text-secondary">
         {title}
       </h2>
-      {children}
+      <div className="card mt-3 p-6 sm:p-8">{children}</div>
     </section>
   );
 }

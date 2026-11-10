@@ -19,7 +19,8 @@ type PageProps = { params: Promise<{ lang: string }> };
  */
 const UPDATED = "2026-11-10";
 
-const listClass = "mt-4 grid list-disc gap-2 pl-5 leading-7 marker:text-accent";
+const listClass =
+  "grid list-disc gap-2 pl-5 leading-7 marker:text-accent [&:not(:first-child)]:mt-4";
 
 export async function generateMetadata({
   params,
@@ -139,9 +140,7 @@ export default async function PrivacyPage({ params }: PageProps) {
           </PrivacySection>
 
           <PrivacySection id="data" title={t("dataTitle")}>
-            <p className="mt-4 leading-7 text-text-secondary">
-              {t("dataIntro")}
-            </p>
+            <p className="leading-7 text-text-secondary">{t("dataIntro")}</p>
             <DataAccessList
               rows={rows}
               labelledBy="data-title"
@@ -154,7 +153,7 @@ export default async function PrivacyPage({ params }: PageProps) {
           </PrivacySection>
 
           <PrivacySection id="not-collected" title={t("notCollectedTitle")}>
-            <p className="mt-4 leading-7">{t("notCollectedIntro")}</p>
+            <p className="leading-7">{t("notCollectedIntro")}</p>
             <ul className={listClass}>
               {notCollected.map((line) => (
                 <li key={line}>{line}</li>
@@ -174,7 +173,7 @@ export default async function PrivacyPage({ params }: PageProps) {
           </PrivacySection>
 
           <PrivacySection id="changes" title={t("changesTitle")}>
-            <p className="mt-4 leading-7">{t("changesBody")}</p>
+            <p className="leading-7">{t("changesBody")}</p>
             <p className="mt-2 leading-7">
               {t.rich("contactBody", {
                 link: (chunks) => (

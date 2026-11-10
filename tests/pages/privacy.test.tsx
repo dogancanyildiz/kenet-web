@@ -97,7 +97,9 @@ describe.each(cases)("privacy page ($lang)", (c) => {
     expect(cards).toHaveLength(c.sections.length);
     for (const card of cards) {
       expect(card.querySelector(".card")).toBeNull();
-      expect(card.tagName).toBe("SECTION");
+      // The heading sits above the card, inside the labelled section.
+      expect(card.parentElement?.tagName).toBe("SECTION");
+      expect(card.parentElement?.querySelector("h2")).not.toBeNull();
     }
   });
 
