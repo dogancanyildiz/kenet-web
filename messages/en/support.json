@@ -1,0 +1,12 @@
+{
+  "support": {
+    "title": "Support",
+    "lead": "Use the channels below to report a problem, ask a question or send a suggestion.",
+    "issuesTitle": "Bugs and suggestions",
+    "issuesBody": "Open an issue in the app's source repository. For a bug, include the device, the version and the steps.",
+    "issuesLink": "Open an issue on GitHub",
+    "contactTitle": "Direct contact",
+    "contactBody": "You can reach the developer through the contact page on their own site.",
+    "contactLink": "Contact page"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "brand": {
+    "name": "Kenet"
+  },
+  "metadata": {
+    "siteName": "Kenet",
+    "defaultTitle": "Kenet: a personal journal built on people, places and time",
+    "defaultDescription": "Write; let who, where and when link themselves. Tasks and goals live in the same place. Your data stays yours as Obsidian compatible plain Markdown files. iPhone, iPad and Mac."
+  },
+  "nav": {
+    "home": "Home",
+    "privacy": "Privacy",
+    "support": "Support",
+    "primary": "Primary"
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "languageSwitcher": "Language",
+    "switchTo": "Türkçe"
+  },
+  "footer": {
+    "madeBy": "Kenet is developed by {name}.",
+    "source": "Source code",
+    "build": "Build {sha}, {date}",
+    "rights": "All rights reserved."
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page not found",
+    "description": "The address you were looking for is not on this site or has moved.",
+    "backHome": "Back to the home page"
+  }
+}

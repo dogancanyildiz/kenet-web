@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [dev, main]
+  push:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+      # --ignore-scripts skips every dependency's install lifecycle script;
+      # the native addons listed resolve their prebuilt binary through a
+      # platform specific optionalDependency and are rebuilt explicitly.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts && npm rebuild sharp esbuild @swc/core unrs-resolver @parcel/watcher
+      - name: Review dependency changes
+        if: github.event_name == 'pull_request'
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: high
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Test
+        run: npm run test -- --coverage
+      - name: Build
+        run: npm run build
+        env:
+          # Build time only; inlined into the client bundle, never a secret.
+          NEXT_PUBLIC_SITE_URL: https://kenet.app
+          NEXT_PUBLIC_BUILD_SHA: ${{ github.sha }}
+          NEXT_PUBLIC_BUILD_DATE: ${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
+      - name: Verify static routes
+        run: npm run verify:routes
+      - name: Format
+        run: npm run format
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: Lint the Dockerfile
+        run: docker run --rm -i hadolint/hadolint@sha256:a1d49ae1a4e83c1dbad26b8c1ad7588c8bd1e04f4866b34ad3cac50335198552 hadolint --failure-threshold warning - < Dockerfile
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4
+      - name: Build the production image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7
+        with:
+          context: .
+          # No registry and no push: Coolify builds the image on the server,
+          # this job is only a gate.
+          push: false
+          load: true
+          tags: kenet-web-ci:${{ github.sha }}
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=https://kenet.app
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Start the smoke container
+        run: docker run -d --name kenet-web-smoke -p 3131:3000 kenet-web-ci:${{ github.sha }}
+      - name: Assert the image ships a healthcheck
+        run: |
+          set -euo pipefail
+          config=$(docker inspect --format '{{json .Config.Healthcheck}}' kenet-web-smoke)
+          if [ "$config" = "null" ]; then
+            echo "image has no HEALTHCHECK configured" >&2
+            exit 1
+          fi
+      - name: Wait for the container to report healthy
+        run: |
+          set -euo pipefail
+          status="starting"
+          for _ in $(seq 1 30); do
+            status=$(docker inspect --format '{{.State.Health.Status}}' kenet-web-smoke)
+            echo "health status: $status"
+            if [ "$status" = "healthy" ] || [ "$status" = "unhealthy" ]; then
+              break
+            fi
+            sleep 2
+          done
+          if [ "$status" != "healthy" ]; then
+            echo "container did not report healthy in time" >&2
+            docker logs kenet-web-smoke
+            exit 1
+          fi
+      - name: Probe the health endpoint from outside the container
+        run: curl -fsS http://127.0.0.1:3131/api/health
+      - name: Probe the home page
+        run: |
+          set -euo pipefail
+          code=$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3131/)
+          echo "home: $code"
+          [ "$code" = "200" ]
+      - name: Stop and remove the smoke container
+        if: always()
+        run: docker rm -f kenet-web-smoke || true

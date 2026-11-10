@@ -1,0 +1,37 @@
+# Bağımlılıklar ve derleme çıktısı: imajda yeniden kurulur ya da üretilir
+node_modules
+.next
+out
+coverage
+
+# Sürüm denetimi ve CI
+.git
+.gitignore
+.github
+
+# Yerel durum: hiçbiri imaj katmanına girmez
+.local
+.nodeterm
+.claude
+.cursor
+.vscode
+.idea
+
+# Sırlar. Çalışma zamanı değerlerini Coolify verir, imaja gömülmez.
+.env
+.env.*
+
+# Belgeler ve kök Markdown; README imaja girmez ama Dockerfile lint'i için zararsız
+docs
+*.md
+LICENSE
+
+# Yerel doğrulama yardımcısı; Coolify doğrudan Dockerfile'dan derler
+docker-compose.yml
+
+# TypeScript artımlı derleme önbelleği
+*.tsbuildinfo
+
+# İşletim sistemi gürültüsü
+.DS_Store
+Thumbs.db

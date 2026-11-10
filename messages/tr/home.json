@@ -1,0 +1,20 @@
+{
+  "home": {
+    "eyebrow": "iPhone, iPad ve Mac için",
+    "title": "Yaz; kim, nerede ve ne zaman kendiliğinden bağlansın.",
+    "lead": "Kenet gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana bağlayan kişisel bir günlük. Görevler ve hedefler aynı yerde durur. Verin düz Markdown dosyaları olarak hep senin.",
+    "storeBadgeSoon": "Yakında App Store'da",
+    "storeBadge": "App Store'dan indir",
+    "promisesTitle": "Üç vaat",
+    "promise1Title": "Veri senin",
+    "promise1Body": "Markdown gerçek kaynaktır. Kasa yereldir, hesap yoktur. Uygulama gitse de dosyalar kalır.",
+    "promise2Title": "Hiçbir şey kaybolmaz",
+    "promise2Body": "Uygulama önce dosyaya yazar, sonra indeksi günceller. Tanımadığı metne dokunmaz. Silmede onay ya da geri alma vardır.",
+    "promise3Title": "Başka platforma taşınabilir",
+    "promise3Body": "Kasa Obsidian ile aynıdır. Uygulamaya özgü sözdizimi yoktur, kasa şifrelenmez.",
+    "principlesTitle": "Nasıl çalışır",
+    "principle1": "Bir satır yazmak 10 saniyeden kısa sürer.",
+    "principle2": "Sen yaz, uygulama bağlasın: klasörleme ve etiketleme yok.",
+    "principle3": "Belirsizse sorar. Yanlış otomatik bağlama, sormaktan kötüdür."
+  }
+}

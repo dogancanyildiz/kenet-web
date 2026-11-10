@@ -1,0 +1,14 @@
+node_modules
+.next
+out
+build
+coverage
+package-lock.json
+next-env.d.ts
+public
+# docs/ (Türkçe düzyazı, kod değil) prettier dışında: her kayıtta paragraf
+# yeniden akıtmak elle sarılmış metinle savaşır, davranış kazancı yoktur.
+docs
+.nodeterm
+.claude
+CHANGELOG.md

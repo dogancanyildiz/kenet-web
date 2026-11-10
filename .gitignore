@@ -1,0 +1,41 @@
+# Bağımlılıklar
+/node_modules
+
+# Next.js
+/.next/
+/out/
+/build
+
+# Ortam değişkenleri
+.env
+.env.*
+!.env.example
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Test ve kapsam
+/coverage
+
+# Günlükler
+npm-debug.log*
+*.log
+
+# İşletim sistemi ve editör
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/settings.json
+
+# nodeterm tuval durumu
+.nodeterm/
+
+# Yapay zeka araçları: makineye özel durum. Taze klonun gerek duyduğu her şey
+# (AGENTS.md, CLAUDE.md, docs/) izlenir.
+.claude/worktrees/
+.claude/settings.local.json
+.claude/*.local.*
+
+# Yerel çalışma notları
+.local/

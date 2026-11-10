@@ -1,0 +1,12 @@
+{
+  "support": {
+    "title": "Destek",
+    "lead": "Sorun bildirmek, soru sormak ya da öneri iletmek için aşağıdaki kanalları kullan.",
+    "issuesTitle": "Hata ve öneri",
+    "issuesBody": "Uygulamanın kaynak deposunda bir konu aç. Hata için cihaz, sürüm ve adımları yaz.",
+    "issuesLink": "GitHub'da konu aç",
+    "contactTitle": "Doğrudan iletişim",
+    "contactBody": "Geliştiriciye kendi sitesindeki iletişim sayfasından ulaşabilirsin.",
+    "contactLink": "İletişim sayfası"
+  }
+}

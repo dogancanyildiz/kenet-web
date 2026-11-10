@@ -1,0 +1,216 @@
+/* Şafak design language on the web. Source of truth for the values:
+   kenet/docs/design.md, "Renk belirteçleri". Every colour token has four
+   variants: light, dark and the Increase Contrast (KA) pair of each. The
+   site follows the system appearance; there is no site-level theme switch
+   (design rule 3). Scope automatic source detection to src/ so class names
+   quoted in docs/ and tests/ never reach the stylesheet. */
+@import "tailwindcss" source("../");
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-elevated: var(--elevated);
+  --color-surface: var(--surface);
+  --color-well: var(--well);
+  --color-rule: var(--rule);
+  --color-line: var(--line);
+  --color-control: var(--control);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-person: var(--person);
+  --color-place: var(--place);
+  --font-sans: var(--font-sans-stack);
+  --radius-card: 1.25rem;
+  --radius-control: 0.75rem;
+}
+
+:root {
+  /* SF Pro on Apple platforms, the system face elsewhere. The app uses only
+     system fonts (design rule 8); the site ships none of its own. */
+  --font-sans-stack:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", ui-sans-serif, system-ui,
+    "Segoe UI", Roboto, sans-serif;
+  color-scheme: light dark;
+
+  /* Light */
+  --paper: #f3f3f6;
+  --elevated: #fafafc;
+  --surface: #ffffff;
+  --well: #f1f1f5;
+  --rule: rgb(0 0 0 / 7%);
+  --line: rgb(0 0 0 / 12%);
+  --control: #868991;
+  --text: #15161a;
+  --text-secondary: #53565e;
+  --text-tertiary: #666972;
+  --accent: #7a2c6e;
+  --on-accent: #ffffff;
+  --accent-soft: rgb(122 44 110 / 12%);
+  --warning: #7a4e00;
+  --danger: #a11e1e;
+  --person: #2d5ba6;
+  --place: #1b6b43;
+  /* Glow: soft plum light rising from the top left of the root page. It is
+     not glass (no blur, no translucent layer): a gradient painted on the
+     background. Static, never animated (design rule 13). */
+  --glow: rgb(122 44 110 / 10%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0e0f11;
+    --elevated: #141518;
+    --surface: #1a1b1f;
+    --well: #212228;
+    --rule: rgb(255 255 255 / 7%);
+    --line: rgb(255 255 255 / 12%);
+    --control: #7c7f88;
+    --text: #f2f2f4;
+    --text-secondary: #a7aab2;
+    --text-tertiary: #8e9199;
+    --accent: #d08bc4;
+    --on-accent: #1b0e18;
+    --accent-soft: rgb(208 139 196 / 16%);
+    --warning: #e3b86a;
+    --danger: #ff6b6b;
+    --person: #8fb3f0;
+    --place: #7fd1a6;
+    --glow: rgb(208 139 196 / 18%);
+  }
+}
+
+/* Increase Contrast: surfaces stay, foreground and lines strengthen. */
+@media (prefers-contrast: more) {
+  :root {
+    --elevated: #ffffff;
+    --rule: rgb(0 0 0 / 16%);
+    --line: rgb(0 0 0 / 24%);
+    --control: #5e6169;
+    --text: #050507;
+    --text-secondary: #3a3d44;
+    --text-tertiary: #4a4d55;
+    --accent: #5e1f55;
+    --on-accent: #ffffff;
+    --warning: #5c3b00;
+    --danger: #7a1010;
+    --person: #1d4689;
+    --place: #11522f;
+    --glow: transparent;
+  }
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root {
+    --paper: #08090a;
+    --elevated: #0e0f11;
+    --rule: rgb(255 255 255 / 16%);
+    --line: rgb(255 255 255 / 24%);
+    --control: #a3a6ae;
+    --text: #ffffff;
+    --text-secondary: #cdd0d6;
+    --text-tertiary: #b4b7be;
+    --accent: #e8bce0;
+    --on-accent: #12091a;
+    --warning: #f0cf8e;
+    --danger: #ffb4b4;
+    --person: #b8d0f8;
+    --place: #aee5c6;
+    --glow: transparent;
+  }
+}
+
+/* Reduce Transparency removes the glow as well (design.md, "Parıltı"). */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glow: transparent;
+  }
+}
+
+@layer base {
+  html {
+    background-color: var(--paper);
+    color: var(--text);
+    font-family: var(--font-sans-stack);
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100dvh;
+    background-color: var(--paper);
+    /* The glow sits only in the upper region of the page and scrolls with
+       the content: a fixed-size gradient anchored to the top left. */
+    background-image: radial-gradient(
+      60rem 36rem at 0% 0%,
+      var(--glow),
+      transparent 70%
+    );
+    background-repeat: no-repeat;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+  }
+}
+
+@layer components {
+  /* Every section is a card: 20 pt corner, hairline border, no shadow
+     (Şafak rule 2). Rows inside a card are separated by a rule. */
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-card);
+  }
+
+  .page-shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 64rem;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .page-shell {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100%;
+    z-index: 50;
+    border-radius: var(--radius-control);
+    background-color: var(--accent);
+    color: var(--on-accent);
+    padding: 0.5rem 0.75rem;
+  }
+
+  .skip-link:focus-visible {
+    top: 1rem;
+  }
+
+  /* Links inside running text: text colour, meaning carried by the
+     underline (Şafak rule 4). */
+  .prose-link {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .prose-link:hover {
+    text-decoration-thickness: 2px;
+  }
+}

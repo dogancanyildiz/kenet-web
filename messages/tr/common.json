@@ -1,0 +1,33 @@
+{
+  "brand": {
+    "name": "Kenet"
+  },
+  "metadata": {
+    "siteName": "Kenet",
+    "defaultTitle": "Kenet: kişiler, konumlar ve zaman üzerine kurulu kişisel günlük",
+    "defaultDescription": "Yaz; kim, nerede ve ne zaman kendiliğinden bağlansın. Görevler ve hedefler aynı yerde. Verin Obsidian uyumlu düz Markdown dosyaları olarak hep senin. iPhone, iPad ve Mac."
+  },
+  "nav": {
+    "home": "Ana sayfa",
+    "privacy": "Gizlilik",
+    "support": "Destek",
+    "primary": "Ana gezinme"
+  },
+  "a11y": {
+    "skipToContent": "İçeriğe geç",
+    "languageSwitcher": "Dil",
+    "switchTo": "English"
+  },
+  "footer": {
+    "madeBy": "Kenet, {name} tarafından geliştirilir.",
+    "source": "Kaynak kodu",
+    "build": "Derleme {sha}, {date}",
+    "rights": "Tüm hakları saklıdır."
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Sayfa bulunamadı",
+    "description": "Aradığın adres bu sitede yok ya da taşındı.",
+    "backHome": "Ana sayfaya dön"
+  }
+}

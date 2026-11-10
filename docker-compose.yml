@@ -1,0 +1,21 @@
+# Yerel doğrulama. Coolify bu dosyayı kullanmaz; üretim Dockerfile build pack
+# ile derlenir (compose build pack sıfır kesintili güncellemeyi kapatır).
+#
+#   docker compose up --build -d
+#   curl -s http://127.0.0.1:3000/api/health
+#   docker compose down
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: http://localhost:3000
+        NEXT_PUBLIC_BUILD_SHA: "${NEXT_PUBLIC_BUILD_SHA:-}"
+        NEXT_PUBLIC_BUILD_DATE: "${NEXT_PUBLIC_BUILD_DATE:-}"
+    image: kenet-web-local:latest
+    container_name: kenet-web-local
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    restart: "no"
