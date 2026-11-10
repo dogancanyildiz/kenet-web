@@ -4,6 +4,8 @@ import { resolveLocale } from "@/lib/route-params";
 import { buildPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { PageHeader } from "@/components/layout/page-header";
+import { ReportCard } from "@/components/support/report-card";
+import { FaqCard } from "@/components/support/faq-card";
 import { PageSection } from "@/components/layout/page-section";
 
 type PageProps = { params: Promise<{ lang: string }> };
@@ -39,27 +41,61 @@ export default async function SupportPage({ params }: PageProps) {
     },
   ];
 
+  const reportItems = [
+    t("reportDevice"),
+    t("reportSystem"),
+    t("reportApp"),
+    t("reportDid"),
+    t("reportExpected"),
+    t("reportHappened"),
+    t("reportScreenshot"),
+  ];
+
+  const faqItems = [
+    { question: t("faqVaultQ"), answer: t("faqVaultA") },
+    { question: t("faqObsidianQ"), answer: t("faqObsidianA") },
+    { question: t("faqBackupQ"), answer: t("faqBackupA") },
+    { question: t("faqIcloudQ"), answer: t("faqIcloudA") },
+  ];
+
   return (
     <>
       <PageHeader title={t("title")} lead={t("lead")} />
       <PageSection>
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <h2 className="text-xl font-semibold">{t("channelsTitle")}</h2>
+        <ul className="mt-4 grid gap-4 sm:grid-cols-2">
           {channels.map((channel) => (
             <li key={channel.title} className="card p-6">
-              <h2 className="text-lg font-semibold">{channel.title}</h2>
+              <h3 className="text-lg font-semibold">{channel.title}</h3>
               <p className="mt-2 leading-7 text-text-secondary">
                 {channel.body}
               </p>
               <a
                 href={channel.href}
                 rel="noopener noreferrer"
-                className="prose-link mt-4 inline-block font-medium"
+                className="prose-link mt-4 inline-flex min-h-11 items-center font-medium"
               >
                 {channel.label}
               </a>
             </li>
           ))}
         </ul>
+      </PageSection>
+      <PageSection>
+        <h2 className="text-xl font-semibold">{t("reportTitle")}</h2>
+        <div className="mt-4">
+          <ReportCard
+            intro={t("reportIntro")}
+            items={reportItems}
+            privacy={t("reportPrivacy")}
+          />
+        </div>
+      </PageSection>
+      <PageSection>
+        <h2 className="text-xl font-semibold">{t("faqTitle")}</h2>
+        <div className="mt-4">
+          <FaqCard items={faqItems} />
+        </div>
       </PageSection>
     </>
   );

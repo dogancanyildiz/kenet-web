@@ -2,11 +2,31 @@
   "support": {
     "title": "Support",
     "lead": "Use the channels below to report a problem, ask a question or send a suggestion.",
+    "channelsTitle": "Channels",
     "issuesTitle": "Bugs and suggestions",
-    "issuesBody": "Open an issue in the app's source repository. For a bug, include the device, the version and the steps.",
+    "issuesBody": "Open an issue in the app's source repository. For a bug, add the details listed below.",
     "issuesLink": "Open an issue on GitHub",
     "contactTitle": "Direct contact",
     "contactBody": "You can reach the developer through the contact page on their own site.",
-    "contactLink": "Contact page"
+    "contactLink": "Contact page",
+    "reportTitle": "When you report a bug",
+    "reportIntro": "Put these in the issue:",
+    "reportDevice": "Device: iPhone, iPad or Mac",
+    "reportSystem": "System version",
+    "reportApp": "Kenet version",
+    "reportDid": "What you did",
+    "reportExpected": "What you expected",
+    "reportHappened": "What happened",
+    "reportScreenshot": "A screenshot, if you have one",
+    "reportPrivacy": "GitHub issues are public. Do not attach vault files or personal content.",
+    "faqTitle": "Frequently asked questions",
+    "faqVaultQ": "Where is my vault stored?",
+    "faqVaultA": "The vault is a folder of plain Markdown files. You choose the folder or use Kenet's own folder; if iCloud is available, the vault can also live in iCloud.",
+    "faqObsidianQ": "Can I open it with Obsidian?",
+    "faqObsidianA": "The vault uses the same format as Obsidian. Kenet opens an existing vault in place, so you do not have to move any files. On Mac, Obsidian can stay as a backup editor.",
+    "faqBackupQ": "How do I move or back up my data?",
+    "faqBackupA": "The vault is a folder, so copying the folder is enough. There is no export step; the files are plain Markdown and open in any text editor.",
+    "faqIcloudQ": "Is iCloud required?",
+    "faqIcloudA": "No. Storing the vault in iCloud is optional. You can use a local vault or open a folder you pick yourself."
   }
 }

@@ -2,11 +2,31 @@
   "support": {
     "title": "Destek",
     "lead": "Sorun bildirmek, soru sormak ya da öneri iletmek için aşağıdaki kanalları kullan.",
+    "channelsTitle": "Kanallar",
     "issuesTitle": "Hata ve öneri",
-    "issuesBody": "Uygulamanın kaynak deposunda bir konu aç. Hata için cihaz, sürüm ve adımları yaz.",
+    "issuesBody": "Uygulamanın kaynak deposunda bir konu aç. Hata için aşağıdaki bilgileri ekle.",
     "issuesLink": "GitHub'da konu aç",
     "contactTitle": "Doğrudan iletişim",
     "contactBody": "Geliştiriciye kendi sitesindeki iletişim sayfasından ulaşabilirsin.",
-    "contactLink": "İletişim sayfası"
+    "contactLink": "İletişim sayfası",
+    "reportTitle": "Hata bildirirken",
+    "reportIntro": "Konuya şunları yaz:",
+    "reportDevice": "Cihaz: iPhone, iPad ya da Mac",
+    "reportSystem": "Sistem sürümü",
+    "reportApp": "Kenet'in sürümü",
+    "reportDid": "Ne yaptın",
+    "reportExpected": "Ne bekledin",
+    "reportHappened": "Ne oldu",
+    "reportScreenshot": "Varsa ekran görüntüsü",
+    "reportPrivacy": "GitHub konuları herkese açıktır. Kasa dosyalarını ve kişisel içeriği konuya ekleme.",
+    "faqTitle": "Sık sorulanlar",
+    "faqVaultQ": "Kasa nerede durur?",
+    "faqVaultA": "Kasa, düz Markdown dosyalarından oluşan bir klasördür. Klasörü sen seçersin ya da Kenet'in kendi klasörünü kullanırsın; iCloud varsa kasa iCloud'da da durabilir.",
+    "faqObsidianQ": "Obsidian ile açılır mı?",
+    "faqObsidianA": "Kasa Obsidian ile aynı biçimi kullanır. Kenet var olan bir kasayı yerinde açar, dosyaları taşıman gerekmez. Mac'te Obsidian yedek editör olarak kalabilir.",
+    "faqBackupQ": "Verimi nasıl taşırım ya da yedeklerim?",
+    "faqBackupA": "Kasa bir klasör olduğu için klasörü kopyalamak yeter. Dışa aktarma adımı yoktur; dosyalar düz Markdown olduğundan her metin düzenleyicide okunur.",
+    "faqIcloudQ": "iCloud zorunlu mu?",
+    "faqIcloudA": "Hayır. iCloud'da saklamak isteğe bağlıdır. Yerel bir kasa kullanabilir ya da kendi seçtiğin bir klasörü açabilirsin."
   }
 }
