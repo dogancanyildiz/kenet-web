@@ -15,10 +15,13 @@
 
 | Sıra | Bölüm | İçerik |
 |---|---|---|
-| 1 | Giriş | Üst satır "iPhone, iPad ve Mac için"; başlık vaat cümlesi; bir paragraf; App Store düğmesi (mağaza yoksa "Yakında App Store'da" pasif) |
+| 1 | Giriş (kart) | Üst satır "iPhone, iPad ve Mac için"; h1 vaat cümlesi; bir paragraf; künye satırı "3 vaat, 6 ilke, 1 kasa" (sayı ve sözcük metin renginde yarı kalın, ayraçlar ikincil); App Store düğmesi (mağaza yoksa "Yakında App Store'da" pasif) |
 | 2 | Üç vaat | Üç kart: Veri senin, Hiçbir şey kaybolmaz, Başka platforma taşınabilir |
-| 3 | Nasıl çalışır | Numaralı üç satır tek kartta: 10 saniye, sen yaz uygulama bağlasın, belirsizse sor |
-| 4 | (Aşama 2) Platformlar ve ekran görüntüleri | Karar bekliyor |
+| 3 | Nasıl çalışır | Tek kartta numaralı beş adım, kullanıcı günü akışından: yaz, tanı, emin değilse sor, bağla, önce dosyaya yaz sonra indeksi güncelle |
+| 4 | Platformlar | Tek kart, üç sütun: iPhone, iPad, Mac; "Mac uygulaması mağazaya sonra girer" notu. Ekran görüntüsü yok (Aşama 4) |
+| 5 | Kapanış | h2 "Obsidian": kasa aynı biçimde, var olan kasa yerinde açılır; mağaza düğmesinin tekrarı |
+
+Bileşenler `src/components/home/` altında: `intro`, `masthead`, `promises`, `how-it-works`, `platforms`, `closing`. Test `tests/pages/home.test.tsx` başlık düzeylerini, h2 sırasını ve kart sayısını ölçer.
 
 ## Gizlilik `/gizlilik`
 
