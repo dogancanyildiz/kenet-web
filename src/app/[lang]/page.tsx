@@ -88,6 +88,8 @@ export default async function HomePage({ params }: PageProps) {
           sawRest={t("mechSawRest")}
           fileLine={t("mechFileLine")}
           fileNote={t("mechFileNote")}
+          quickEntrySr={t("mechQuickEntrySr")}
+          fileCodeLabel={t("mechFileCodeLabel")}
         />
       </PageSection>
 
@@ -119,6 +121,23 @@ export default async function HomePage({ params }: PageProps) {
           treePlaces={t("vaultTreePlaces")}
           treeTemplates={t("vaultTreeTemplates")}
           treeApp={t("vaultTreeApp")}
+          fileLabel={t("vaultFileLabel")}
+          lines={[
+            t("vaultLine1"),
+            t("vaultLine2"),
+            t("vaultLine3"),
+            t("vaultLine4"),
+            t("vaultLine5"),
+            t("vaultLine6"),
+            t("vaultLine7"),
+            t("vaultLine8"),
+            t("vaultLine9"),
+            t("vaultLine10"),
+            t("vaultLine11"),
+            t("vaultLine12"),
+            t("vaultLine13"),
+            t("vaultLine14"),
+          ]}
         />
       </PageSection>
 

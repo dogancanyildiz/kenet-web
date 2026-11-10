@@ -58,14 +58,16 @@
   --person: #2d5ba6;
   --place: #1b6b43;
   --device-bezel: #000000;
-  /* Glow: two-tone plum + amber wash from the top left. Not glass: a
-     gradient painted on the page. Static, never animated. */
+  --device-shadow: 0 24px 80px -32px rgb(0 0 0 / 0.3);
+  /* Glow: two-tone plum + amber wash from the top left. Fixed paint box
+     (background-size) so the ellipse is not scaled to page height.
+     Values from kenet/docs/design.md "Parıltı". */
   --glow-a: #8e3f80;
   --glow-b: #c98b2f;
   --glow: radial-gradient(
-    900px 600px at 12% -8%,
+    900px 600px at 12% 0,
     color-mix(in srgb, var(--glow-a) 16%, transparent) 0%,
-    color-mix(in srgb, var(--glow-b) 9%, transparent) 38%,
+    color-mix(in srgb, var(--glow-b) 16%, transparent) 38%,
     transparent 70%
   );
 }
@@ -89,10 +91,11 @@
     --danger: #ff6b6b;
     --person: #8fb3f0;
     --place: #7fd1a6;
+    --device-shadow: 0 24px 80px -32px rgb(0 0 0 / 0.6);
     --glow: radial-gradient(
-      900px 600px at 12% -8%,
+      900px 600px at 12% 0,
       color-mix(in srgb, var(--glow-a) 45%, transparent) 0%,
-      color-mix(in srgb, var(--glow-b) 22%, transparent) 38%,
+      color-mix(in srgb, var(--glow-b) 28%, transparent) 38%,
       transparent 70%
     );
   }
@@ -143,6 +146,11 @@
   :root {
     --glow: none;
   }
+
+  .site-header {
+    background-color: var(--paper);
+    backdrop-filter: none;
+  }
 }
 
 @layer base {
@@ -152,15 +160,18 @@
     font-family: var(--font-sans-stack);
     -webkit-font-smoothing: antialiased;
     text-size-adjust: 100%;
+    scroll-padding-top: 4.5rem;
   }
 
   body {
     min-height: 100dvh;
     background-color: var(--paper);
-    /* The glow sits only in the upper region of the page and scrolls with
-       the content: a fixed-size gradient anchored to the top left. */
+    /* Fixed-height paint box: the ellipse stays in the upper region even
+       when the page is tall. Center at 12% 0 (top edge), not -8% of height. */
     background-image: var(--glow);
+    background-size: 100% 900px;
     background-repeat: no-repeat;
+    background-position: top left;
   }
 
   :focus-visible {
@@ -260,7 +271,14 @@
     }
   }
 
-  .device-mask-mobile {
-    mask-image: linear-gradient(to bottom, black 70%, transparent);
+  .site-header {
+    background-color: color-mix(in srgb, var(--paper) 85%, transparent);
+    backdrop-filter: blur(12px);
   }
+}
+
+/* Utility so max-md:device-mask-mobile generates a real rule under the
+   breakpoint. @layer components classes do not receive Tailwind variants. */
+@utility device-mask-mobile {
+  mask-image: linear-gradient(to bottom, black 70%, transparent);
 }

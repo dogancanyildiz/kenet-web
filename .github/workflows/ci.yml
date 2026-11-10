@@ -49,6 +49,8 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://kenet.app
           NEXT_PUBLIC_BUILD_SHA: ${{ github.sha }}
           NEXT_PUBLIC_BUILD_DATE: ${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
+      - name: Test compiled CSS
+        run: npm run test:css
       - name: Verify static routes
         run: npm run verify:routes
       - name: Format

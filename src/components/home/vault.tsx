@@ -9,6 +9,8 @@ type VaultProps = {
   treePlaces: string;
   treeTemplates: string;
   treeApp: string;
+  fileLabel: string;
+  lines: readonly string[];
 };
 
 type Segment =
@@ -16,55 +18,36 @@ type Segment =
   | { kind: "key"; value: string }
   | { kind: "wiki"; name: string };
 
-/** Shortened journal example from kenet/docs/vault-format.md (lines 762–781). */
-const FILE_LINES: readonly Segment[][] = [
-  [{ kind: "text", value: "---" }],
-  [
-    { kind: "key", value: "type" },
-    { kind: "text", value: ": journal" },
-  ],
-  [
-    { kind: "key", value: "date" },
-    { kind: "text", value: ": 2026-10-02" },
-  ],
-  [
-    { kind: "key", value: "goals" },
-    { kind: "text", value: ":" },
-  ],
-  [
-    { kind: "text", value: "  " },
-    { kind: "key", value: "kitap" },
-    { kind: "text", value: ": 25" },
-  ],
-  [{ kind: "text", value: "---" }],
-  [{ kind: "text", value: "" }],
-  [{ kind: "text", value: "## Tasks" }],
-  [
-    { kind: "text", value: "- [ ] " },
-    { kind: "wiki", name: "Ahmet Yılmaz" },
-    { kind: "text", value: "'a teklifi gönder 📅 2026-10-05" },
-  ],
-  [
-    {
-      kind: "text",
-      value: "- [x] Market alışverişi ✅ 2026-10-02",
-    },
-  ],
-  [{ kind: "text", value: "" }],
-  [{ kind: "text", value: "## Events" }],
-  [
-    { kind: "text", value: "- 14:30 " },
-    { kind: "wiki", name: "Ahmet Yılmaz|Ahmet" },
-    { kind: "text", value: " ile " },
-    { kind: "wiki", name: "Kadıköy Ofis" },
-    { kind: "text", value: "'te teklifi konuştuk" },
-  ],
-  [
-    { kind: "text", value: "- " },
-    { kind: "wiki", name: "Elif" },
-    { kind: "text", value: " ile yemek" },
-  ],
-];
+const WIKI = /\[\[([^\]]+)\]\]/g;
+const FRONTMATTER_KEY = /^(\s*)([A-Za-z][\w-]*)(:.*)$/;
+
+/** Split a vault line into wiki links and (for frontmatter) key spans. */
+function parseLine(line: string): Segment[] {
+  const keyMatch = FRONTMATTER_KEY.exec(line);
+  if (keyMatch && !line.includes("[[")) {
+    const [, indent, key, rest] = keyMatch;
+    return [
+      { kind: "text", value: indent ?? "" },
+      { kind: "key", value: key ?? "" },
+      { kind: "text", value: rest ?? "" },
+    ];
+  }
+
+  const segments: Segment[] = [];
+  let last = 0;
+  for (const match of line.matchAll(WIKI)) {
+    const start = match.index ?? 0;
+    if (start > last) {
+      segments.push({ kind: "text", value: line.slice(last, start) });
+    }
+    segments.push({ kind: "wiki", name: match[1] ?? "" });
+    last = start + match[0].length;
+  }
+  if (last < line.length) {
+    segments.push({ kind: "text", value: line.slice(last) });
+  }
+  return segments.length > 0 ? segments : [{ kind: "text", value: line }];
+}
 
 function WikiLink({ name }: { name: string }) {
   return (
@@ -105,6 +88,8 @@ export function Vault({
   treePlaces,
   treeTemplates,
   treeApp,
+  fileLabel,
+  lines,
 }: VaultProps) {
   const tree = [
     { path: treeSelected, selected: true },
@@ -118,7 +103,7 @@ export function Vault({
     <>
       <SectionHeading label={label} title={title} />
       <div className="card mt-6 p-6 sm:p-8">
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
           <ul className="font-[family-name:var(--font-mono-stack)] text-[13px] leading-6">
             {tree.map((entry) => (
               <li key={entry.path}>
@@ -134,13 +119,19 @@ export function Vault({
               </li>
             ))}
           </ul>
-          <pre className="overflow-x-auto font-[family-name:var(--font-mono-stack)] text-[13px] leading-6 text-text">
-            {FILE_LINES.map((segments, index) => (
-              <span key={index} className="block">
-                <FileLine segments={segments} />
-                {index < FILE_LINES.length - 1 ? "\n" : null}
-              </span>
-            ))}
+          <pre
+            tabIndex={0}
+            aria-label={fileLabel}
+            className="min-w-0 overflow-x-auto font-[family-name:var(--font-mono-stack)] text-[13px] leading-6 text-text"
+          >
+            <code>
+              {lines.map((line, index) => (
+                <span key={index} className="block">
+                  <FileLine segments={parseLine(line)} />
+                  {index < lines.length - 1 ? "\n" : null}
+                </span>
+              ))}
+            </code>
           </pre>
         </div>
         <p className="mt-6 text-[15px] leading-6 text-text-secondary">{note}</p>

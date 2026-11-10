@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { render, screen } from "@testing-library/react";
 import { createTranslator } from "next-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
@@ -10,11 +12,12 @@ vi.mock("next/image", () => ({
     alt: string;
     src: string;
     className?: string;
+    preload?: boolean;
     priority?: boolean;
     width?: number;
     height?: number;
   }) => {
-    const { alt, src, className, width, height } = props;
+    const { alt, src, className, width, height, preload, priority } = props;
     return (
       // eslint-disable-next-line @next/next/no-img-element -- test stand-in for next/image
       <img
@@ -23,9 +26,34 @@ vi.mock("next/image", () => ({
         className={className}
         width={width}
         height={height}
+        data-preload={preload || priority ? "true" : undefined}
       />
     );
   },
+  getImageProps: ({
+    alt,
+    src,
+    width,
+    height,
+    preload,
+    priority,
+  }: {
+    alt: string;
+    src: string;
+    width?: number;
+    height?: number;
+    preload?: boolean;
+    priority?: boolean;
+  }) => ({
+    props: {
+      alt,
+      src,
+      srcSet: src,
+      width,
+      height,
+      "data-preload": preload || priority ? "true" : undefined,
+    },
+  }),
 }));
 
 vi.mock("next-intl/server", () => ({
@@ -109,23 +137,66 @@ describe("home page", () => {
     const place = container.querySelectorAll(".link-place");
     expect(person).toHaveLength(1);
     expect(place).toHaveLength(1);
-    expect(person[0]?.textContent).toBe("Ece Yalın");
+    expect(person[0]?.textContent).toBe("Ece");
     expect(place[0]?.textContent).toBe("Kadıköy");
-    expect(place[0]?.nextElementSibling?.textContent).toBe("'de");
+    expect(place[0]?.nextSibling?.textContent).toBe("'de");
   });
 
-  it("gives every image a non-empty alt and theme pair classes", async () => {
+  it("uses picture with a dark source and a single matching img", async () => {
     const { container } = await renderHome("tr");
+    const pictures = [...container.querySelectorAll("picture")];
+    expect(pictures.length).toBeGreaterThanOrEqual(4);
+
+    for (const picture of pictures) {
+      const source = picture.querySelector('source[media*="dark"]');
+      const img = picture.querySelector("img");
+      expect(source).toBeTruthy();
+      expect(img).toBeTruthy();
+      const darkSet =
+        source?.getAttribute("srcset") ?? source?.getAttribute("srcSet") ?? "";
+      const lightSet =
+        img?.getAttribute("srcset") ??
+        img?.getAttribute("srcSet") ??
+        img?.getAttribute("src") ??
+        "";
+      expect(darkSet).toMatch(/-dark/);
+      expect(lightSet).toMatch(/-light/);
+    }
+
     const images = [...container.querySelectorAll("img")];
     expect(images.length).toBeGreaterThan(0);
     for (const img of images) {
       expect(img.getAttribute("alt")?.trim().length).toBeGreaterThan(0);
     }
 
-    const lights = container.querySelectorAll("img.only-light");
-    const darks = container.querySelectorAll("img.only-dark");
-    expect(lights.length).toBe(darks.length);
-    expect(lights.length).toBeGreaterThanOrEqual(4);
+    const mac = images.find((img) =>
+      (img.getAttribute("src") ?? "").includes("mac-kanban")
+    );
+    expect(mac).toBeTruthy();
+
+    const preloaded = images.filter(
+      (img) => img.getAttribute("data-preload") === "true"
+    );
+    expect(preloaded).toHaveLength(1);
+  });
+
+  it("gives every English image a non-empty alt", async () => {
+    const { container } = await renderHome("en");
+    for (const img of container.querySelectorAll("img")) {
+      expect(img.getAttribute("alt")?.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it("renders English vault sample lines, not Turkish copy", async () => {
+    const { container } = await renderHome("en");
+    expect(container.textContent).toContain(
+      "Send the offer to [[Ahmet Yılmaz]]"
+    );
+    expect(container.textContent).toContain(
+      "Talked through the offer with [[Ahmet Yılmaz|Ahmet]] at [[Kadıköy Ofis]]"
+    );
+    expect(container.textContent).toContain("Dinner with [[Elif]]");
+    expect(container.textContent).not.toContain("'a teklifi gönder");
   });
 
   it("marks any external link noopener noreferrer", async () => {
@@ -133,5 +204,29 @@ describe("home page", () => {
     for (const link of container.querySelectorAll("a[href^='http']")) {
       expect(link.getAttribute("rel")).toBe("noopener noreferrer");
     }
+  });
+
+  it("compiles .link-place with a dotted underline", () => {
+    const roots = [
+      join(process.cwd(), ".next", "static", "css"),
+      join(process.cwd(), ".next", "static", "chunks"),
+    ];
+    const files: string[] = [];
+    for (const root of roots) {
+      try {
+        for (const name of readdirSync(root)) {
+          if (name.endsWith(".css")) files.push(join(root, name));
+        }
+      } catch {
+        /* build output missing */
+      }
+    }
+    if (files.length === 0) return;
+
+    const css = files.map((file) => readFileSync(file, "utf8")).join("\n");
+    // Compiled form may be the shorthand `underline dotted` or the longhand.
+    expect(css).toMatch(
+      /\.link-place[\s\S]{0,200}?(?:text-decoration(?:-style)?:\s*(?:underline\s+)?dotted|underline dotted)/
+    );
   });
 });

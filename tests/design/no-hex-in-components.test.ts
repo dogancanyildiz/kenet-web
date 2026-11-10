@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 /**
  * Design rule 1 (docs/design.md): colour comes from the tokens in
  * globals.css, never from a literal in a component. Tailwind arbitrary values
- * (`text-[#000]`) and inline hex both count.
+ * (`text-[#000]`) and inline hex / rgb / hsl / oklch all count.
  */
 function sourceFiles(dir: string): string[] {
   return readdirSync(dir).flatMap((entry) => {
@@ -16,6 +16,7 @@ function sourceFiles(dir: string): string[] {
 }
 
 const HEX = /#[0-9a-f]{3,8}\b/i;
+const RAW_COLOR = /\b(?:rgb|hsl|oklch)\s*\(/i;
 
 describe("component sources", () => {
   it("carry no hex colour literal", () => {
@@ -25,6 +26,16 @@ describe("component sources", () => {
       // and tests/design/tokens.test.ts keeps it in sync with the stylesheet.
       if (file === join(root, "app", "[lang]", "layout.tsx")) return false;
       return HEX.test(readFileSync(file, "utf8"));
+    });
+    expect(offenders).toEqual([]);
+  });
+
+  it("carry no raw rgb/hsl/oklch colour literals", () => {
+    const root = join(process.cwd(), "src");
+    const offenders = sourceFiles(root).filter((file) => {
+      if (file === join(root, "app", "globals.css")) return false;
+      // Only .ts/.tsx; globals.css is not in this list.
+      return RAW_COLOR.test(readFileSync(file, "utf8"));
     });
     expect(offenders).toEqual([]);
   });

@@ -21,7 +21,7 @@ export function Hero({
   return (
     <div className="grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-12">
       <div className="min-w-0">
-        <h1 className="max-w-xl text-[56px] font-semibold tracking-tight text-balance sm:text-6xl">
+        <h1 className="max-w-2xl text-[40px] leading-[1.05] font-semibold tracking-tight text-balance md:text-5xl lg:text-[56px]">
           {title}
         </h1>
         <p className="mt-5 max-w-md text-[18px] leading-7 text-text-secondary">
@@ -37,9 +37,9 @@ export function Hero({
           srcLight="/screens/today-light.webp"
           srcDark="/screens/today-dark.webp"
           alt={phoneAlt}
-          priority
+          preload
           clipMobile
-          className="mx-auto w-[280px] md:mx-0 md:w-[320px] lg:w-[360px]"
+          className="mx-auto w-full max-w-[280px] md:mx-0 md:max-w-[320px] lg:max-w-[360px]"
         />
       </div>
     </div>

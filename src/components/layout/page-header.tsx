@@ -15,7 +15,7 @@ export function PageHeader({ title, lead, eyebrow }: PageHeaderProps) {
           </p>
         ) : null}
         <h1
-          className={`text-4xl font-semibold tracking-tight text-balance sm:text-5xl ${
+          className={`text-[40px] font-semibold tracking-tight text-balance sm:text-5xl ${
             eyebrow ? "mt-2" : ""
           }`.trim()}
         >
