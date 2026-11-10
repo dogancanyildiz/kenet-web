@@ -62,7 +62,9 @@ export default async function SupportPage({ params }: PageProps) {
     <>
       <PageHeader title={t("title")} lead={t("lead")} />
       <PageSection>
-        <h2 className="text-xl font-semibold">{t("channelsTitle")}</h2>
+        <h2 className="text-sm font-medium text-text-secondary">
+          {t("channelsTitle")}
+        </h2>
         <ul className="mt-4 grid gap-4 sm:grid-cols-2">
           {channels.map((channel) => (
             <li key={channel.title} className="card p-6">
@@ -82,7 +84,9 @@ export default async function SupportPage({ params }: PageProps) {
         </ul>
       </PageSection>
       <PageSection>
-        <h2 className="text-xl font-semibold">{t("reportTitle")}</h2>
+        <h2 className="text-sm font-medium text-text-secondary">
+          {t("reportTitle")}
+        </h2>
         <div className="mt-4">
           <ReportCard
             intro={t("reportIntro")}
@@ -92,7 +96,9 @@ export default async function SupportPage({ params }: PageProps) {
         </div>
       </PageSection>
       <PageSection>
-        <h2 className="text-xl font-semibold">{t("faqTitle")}</h2>
+        <h2 className="text-sm font-medium text-text-secondary">
+          {t("faqTitle")}
+        </h2>
         <div className="mt-4">
           <FaqCard items={faqItems} />
         </div>

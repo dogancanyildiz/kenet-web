@@ -50,8 +50,20 @@ describe.each([
 
   it("lists the report details and the privacy warning", async () => {
     const { container } = await renderPage(lang);
-    expect(container.querySelectorAll("ul.list-disc > li")).toHaveLength(7);
+    // Scope to the section the "Hata bildirirken" heading introduces, so the
+    // count does not depend on a style class or on the other lists.
+    const heading = [...container.querySelectorAll("h2")].find(
+      (h) => h.textContent === m.reportTitle
+    );
+    expect(heading).toBeDefined();
+    expect(heading!.parentElement!.querySelectorAll("li")).toHaveLength(7);
     expect(container.textContent).toContain(m.reportPrivacy);
+  });
+
+  it("never nests a card inside a card", async () => {
+    const { container } = await renderPage(lang);
+    expect(container.querySelectorAll(".card").length).toBeGreaterThan(0);
+    expect(container.querySelectorAll(".card .card")).toHaveLength(0);
   });
 
   it("renders four FAQ items as native details", async () => {

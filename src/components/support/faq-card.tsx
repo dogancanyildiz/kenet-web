@@ -11,7 +11,7 @@ export function FaqCard({ items }: FaqCardProps) {
           key={item.question}
           className={`px-6 ${i > 0 ? "border-t border-rule" : ""}`}
         >
-          <summary className="flex min-h-11 cursor-pointer items-center py-3 font-medium">
+          <summary className="min-h-11 cursor-pointer py-3 font-medium">
             {item.question}
           </summary>
           <p className="pb-4 leading-7 text-text-secondary">{item.answer}</p>
