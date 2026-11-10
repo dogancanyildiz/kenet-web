@@ -4,6 +4,7 @@ import { resolveLocale } from "@/lib/route-params";
 import { buildPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { PageHeader } from "@/components/layout/page-header";
+import { SectionHeading } from "@/components/layout/section-heading";
 import { ReportCard } from "@/components/support/report-card";
 import { FaqCard } from "@/components/support/faq-card";
 import { PageSection } from "@/components/layout/page-section";
@@ -62,9 +63,7 @@ export default async function SupportPage({ params }: PageProps) {
     <>
       <PageHeader title={t("title")} lead={t("lead")} />
       <PageSection>
-        <h2 className="text-sm font-medium text-text-secondary">
-          {t("channelsTitle")}
-        </h2>
+        <SectionHeading title={t("channelsTitle")} />
         <ul className="mt-4 grid gap-4 sm:grid-cols-2">
           {channels.map((channel) => (
             <li key={channel.title} className="card p-6">
@@ -84,9 +83,7 @@ export default async function SupportPage({ params }: PageProps) {
         </ul>
       </PageSection>
       <PageSection>
-        <h2 className="text-sm font-medium text-text-secondary">
-          {t("reportTitle")}
-        </h2>
+        <SectionHeading title={t("reportTitle")} />
         <div className="mt-4">
           <ReportCard
             intro={t("reportIntro")}
@@ -96,9 +93,7 @@ export default async function SupportPage({ params }: PageProps) {
         </div>
       </PageSection>
       <PageSection>
-        <h2 className="text-sm font-medium text-text-secondary">
-          {t("faqTitle")}
-        </h2>
+        <SectionHeading title={t("faqTitle")} />
         <div className="mt-4">
           <FaqCard items={faqItems} />
         </div>

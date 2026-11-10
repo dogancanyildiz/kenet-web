@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { SectionHeading } from "@/components/layout/section-heading";
 
 type PrivacySectionProps = {
   id: string;
@@ -14,10 +15,8 @@ export function PrivacySection({ id, title, children }: PrivacySectionProps) {
   const headingId = `${id}-title`;
   return (
     <section aria-labelledby={headingId}>
-      <h2 id={headingId} className="text-sm font-medium text-text-secondary">
-        {title}
-      </h2>
-      <div className="card mt-3 p-6 sm:p-8">{children}</div>
+      <SectionHeading id={headingId} title={title} />
+      <div className="card mt-4 p-6 sm:p-8">{children}</div>
     </section>
   );
 }

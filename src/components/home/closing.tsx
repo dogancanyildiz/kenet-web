@@ -1,29 +1,27 @@
 import { StoreBadge } from "@/components/store-badge";
 
 type ClosingProps = {
-  title: string;
-  body: string;
+  line: string;
+  note: string;
   storeBadge: string;
   storeBadgeSoon: string;
 };
 
 export function Closing({
-  title,
-  body,
+  line,
+  note,
   storeBadge,
   storeBadgeSoon,
 }: ClosingProps) {
   return (
-    <>
-      <h2 className="text-sm font-medium text-balance text-text-secondary">
-        {title}
-      </h2>
-      <div className="card mt-3 p-6 sm:p-8">
-        <p className="max-w-2xl text-lg leading-8">{body}</p>
-        <div className="mt-8">
-          <StoreBadge label={storeBadge} soonLabel={storeBadgeSoon} />
-        </div>
+    <div>
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
+        <p className="text-[32px] font-semibold tracking-tight text-balance">
+          {line}
+        </p>
+        <StoreBadge label={storeBadge} soonLabel={storeBadgeSoon} />
       </div>
-    </>
+      <p className="mt-4 text-[15px] text-text-secondary">{note}</p>
+    </div>
   );
 }
