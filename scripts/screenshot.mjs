@@ -111,7 +111,14 @@ for (const job of jobs) {
     ],
   });
   await send("Page.navigate", { url });
-  await sleep(1500);
+  await sleep(1200);
+  // Walk the page once so lazy images start loading, then return to the top.
+  await send("Runtime.evaluate", {
+    expression:
+      "(async () => { for (let y = 0; y < document.documentElement.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 120)); } window.scrollTo(0, 0); })()",
+    awaitPromise: true,
+  });
+  await sleep(600);
   // Layout metrics rather than scrollHeight: with device emulation the
   // documentElement can report the viewport height instead of the page.
   const metrics = (await send("Page.getLayoutMetrics")).result;

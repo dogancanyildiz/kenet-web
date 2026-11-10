@@ -103,7 +103,7 @@ export function Vault({
     <>
       <SectionHeading label={label} title={title} />
       <div className="card mt-6 p-6 sm:p-8">
-        <div className="grid gap-6 md:grid-cols-[minmax(0,14rem)_minmax(0,1fr)]">
+        <div className="grid gap-6 md:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]">
           <ul className="font-[family-name:var(--font-mono-stack)] text-[13px] leading-6">
             {tree.map((entry) => (
               <li key={entry.path}>

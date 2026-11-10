@@ -1,6 +1,4 @@
 // @vitest-environment jsdom
-import { readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
 import { render, screen } from "@testing-library/react";
 import { createTranslator } from "next-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
@@ -12,12 +10,11 @@ vi.mock("next/image", () => ({
     alt: string;
     src: string;
     className?: string;
-    preload?: boolean;
-    priority?: boolean;
+    loading?: "eager" | "lazy";
     width?: number;
     height?: number;
   }) => {
-    const { alt, src, className, width, height, preload, priority } = props;
+    const { alt, src, className, width, height, loading } = props;
     return (
       // eslint-disable-next-line @next/next/no-img-element -- test stand-in for next/image
       <img
@@ -26,7 +23,7 @@ vi.mock("next/image", () => ({
         className={className}
         width={width}
         height={height}
-        data-preload={preload || priority ? "true" : undefined}
+        loading={loading}
       />
     );
   },
@@ -35,26 +32,34 @@ vi.mock("next/image", () => ({
     src,
     width,
     height,
-    preload,
-    priority,
+    loading,
   }: {
     alt: string;
     src: string;
     width?: number;
     height?: number;
-    preload?: boolean;
-    priority?: boolean;
+    loading?: "eager" | "lazy";
   }) => ({
-    props: {
-      alt,
-      src,
-      srcSet: src,
-      width,
-      height,
-      "data-preload": preload || priority ? "true" : undefined,
-    },
+    props: { alt, src, srcSet: src, width, height, loading },
   }),
 }));
+
+// Records the hero's per-scheme preloads; the real react-dom keeps the rest.
+const preloadCalls: Array<
+  [string, { media?: string; fetchPriority?: string }]
+> = [];
+vi.mock("react-dom", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("react-dom")>();
+  return {
+    ...actual,
+    preload: (
+      href: string,
+      options: { media?: string; fetchPriority?: string }
+    ) => {
+      preloadCalls.push([href, options]);
+    },
+  };
+});
 
 vi.mock("next-intl/server", () => ({
   setRequestLocale: () => undefined,
@@ -174,10 +179,34 @@ describe("home page", () => {
     );
     expect(mac).toBeTruthy();
 
-    const preloaded = images.filter(
-      (img) => img.getAttribute("data-preload") === "true"
+    // One high priority, eagerly loaded image (the hero); every other
+    // screenshot loads lazily.
+    const high = images.filter(
+      (img) => img.getAttribute("fetchpriority") === "high"
     );
-    expect(preloaded).toHaveLength(1);
+    expect(high).toHaveLength(1);
+    expect(high[0]!.getAttribute("src")).toContain("today-light");
+    expect(high[0]!.getAttribute("loading")).toBe("eager");
+    const rest = images.filter((img) => img !== high[0]);
+    for (const img of rest) {
+      expect(img.getAttribute("loading"), img.getAttribute("src") ?? "").toBe(
+        "lazy"
+      );
+    }
+  });
+
+  it("preloads the hero once per colour scheme, each behind its media query", async () => {
+    preloadCalls.length = 0;
+    await renderHome("tr");
+    const byMedia = Object.fromEntries(
+      preloadCalls.map(([href, options]) => [options.media, href])
+    );
+    expect(preloadCalls).toHaveLength(2);
+    expect(byMedia["(prefers-color-scheme: dark)"]).toContain("today-dark");
+    expect(byMedia["(prefers-color-scheme: light)"]).toContain("today-light");
+    for (const [, options] of preloadCalls) {
+      expect(options.fetchPriority).toBe("high");
+    }
   });
 
   it("gives every English image a non-empty alt", async () => {
@@ -204,29 +233,5 @@ describe("home page", () => {
     for (const link of container.querySelectorAll("a[href^='http']")) {
       expect(link.getAttribute("rel")).toBe("noopener noreferrer");
     }
-  });
-
-  it("compiles .link-place with a dotted underline", () => {
-    const roots = [
-      join(process.cwd(), ".next", "static", "css"),
-      join(process.cwd(), ".next", "static", "chunks"),
-    ];
-    const files: string[] = [];
-    for (const root of roots) {
-      try {
-        for (const name of readdirSync(root)) {
-          if (name.endsWith(".css")) files.push(join(root, name));
-        }
-      } catch {
-        /* build output missing */
-      }
-    }
-    if (files.length === 0) return;
-
-    const css = files.map((file) => readFileSync(file, "utf8")).join("\n");
-    // Compiled form may be the shorthand `underline dotted` or the longhand.
-    expect(css).toMatch(
-      /\.link-place[\s\S]{0,200}?(?:text-decoration(?:-style)?:\s*(?:underline\s+)?dotted|underline dotted)/
-    );
   });
 });

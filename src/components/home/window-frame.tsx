@@ -30,13 +30,13 @@ export function WindowFrame({
           <span className="size-2.5 rounded-full border border-control" />
           <span className="size-2.5 rounded-full border border-control" />
         </div>
-        <div className="border border-line bg-elevated p-1">
+        <div className="bg-elevated p-1">
           <Image
             src={src}
             alt={alt}
             width={width}
             height={height}
-            loading="eager"
+            loading="lazy"
             className="h-auto w-full"
           />
         </div>

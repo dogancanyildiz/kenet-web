@@ -1,10 +1,14 @@
 import { getImageProps } from "next/image";
+import { preload as preloadResource } from "react-dom";
 
 type DeviceFrameProps = {
   srcLight: string;
   srcDark: string;
   alt: string;
-  /** Preload the light fallback (hero LCP only). */
+  /**
+   * Hero only: preload the theme's image with a media query each, so one
+   * download per visitor, and mark it high priority. Everything else lazy.
+   */
   preload?: boolean;
   /** Fade and clip the bottom of the phone on narrow viewports (hero). */
   clipMobile?: boolean;
@@ -35,10 +39,23 @@ export function DeviceFrame({
     width: INTRINSIC_WIDTH,
     height: INTRINSIC_HEIGHT,
     sizes: "(max-width: 1023px) 260px, 360px",
-    // Every screenshot is the content of this page and about 45 KB; eager
-    // loading means the strip is never a row of empty frames.
-    loading: "eager" as const,
+    loading: preload ? ("eager" as const) : ("lazy" as const),
   };
+
+  // getImageProps({ preload }) emits no <link>; React's preload with a media
+  // query does, and the browser fetches only the one that matches.
+  if (preload) {
+    preloadResource(srcDark, {
+      as: "image",
+      media: "(prefers-color-scheme: dark)",
+      fetchPriority: "high",
+    });
+    preloadResource(srcLight, {
+      as: "image",
+      media: "(prefers-color-scheme: light)",
+      fetchPriority: "high",
+    });
+  }
 
   const {
     props: { srcSet: darkSrcSet, src: darkSrc },
@@ -46,7 +63,7 @@ export function DeviceFrame({
 
   const {
     props: { srcSet: lightSrcSet, ...img },
-  } = getImageProps({ ...common, src: srcLight, preload });
+  } = getImageProps({ ...common, src: srcLight });
 
   return (
     <div
@@ -67,6 +84,7 @@ export function DeviceFrame({
             <img
               {...img}
               srcSet={lightSrcSet ?? img.src}
+              fetchPriority={preload ? "high" : undefined}
               className="h-auto w-full"
             />
           </picture>

@@ -27,22 +27,26 @@ function readCompiledCss(): string | null {
 }
 
 const css = readCompiledCss();
-const run = css ? it : it.skip;
+/**
+ * `npm run test:css` sets REQUIRE_BUILD=1 and runs after `next build` in CI,
+ * so a missing or moved CSS output fails there instead of skipping green.
+ * The plain `npm run test` runs before the build and skips these.
+ */
+const buildRequired = process.env.REQUIRE_BUILD === "1";
+const run = css || buildRequired ? it : it.skip;
 
 describe("compiled CSS after build", () => {
-  run("ships device-mask-mobile under a max-width media query", () => {
-    expect(css).toBeTruthy();
-    // Either the @utility name survived, or an arbitrary mask-image rule
-    // was emitted inside a max-width block.
-    const hasNamed =
-      /@media\s*\([^)]*max-width[^)]*\)\s*\{[^}]*device-mask-mobile/.test(
-        css!
-      ) || /device-mask-mobile[^{]*\{[^}]*mask-image/.test(css!);
-    const hasMaskInMaxWidth =
-      /@media\s*\([^)]*max-width[^)]*\)[\s\S]{0,800}?mask-image\s*:\s*linear-gradient/.test(
-        css!
-      );
-    expect(hasNamed || hasMaskInMaxWidth).toBe(true);
+  run("finds the compiled stylesheet", () => {
+    expect(css, "no CSS under .next/static; run next build first").toBeTruthy();
+  });
+
+  run("applies the hero mask only below the md breakpoint", () => {
+    // Tailwind 4 compiles max-md: to `@media not all and (min-width:48rem)`.
+    expect(css).toMatch(
+      /@media not all and \(min-width:48rem\)\{[^@]*?\.max-md\\:device-mask-mobile\{[^}]*mask-image:linear-gradient/
+    );
+    // No unconditional rule: the mask must never reach the desktop hero.
+    expect(css).not.toMatch(/(?:^|[}\s])\.device-mask-mobile\{/);
   });
 
   run("paints the glow with a fixed background-size height", () => {
@@ -57,4 +61,14 @@ describe("compiled CSS after build", () => {
       /prefers-reduced-transparency:\s*reduce[\s\S]{0,400}?--glow\s*:\s*(none|transparent)/
     );
   });
+
+  run(
+    "draws .link-place with a dotted and .link-person with a solid underline",
+    () => {
+      expect(css).toMatch(
+        /\.link-place\{[^}]*text-decoration:underline dotted/
+      );
+      expect(css).toMatch(/\.link-person\{[^}]*text-decoration:underline;/);
+    }
+  );
 });
