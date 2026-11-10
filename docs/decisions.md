@@ -19,3 +19,6 @@
 | 2026-11-10 | `AGENTS.md` ve `CLAUDE.md` izlenir | Kenet düzeni: taze klon kuralları anında alır. `next dev` AGENTS.md başına kendi bloğunu ekler; blok commit'lenir |
 | 2026-11-10 | Dallanma `feature/*` → `dev` → `main`; `release.yml` kişisel siteden aynen | Sürüm ve CHANGELOG otomatik; `main` yayın dalı |
 | 2026-11-10 | Simge PNG'leri `sharp` ile üretilir ve commit'lenir | Derleme ortamında rasterleştirici gerekmez; `npm run icons` tek adım |
+| 2026-11-10 | Gizlilik sayfası veri tablosu HTML tablo yerine liste ve tanım listesi (`ul > li > h3 + dl`) | İçerik tek kopya, telefonda alt alta ve geniş ekranda iki sütun; yatay kaydırma yok. Ekran okuyucu için satır başlığı h3 |
+| 2026-11-10 | Site "çerez kullanmaz" der; Cloudflare Bot Fight Mode ve meydan okuma kapalı tutulur | Bu özellikler çerez koyar ve cümleyi yanlışlar; gerekirse önce politika değişir |
+| 2026-11-10 | Bölüm başlıkları (h2) bütün sayfalarda küçük ikincil etiket: `text-sm font-medium text-text-secondary` | Şafak kuralı 2: bölüm başlığı kartın üstünde ve dışında, sessiz. Destek ve ana sayfa eşitlendi; gizlilik kart içi h2 taşır, inceleme turunda tutarlılığa bakılır |

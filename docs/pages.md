@@ -27,23 +27,25 @@ Bileşenler `src/components/home/` altında: `intro`, `masthead`, `promises`, `h
 
 | Sıra | Bölüm | İçerik |
 |---|---|---|
-| 1 | Başlık | "Gizlilik politikası", bir paragraf özet, son güncelleme tarihi |
-| 2 | Özet | Üç cümle: veri cihazda, hesap yok, uygulama veri toplamaz |
-| 3 | Uygulamanın eriştiği veriler | Tablo: veri, amaç, nerede durur, kapatılabilir mi. Satırlar: kasa dosyaları, takvim, konum, bildirimler, iCloud (isteğe bağlı), Siri ve Kısayollar, widget verisi (App Group) |
-| 4 | Toplanmayan veriler | Analitik, çökme raporu, reklam kimliği, hesap |
-| 5 | Site | kenet.app çerez kullanmaz, üçüncü taraf betik yüklemez; sunucu günlükleri |
-| 6 | Değişiklikler ve iletişim | Değişiklik bu sayfada tarihle; iletişim `/destek` |
+| 1 | Başlık | "Gizlilik politikası", bir paragraf özet, "Son güncelleme" satırı (`time` öğesi; tarih `page.tsx` içinde sabit, dile göre biçimlenir) |
+| 2 | Özet (kart) | Üç cümle: veri cihazda ya da kendi iCloud'unda; hesap yok; uygulama veri toplamaz |
+| 3 | Uygulamanın eriştiği veriler (kart) | Satır başına h3 ve üç cevaplı tanım listesi (ne için, nerede durur, kapatılabilir mi); telefonda alt alta, geniş ekranda iki sütun. 10 satır: kasa dosyaları, takvim, konum, bildirimler, iCloud, Siri ve Kısayollar, widget ve paylaşım verisi, Face ID ya da Touch ID, rehber seçici, sistemin günlük önerileri |
+| 4 | Toplanmayan veriler (kart) | Analitik, çökme raporu, reklam kimliği, hesap, üçüncü taraf SDK; gizlilik bildirimine gönderme |
+| 5 | Bu site (kart) | Çerez yok, hesap yok, üçüncü taraf yok; erişim günlükleri Cloudflare ve kendi sunucuda oluşur, ölçüm için kullanılmaz |
+| 6 | Değişiklikler ve iletişim (kart) | Değişiklik bu sayfada tarihle; `/destek` sayfasına yerelleşmiş `Link` |
 
-Metin kaynakları `product.md` içindeki tabloda. Uygulamada olmayan bir özellik politikaya yazılmaz; emin olunmayan satır soru olarak PR açıklamasına yazılır.
+Her satır Kenet kodundaki ve belgelerindeki kanıta dayanır; kanıt tablosu PR #7 açıklamasında ve uygulayıcı raporundadır. Tablo yerine liste ve tanım listesi seçildi: içerik tek kopya kalır ve dar ekranda yatay kaydırma olmaz. Bileşenler `src/components/privacy/`; test `tests/pages/privacy.test.tsx`.
 
 ## Destek `/destek`
 
 | Sıra | Bölüm | İçerik |
 |---|---|---|
 | 1 | Başlık | "Destek", bir paragraf |
-| 2 | Kanallar | İki kart: GitHub'da konu aç; geliştirici iletişim sayfası |
-| 3 | (Aşama 2) Hata bildirirken | Cihaz, sistem sürümü, uygulama sürümü, adımlar, beklenen ve olan |
-| 4 | (Aşama 2) Sık sorulanlar | Kasa nerede; Obsidian ile açılır mı; veri nasıl taşınır; iCloud zorunlu mu |
+| 2 | Kanallar | h2 ve iki kart (h3): GitHub'da konu aç; geliştirici iletişim sayfası. E-posta yok (karar 2026-11-10) |
+| 3 | Hata bildirirken | Tek kart: cihaz, sistem sürümü, Kenet sürümü, ne yaptın, ne bekledin, ne oldu, ekran görüntüsü; "GitHub konuları herkese açıktır" uyarısı |
+| 4 | Sık sorulanlar | Tek kart, dört `details/summary`: kasa nerede durur; Obsidian ile açılır mı; veri nasıl taşınır ya da yedeklenir; iCloud zorunlu mu |
+
+Bileşenler `src/components/support/`; test `tests/pages/support.test.tsx`.
 
 ## 404
 
