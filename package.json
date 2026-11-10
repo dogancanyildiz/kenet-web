@@ -9,6 +9,7 @@
     "lint": "eslint --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "test:css": "REQUIRE_BUILD=1 vitest run tests/design/compiled-css.test.ts",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "verify:routes": "node scripts/assert-static-routes.mjs",

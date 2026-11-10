@@ -23,7 +23,7 @@ export function LanguageSwitcher() {
       hrefLang={target}
       lang={target}
       aria-label={`${t("languageSwitcher")}: ${t("switchTo")}`}
-      className="rounded-control px-3 py-2 text-sm font-medium text-text-secondary hover:bg-well hover:text-text"
+      className="flex min-h-11 items-center rounded-control px-3 text-sm font-medium text-text-secondary hover:bg-well hover:text-text"
     >
       {t("switchTo")}
     </Link>

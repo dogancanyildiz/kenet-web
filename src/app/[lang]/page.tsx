@@ -3,10 +3,11 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { resolveLocale } from "@/lib/route-params";
 import { buildPageMetadata } from "@/lib/seo";
 import { PageSection } from "@/components/layout/page-section";
-import { Intro } from "@/components/home/intro";
+import { Hero } from "@/components/home/hero";
+import { Mechanism } from "@/components/home/mechanism";
 import { Promises } from "@/components/home/promises";
-import { HowItWorks } from "@/components/home/how-it-works";
-import { Platforms } from "@/components/home/platforms";
+import { Screens } from "@/components/home/screens";
+import { Vault } from "@/components/home/vault";
 import { Closing } from "@/components/home/closing";
 
 type PageProps = { params: Promise<{ lang: string }> };
@@ -33,47 +34,117 @@ export default async function HomePage({ params }: PageProps) {
     { title: t("promise2Title"), body: t("promise2Body") },
     { title: t("promise3Title"), body: t("promise3Body") },
   ];
-  const steps = [t("step1"), t("step2"), t("step3"), t("step4"), t("step5")];
-  const platforms = [t("platformIphone"), t("platformIpad"), t("platformMac")];
-  const mastheadItems = [
-    t("mastheadItem1"),
-    t("mastheadItem2"),
-    t("mastheadItem3"),
+
+  const phones = [
+    {
+      srcLight: "/screens/today-light.webp",
+      srcDark: "/screens/today-dark.webp",
+      alt: t("screenTodayAlt"),
+      caption: t("screenToday"),
+    },
+    {
+      srcLight: "/screens/tasks-light.webp",
+      srcDark: "/screens/tasks-dark.webp",
+      alt: t("screenTasksAlt"),
+      caption: t("screenTasksList"),
+    },
+    {
+      srcLight: "/screens/kanban-light.webp",
+      srcDark: "/screens/kanban-dark.webp",
+      alt: t("screenKanbanAlt"),
+      caption: t("screenTasksKanban"),
+    },
   ] as const;
 
   return (
     <>
-      <PageSection as="header" className="pt-16 sm:pt-24">
-        <Intro
-          eyebrow={t("eyebrow")}
+      <PageSection as="header" className="pt-10 sm:pt-14">
+        <Hero
           title={t("title")}
           lead={t("lead")}
-          mastheadItems={mastheadItems}
+          platformsShort={t("platformsShort")}
           storeBadge={t("storeBadge")}
           storeBadgeSoon={t("storeBadgeSoon")}
+          phoneAlt={t("phoneAlt")}
         />
       </PageSection>
 
       <PageSection>
-        <Promises title={t("promisesTitle")} items={promises} />
+        <Mechanism
+          label={t("howLabel")}
+          title={t("howTitle")}
+          wroteLabel={t("mechWrote")}
+          sawLabel={t("mechSaw")}
+          fileLabel={t("mechFile")}
+          modeEvent={t("mechModeEvent")}
+          modeTask={t("mechModeTask")}
+          time={t("mechTime")}
+          rawLine={t("mechRaw")}
+          sawPrefix={t("mechSawPrefix")}
+          person={t("mechPerson")}
+          sawBetween={t("mechSawBetween")}
+          place={t("mechPlace")}
+          placeSuffix={t("mechPlaceSuffix")}
+          sawRest={t("mechSawRest")}
+          fileLine={t("mechFileLine")}
+          fileNote={t("mechFileNote")}
+          quickEntrySr={t("mechQuickEntrySr")}
+          fileCodeLabel={t("mechFileCodeLabel")}
+        />
       </PageSection>
 
       <PageSection>
-        <HowItWorks title={t("howTitle")} steps={steps} />
+        <Promises
+          label={t("promisesLabel")}
+          title={t("promisesTitle")}
+          items={promises}
+        />
       </PageSection>
 
       <PageSection>
-        <Platforms
-          title={t("platformsTitle")}
-          platforms={platforms}
-          note={t("platformsNote")}
+        <Screens
+          label={t("screensLabel")}
+          title={t("screensTitle")}
+          phones={phones}
+          macAlt={t("macAlt")}
+          macCaption={t("macCaption")}
+        />
+      </PageSection>
+
+      <PageSection>
+        <Vault
+          label={t("vaultLabel")}
+          title={t("vaultTitle")}
+          note={t("vaultNote")}
+          treeSelected={t("vaultTreeSelected")}
+          treePeople={t("vaultTreePeople")}
+          treePlaces={t("vaultTreePlaces")}
+          treeTemplates={t("vaultTreeTemplates")}
+          treeApp={t("vaultTreeApp")}
+          fileLabel={t("vaultFileLabel")}
+          lines={[
+            t("vaultLine1"),
+            t("vaultLine2"),
+            t("vaultLine3"),
+            t("vaultLine4"),
+            t("vaultLine5"),
+            t("vaultLine6"),
+            t("vaultLine7"),
+            t("vaultLine8"),
+            t("vaultLine9"),
+            t("vaultLine10"),
+            t("vaultLine11"),
+            t("vaultLine12"),
+            t("vaultLine13"),
+            t("vaultLine14"),
+          ]}
         />
       </PageSection>
 
       <PageSection>
         <Closing
-          title={t("closingTitle")}
-          body={t("closingBody")}
+          line={t("closingLine")}
+          note={t("closingNote")}
           storeBadge={t("storeBadge")}
           storeBadgeSoon={t("storeBadgeSoon")}
         />

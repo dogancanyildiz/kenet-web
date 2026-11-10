@@ -101,6 +101,8 @@ const NO_STORE = { key: "Cache-Control", value: "no-store" };
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Standalone image has no sharp; screens are already small WebP files.
+  images: { unoptimized: true },
   poweredByHeader: false,
   experimental: {
     // Lets src/app/global-not-found.tsx handle requests that never reach the

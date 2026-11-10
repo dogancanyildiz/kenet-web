@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { BrandMark } from "@/components/brand/brand-mark";
 import { buildInfo, copyrightRange } from "@/lib/build-info";
 import { site } from "@/lib/site";
 
@@ -10,8 +11,11 @@ export async function Footer() {
   return (
     <footer className="mt-16 border-t border-rule py-8 text-sm text-text-secondary">
       <div className="page-shell flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p>
-          © {range} {site.ownerName}. {t("rights")}
+        <p className="flex items-center gap-2">
+          <BrandMark size={20} />
+          <span>
+            © {range} {site.ownerName}. {t("rights")}
+          </span>
         </p>
         <ul className="flex flex-wrap gap-x-6 gap-y-2">
           <li>

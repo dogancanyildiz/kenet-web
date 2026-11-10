@@ -13,7 +13,7 @@ export function PageSection({
   className = "",
 }: PageSectionProps) {
   return (
-    <Tag className={`py-8 sm:py-10 ${className}`.trim()}>
+    <Tag className={`py-20 sm:py-24 ${className}`.trim()}>
       <div className="page-shell">{children}</div>
     </Tag>
   );
