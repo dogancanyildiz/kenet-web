@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 import { render, screen } from "@testing-library/react";
 import { createTranslator } from "next-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
@@ -174,10 +176,11 @@ describe("home page", () => {
       expect(img.getAttribute("alt")?.trim().length).toBeGreaterThan(0);
     }
 
-    const mac = images.find((img) =>
-      (img.getAttribute("src") ?? "").includes("mac-kanban")
+    const tablet = images.find((img) =>
+      (img.getAttribute("src") ?? "").includes("ipad-person-light")
     );
-    expect(mac).toBeTruthy();
+    expect(tablet).toBeTruthy();
+    expect(tablet?.closest('[data-device="tablet"]')).toBeTruthy();
 
     // One high priority, eagerly loaded image (the hero); every other
     // screenshot loads lazily.
@@ -193,6 +196,40 @@ describe("home page", () => {
         "lazy"
       );
     }
+  });
+
+  it("shows the hero phone, four store-style phone tiles and one iPad", async () => {
+    const { container } = await renderHome("tr");
+    expect(container.querySelectorAll('[data-device="phone"]')).toHaveLength(5);
+    expect(container.querySelectorAll('[data-device="tablet"]')).toHaveLength(
+      1
+    );
+    const tiles = [...container.querySelectorAll("figure")].filter((figure) =>
+      figure.querySelector('[data-device="phone"]')
+    );
+    expect(
+      tiles.map((tile) => tile.querySelector("figcaption p")?.textContent)
+    ).toEqual([
+      "Kişinin geçmişi tek sayfada",
+      "Kişiler ve konumlar",
+      "Görevler Kanban'da da",
+      "Hedefe miktarla ilerle",
+    ]);
+  });
+
+  it("references only screenshots that exist, and every screenshot is used", async () => {
+    const { container } = await renderHome("tr");
+    const used = new Set<string>();
+    for (const node of container.querySelectorAll("img, source")) {
+      for (const attr of ["src", "srcset"]) {
+        const value = node.getAttribute(attr);
+        if (value?.startsWith("/screens/")) used.add(value.slice(9));
+      }
+    }
+    const files = readdirSync(join(process.cwd(), "public/screens")).filter(
+      (file) => file.endsWith(".webp")
+    );
+    expect([...used].sort()).toEqual([...files].sort());
   });
 
   it("preloads the hero once per colour scheme, each behind its media query", async () => {

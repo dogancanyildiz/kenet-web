@@ -39,7 +39,7 @@ export function Hero({
           alt={phoneAlt}
           preload
           clipMobile
-          className="mx-auto w-full max-w-[280px] md:mx-0 md:max-w-[320px] lg:max-w-[360px]"
+          className="mx-auto w-full max-w-[280px] md:mx-0 md:max-w-[320px] lg:max-w-[340px]"
         />
       </div>
     </div>

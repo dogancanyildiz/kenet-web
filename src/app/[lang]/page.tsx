@@ -37,24 +37,41 @@ export default async function HomePage({ params }: PageProps) {
 
   const phones = [
     {
-      srcLight: "/screens/today-light.webp",
-      srcDark: "/screens/today-dark.webp",
-      alt: t("screenTodayAlt"),
-      caption: t("screenToday"),
+      srcLight: "/screens/person-light.webp",
+      srcDark: "/screens/person-dark.webp",
+      alt: t("screenPersonAlt"),
+      title: t("screenPersonTitle"),
+      caption: t("screenPersonCaption"),
     },
     {
-      srcLight: "/screens/tasks-light.webp",
-      srcDark: "/screens/tasks-dark.webp",
-      alt: t("screenTasksAlt"),
-      caption: t("screenTasksList"),
+      srcLight: "/screens/people-light.webp",
+      srcDark: "/screens/people-dark.webp",
+      alt: t("screenPeopleAlt"),
+      title: t("screenPeopleTitle"),
+      caption: t("screenPeopleCaption"),
     },
     {
       srcLight: "/screens/kanban-light.webp",
       srcDark: "/screens/kanban-dark.webp",
       alt: t("screenKanbanAlt"),
-      caption: t("screenTasksKanban"),
+      title: t("screenKanbanTitle"),
+      caption: t("screenKanbanCaption"),
+    },
+    {
+      srcLight: "/screens/goal-light.webp",
+      srcDark: "/screens/goal-dark.webp",
+      alt: t("screenGoalAlt"),
+      title: t("screenGoalTitle"),
+      caption: t("screenGoalCaption"),
     },
   ] as const;
+
+  const tablet = {
+    srcLight: "/screens/ipad-person-light.webp",
+    srcDark: "/screens/ipad-person-dark.webp",
+    alt: t("tabletAlt"),
+    caption: t("tabletCaption"),
+  };
 
   return (
     <>
@@ -106,8 +123,7 @@ export default async function HomePage({ params }: PageProps) {
           label={t("screensLabel")}
           title={t("screensTitle")}
           phones={phones}
-          macAlt={t("macAlt")}
-          macCaption={t("macCaption")}
+          tablet={tablet}
         />
       </PageSection>
 

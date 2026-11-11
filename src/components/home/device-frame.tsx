@@ -1,10 +1,14 @@
 import { getImageProps } from "next/image";
 import { preload as preloadResource } from "react-dom";
 
+type Device = "phone" | "tablet";
+
 type DeviceFrameProps = {
   srcLight: string;
   srcDark: string;
   alt: string;
+  /** iPhone (portrait) or iPad (landscape). */
+  device?: Device;
   /**
    * Hero only: preload the theme's image with a media query each, so one
    * download per visitor, and mark it high priority. Everything else lazy.
@@ -15,13 +19,43 @@ type DeviceFrameProps = {
   className?: string;
 };
 
-const INTRINSIC_WIDTH = 390;
-const INTRINSIC_HEIGHT = 774;
+/**
+ * Intrinsic sizes in CSS px; keep in step with scripts/optimize-screens.mjs.
+ * Phone: full 1206×2622 capture at 780 px wide, uncropped (status bar and
+ * tab bar stay). Tablet: landscape iPad capture with the status bar and the
+ * resize-handle strip cropped, 1600×1130.
+ */
+const SIZES: Record<
+  Device,
+  {
+    width: number;
+    height: number;
+    aspect: string;
+    shell: string;
+    screen: string;
+    sizes: string;
+  }
+> = {
+  phone: {
+    width: 390,
+    height: 848,
+    aspect: "aspect-[390/848]",
+    shell: "rounded-[44px] p-2 sm:rounded-[54px]",
+    screen: "rounded-[36px] sm:rounded-[46px]",
+    sizes: "(max-width: 1023px) 260px, 340px",
+  },
+  tablet: {
+    width: 800,
+    height: 565,
+    aspect: "aspect-[800/565]",
+    shell: "rounded-[20px] p-1.5 sm:rounded-[32px] sm:p-3",
+    screen: "rounded-[14px] sm:rounded-[20px]",
+    sizes: "(max-width: 1023px) 100vw, 1024px",
+  },
+};
 
 /**
- * iPhone shell around a real app screenshot. Shots are cropped to 390:774
- * (scripts/optimize-screens.mjs) so no empty background shows under the
- * Today composer; keep INTRINSIC_HEIGHT in step with PHONE_HEIGHT / 2. Bezel and shadow come from
+ * Device shell around a real app screenshot. Bezel and shadow come from
  * tokens. One <picture> so only the matching theme image downloads.
  * Width comes from the caller's className (e.g. w-full max-w-[260px]).
  *
@@ -32,15 +66,17 @@ export function DeviceFrame({
   srcLight,
   srcDark,
   alt,
+  device = "phone",
   preload = false,
   clipMobile = false,
   className = "",
 }: DeviceFrameProps) {
+  const size = SIZES[device];
   const common = {
     alt,
-    width: INTRINSIC_WIDTH,
-    height: INTRINSIC_HEIGHT,
-    sizes: "(max-width: 1023px) 260px, 360px",
+    width: size.width,
+    height: size.height,
+    sizes: size.sizes,
     loading: preload ? ("eager" as const) : ("lazy" as const),
   };
 
@@ -69,14 +105,17 @@ export function DeviceFrame({
 
   return (
     <div
+      data-device={device}
       className={`relative ${
         clipMobile
           ? "max-md:max-h-[340px] max-md:overflow-hidden max-md:device-mask-mobile"
           : ""
       } ${className}`.trim()}
     >
-      <div className="rounded-[44px] bg-device-bezel p-2 shadow-(--device-shadow) sm:rounded-[54px]">
-        <div className="aspect-[390/774] overflow-hidden rounded-[36px] bg-paper sm:rounded-[46px]">
+      <div className={`bg-device-bezel shadow-(--device-shadow) ${size.shell}`}>
+        <div
+          className={`${size.aspect} overflow-hidden bg-paper ${size.screen}`}
+        >
           <picture>
             <source
               media="(prefers-color-scheme: dark)"
