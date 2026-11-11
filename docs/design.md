@@ -7,7 +7,7 @@
 | Öğe | Tanım |
 |---|---|
 | Zemin | Nötr gri: koyu `#0E0F11`, açık `#F3F3F6`. Site sistem görünümünü izler; tema anahtarı yoktur. |
-| Parıltı | Sol üstten yayılan iki tonlu ışık: mürdüm (`--glow-a` #8E3F80) ve kehribar yankısı (`--glow-b` #C98B2F), oranlar Kenet `design.md` "Parıltı" bölümünden (koyuda %45 ve %28, açıkta %16 ve %16). `body` zemininde sabit 900 px yükseklikte (`background-size`), içerikle kayar, cam değildir. Kontrastı Artır ve Saydamlığı Azalt açıkken kapanır; `tests/design/compiled-css.test.ts` kilitler. |
+| Parıltı | Sol üstten yayılan iki tonlu ışık: mürdüm (`--glow-a` #8E3F80) ve kehribar yankısı (`--glow-b` #C98B2F), oranlar Kenet `design.md` "Parıltı" bölümünden (koyuda %45 ve %14, açıkta %16 ve %16; koyudaki kehribar Kenet'in %28 değerinden yarıya indirildi, web zemininde çamurlu kahverengi leke bırakıyordu). `body` zemininde sabit 900 px yükseklikte (`background-size`), içerikle kayar, cam değildir. Kontrastı Artır ve Saydamlığı Azalt açıkken kapanır; `tests/design/compiled-css.test.ts` kilitler. |
 | Yüzey | Her bölüm bir karttır: 20 px köşe, ince `rule` sınır, gölge yok. Kart içinde kart yoktur. |
 | Yazı | Sistem yazı tipi: Apple'da SF Pro, ötekilerde sistem. Site yazı tipi yüklemez. |
 | Eylem | Tek vurgu rengi: mürdüm. Parıltı eylem değildir. |

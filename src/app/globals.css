@@ -95,7 +95,7 @@
     --glow: radial-gradient(
       900px 600px at 12% 0,
       color-mix(in srgb, var(--glow-a) 45%, transparent) 0%,
-      color-mix(in srgb, var(--glow-b) 28%, transparent) 38%,
+      color-mix(in srgb, var(--glow-b) 14%, transparent) 38%,
       transparent 70%
     );
   }
