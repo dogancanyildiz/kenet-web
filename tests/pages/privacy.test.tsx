@@ -111,6 +111,21 @@ describe.each(cases)("privacy page ($lang)", (c) => {
     expect(time?.parentElement?.textContent).toBe(c.updated);
   });
 
+  it("opens with an on-page index whose anchors land on each section", async () => {
+    const { container } = await renderPage(c.lang);
+    const toc = screen.getByRole("navigation", {
+      name: c.lang === "tr" ? "Bu sayfada" : "On this page",
+    });
+    const links = within(toc).getAllByRole("link");
+
+    expect(links.map((a) => a.textContent)).toEqual(c.sections);
+    for (const link of links) {
+      const id = link.getAttribute("href")?.replace(/^#/, "") ?? "";
+      const target = container.querySelector(`[id="${id}"]`);
+      expect(target?.tagName, id).toBe("SECTION");
+    }
+  });
+
   it("lists every data row with its three answers", async () => {
     await renderPage(c.lang);
     const region = screen.getByRole("region", { name: c.sections[1] });

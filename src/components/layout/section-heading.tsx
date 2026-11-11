@@ -11,12 +11,10 @@ type SectionHeadingProps = {
 export function SectionHeading({ title, label, id }: SectionHeadingProps) {
   return (
     <>
-      {label ? (
-        <p className="text-[13px] font-medium text-text-secondary">{label}</p>
-      ) : null}
+      {label ? <p className="eyebrow">{label}</p> : null}
       <h2
         id={id}
-        className={`text-[28px] font-semibold tracking-tight text-balance sm:text-3xl ${
+        className={`max-w-3xl text-[28px] leading-[1.15] font-semibold tracking-tight sm:text-3xl ${
           label ? "mt-2" : ""
         }`.trim()}
       >

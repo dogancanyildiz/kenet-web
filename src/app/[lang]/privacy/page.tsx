@@ -10,6 +10,8 @@ import {
   type DataAccessRow,
 } from "@/components/privacy/data-access-list";
 import { PrivacySection } from "@/components/privacy/privacy-section";
+import { PrivacyToc } from "@/components/privacy/privacy-toc";
+import { bulletListClass } from "@/components/ui/bullet-list";
 
 type PageProps = { params: Promise<{ lang: string }> };
 
@@ -19,8 +21,7 @@ type PageProps = { params: Promise<{ lang: string }> };
  */
 const UPDATED = "2026-11-10";
 
-const listClass =
-  "grid list-disc gap-2 pl-5 leading-7 marker:text-accent [&:not(:first-child)]:mt-4";
+const listClass = `${bulletListClass} grid gap-2 [&:not(:first-child)]:mt-4`;
 
 export async function generateMetadata({
   params,
@@ -120,73 +121,84 @@ export default async function PrivacyPage({ params }: PageProps) {
 
   return (
     <>
-      <PageHeader title={t("title")} lead={t("lead")} />
-      <div className="page-shell">
-        <p className="mt-4 text-sm text-text-secondary">
-          {t.rich("updated", {
-            date: updated,
-            time: (chunks) => <time dateTime={UPDATED}>{chunks}</time>,
-          })}
-        </p>
-      </div>
+      <PageHeader
+        title={t("title")}
+        lead={t("lead")}
+        meta={t.rich("updated", {
+          date: updated,
+          time: (chunks) => <time dateTime={UPDATED}>{chunks}</time>,
+        })}
+      />
       <PageSection as="div">
-        <div className="grid gap-6">
-          <PrivacySection id="summary" title={t("summaryTitle")}>
-            <ul className={listClass}>
-              {summary.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </PrivacySection>
+        <div className="grid gap-10 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-12">
+          <PrivacyToc
+            label={t("tocLabel")}
+            items={[
+              { id: "summary", title: t("summaryTitle") },
+              { id: "data", title: t("dataTitle") },
+              { id: "not-collected", title: t("notCollectedTitle") },
+              { id: "site", title: t("siteTitle") },
+              { id: "changes", title: t("changesTitle") },
+            ]}
+          />
+          <div className="grid min-w-0 gap-10">
+            <PrivacySection id="summary" title={t("summaryTitle")}>
+              <ul className={listClass}>
+                {summary.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </PrivacySection>
 
-          <PrivacySection id="data" title={t("dataTitle")}>
-            <p className="leading-7 text-text-secondary">{t("dataIntro")}</p>
-            <DataAccessList
-              rows={rows}
-              labelledBy="data-title"
-              labels={{
-                purpose: t("colPurpose"),
-                where: t("colWhere"),
-                control: t("colControl"),
-              }}
-            />
-          </PrivacySection>
+            <PrivacySection id="data" title={t("dataTitle")}>
+              <p className="leading-7 text-text-secondary">{t("dataIntro")}</p>
+              <DataAccessList
+                rows={rows}
+                labelledBy="data-title"
+                labels={{
+                  purpose: t("colPurpose"),
+                  where: t("colWhere"),
+                  control: t("colControl"),
+                }}
+              />
+            </PrivacySection>
 
-          <PrivacySection id="not-collected" title={t("notCollectedTitle")}>
-            <p className="leading-7">{t("notCollectedIntro")}</p>
-            <ul className={listClass}>
-              {notCollected.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-            <p className="mt-4 leading-7 text-text-secondary">
-              {t("notCollectedNote")}
-            </p>
-          </PrivacySection>
+            <PrivacySection id="not-collected" title={t("notCollectedTitle")}>
+              <p className="leading-7">{t("notCollectedIntro")}</p>
+              <ul className={listClass}>
+                {notCollected.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+              <p className="mt-4 leading-7 text-text-secondary">
+                {t("notCollectedNote")}
+              </p>
+            </PrivacySection>
 
-          <PrivacySection id="site" title={t("siteTitle")}>
-            <ul className={listClass}>
-              {site.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </PrivacySection>
+            <PrivacySection id="site" title={t("siteTitle")}>
+              <ul className={listClass}>
+                {site.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </PrivacySection>
 
-          <PrivacySection id="changes" title={t("changesTitle")}>
-            <p className="leading-7">{t("changesBody")}</p>
-            <p className="mt-2 leading-7">
-              {t.rich("contactBody", {
-                link: (chunks) => (
-                  <Link
-                    href="/support"
-                    className="prose-link inline-flex min-h-11 items-center font-medium"
-                  >
-                    {chunks}
-                  </Link>
-                ),
-              })}
-            </p>
-          </PrivacySection>
+            <PrivacySection id="changes" title={t("changesTitle")}>
+              <p className="leading-7">{t("changesBody")}</p>
+              <p className="mt-2 leading-7">
+                {t.rich("contactBody", {
+                  link: (chunks) => (
+                    <Link
+                      href="/support"
+                      className="prose-link inline-flex min-h-11 items-center font-medium"
+                    >
+                      {chunks}
+                    </Link>
+                  ),
+                })}
+              </p>
+            </PrivacySection>
+          </div>
         </div>
       </PageSection>
     </>

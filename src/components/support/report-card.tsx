@@ -1,3 +1,5 @@
+import { bulletListClass } from "@/components/ui/bullet-list";
+
 type ReportCardProps = {
   intro: string;
   items: string[];
@@ -9,7 +11,7 @@ export function ReportCard({ intro, items, privacy }: ReportCardProps) {
   return (
     <div className="card p-6">
       <p className="leading-7 text-text-secondary">{intro}</p>
-      <ul className="mt-3 list-disc space-y-1 pl-5 leading-7">
+      <ul className={`${bulletListClass} mt-3 space-y-1`}>
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}

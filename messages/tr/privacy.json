@@ -67,6 +67,7 @@
     "site4": "Siteye gelen isteklerin erişim günlükleri barındırma altyapısında oluşur: önde Cloudflare, arkada sitenin kendi sunucusu. Günlükler ölçüm için kullanılmaz.",
     "changesTitle": "Değişiklikler ve iletişim",
     "changesBody": "Politika değişirse yeni metin bu sayfada yayımlanır ve yukarıdaki tarih güncellenir.",
-    "contactBody": "Soru ve istekler için <link>destek sayfasındaki</link> kanalları kullan."
+    "contactBody": "Soru ve istekler için <link>destek sayfasındaki</link> kanalları kullan.",
+    "tocLabel": "Bu sayfada"
   }
 }

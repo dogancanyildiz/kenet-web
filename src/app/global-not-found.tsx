@@ -5,6 +5,7 @@ import "./globals.css";
 import { pathnameForLocale } from "@/i18n/navigation";
 import { routing, type AppLocale } from "@/i18n/routing";
 import { localeFromPathname } from "@/lib/locale-from-pathname";
+import { BrandMark } from "@/components/brand/brand-mark";
 
 /**
  * 404 document for every path the router cannot match. The root layout lives
@@ -31,6 +32,7 @@ export default async function GlobalNotFound() {
   const locale = await documentLocale();
   const t = await getTranslations({ locale, namespace: "notFound" });
   const otherLocale = routing.locales.find((other) => other !== locale);
+  const tBrand = await getTranslations({ locale, namespace: "brand" });
   const other = otherLocale
     ? await getTranslations({ locale: otherLocale, namespace: "notFound" })
     : null;
@@ -39,18 +41,25 @@ export default async function GlobalNotFound() {
     <html lang={locale}>
       <body className="flex min-h-dvh items-center font-sans text-text">
         <main className="page-shell py-16">
-          <p className="text-sm font-medium text-text-secondary">{t("code")}</p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+          <a
+            href={pathnameForLocale(locale, "/")}
+            className="inline-flex min-h-11 items-center gap-2 rounded-control text-[17px] font-semibold tracking-tight"
+          >
+            <BrandMark size={24} />
+            <span>{tBrand("name")}</span>
+          </a>
+          <p className="eyebrow mt-10 tabular-nums">{t("code")}</p>
+          <h1 className="mt-2 text-[40px] leading-[1.1] font-semibold tracking-tight sm:text-5xl">
             {t("title")}
           </h1>
-          <p className="mt-4 max-w-xl text-lg leading-8 text-text-secondary">
+          <p className="measure mt-4 text-[18px] leading-7 text-text-secondary">
             {t("description")}
           </p>
-          <ul className="mt-8 flex flex-wrap gap-6">
+          <ul className="mt-6 flex flex-wrap gap-x-6">
             <li>
               <a
                 href={pathnameForLocale(locale, "/")}
-                className="prose-link font-medium"
+                className="prose-link inline-flex min-h-11 items-center font-medium"
               >
                 {t("backHome")}
               </a>
@@ -61,7 +70,7 @@ export default async function GlobalNotFound() {
                   href={pathnameForLocale(otherLocale, "/")}
                   hrefLang={otherLocale}
                   lang={otherLocale}
-                  className="prose-link font-medium"
+                  className="prose-link inline-flex min-h-11 items-center font-medium"
                 >
                   {other("backHome")}
                 </a>

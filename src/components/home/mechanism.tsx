@@ -86,18 +86,17 @@ export function Mechanism({
           <p className="text-[13px] leading-5 text-text-tertiary sm:pt-1">
             {fileLabel}
           </p>
-          <div className="min-w-0">
-            <pre
-              tabIndex={0}
-              aria-label={fileCodeLabel}
-              className="overflow-x-auto rounded-control bg-well px-3 py-2 font-[family-name:var(--font-mono-stack)] text-[13px] leading-5 text-text"
-            >
-              <code>{fileLine}</code>
+          <figure className="min-w-0">
+            {/* The line wraps under its text after the list marker instead
+                of scrolling, so the block needs no tab stop. */}
+            <figcaption className="sr-only">{fileCodeLabel}</figcaption>
+            <pre className="rounded-control bg-well px-3 py-2 font-[family-name:var(--font-mono-stack)] text-[13px] leading-5 break-words whitespace-pre-wrap text-text">
+              <code className="block pl-[2ch] -indent-[2ch]">{fileLine}</code>
             </pre>
             <p className="mt-3 text-[15px] leading-6 text-text-secondary">
               {fileNote}
             </p>
-          </div>
+          </figure>
         </div>
       </div>
     </>

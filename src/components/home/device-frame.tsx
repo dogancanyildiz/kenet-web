@@ -16,10 +16,12 @@ type DeviceFrameProps = {
 };
 
 const INTRINSIC_WIDTH = 390;
-const INTRINSIC_HEIGHT = 844;
+const INTRINSIC_HEIGHT = 774;
 
 /**
- * iPhone shell around a real app screenshot. Bezel and shadow come from
+ * iPhone shell around a real app screenshot. Shots are cropped to 390:774
+ * (scripts/optimize-screens.mjs) so no empty background shows under the
+ * Today composer; keep INTRINSIC_HEIGHT in step with PHONE_HEIGHT / 2. Bezel and shadow come from
  * tokens. One <picture> so only the matching theme image downloads.
  * Width comes from the caller's className (e.g. w-full max-w-[260px]).
  *
@@ -74,7 +76,7 @@ export function DeviceFrame({
       } ${className}`.trim()}
     >
       <div className="rounded-[44px] bg-device-bezel p-2 shadow-(--device-shadow) sm:rounded-[54px]">
-        <div className="aspect-[390/844] overflow-hidden rounded-[36px] bg-paper sm:rounded-[46px]">
+        <div className="aspect-[390/774] overflow-hidden rounded-[36px] bg-paper sm:rounded-[46px]">
           <picture>
             <source
               media="(prefers-color-scheme: dark)"

@@ -95,7 +95,7 @@
     --glow: radial-gradient(
       900px 600px at 12% 0,
       color-mix(in srgb, var(--glow-a) 45%, transparent) 0%,
-      color-mix(in srgb, var(--glow-b) 28%, transparent) 38%,
+      color-mix(in srgb, var(--glow-b) 14%, transparent) 38%,
       transparent 70%
     );
   }
@@ -160,7 +160,7 @@
     font-family: var(--font-sans-stack);
     -webkit-font-smoothing: antialiased;
     text-size-adjust: 100%;
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 6rem;
   }
 
   body {
@@ -181,6 +181,26 @@
 
   ::selection {
     background-color: var(--accent-soft);
+  }
+
+  /* Line breaking: headings balance their lines, running text avoids a
+     single orphaned word on the last line. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Every control here draws its own hover and focus state; the grey tap
+     flash on iOS would be a second, unrelated one. */
+  a,
+  button,
+  summary {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -219,6 +239,59 @@
 
   .skip-link:focus-visible {
     top: 1rem;
+  }
+
+  /* Section label above an h2 and the page label above an h1: one size,
+     one weight, one colour on every page. */
+  .eyebrow {
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  /* Reading measure for running text: about 68 characters a line. */
+  .measure {
+    max-width: 68ch;
+  }
+
+  /* Navigation links (header and footer): secondary text, the text colour
+     on hover. The current page keeps the text colour and an accent
+     underline, so the state is not carried by colour alone. */
+  .nav-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    border-radius: var(--radius-control);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .nav-link:hover {
+    color: var(--text);
+  }
+
+  .nav-link[aria-current] {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.5rem;
+  }
+
+  /* Disclosure rows (support FAQ): the native marker is replaced by a
+     chevron that turns when the row is open. No transition (design rule 5). */
+  .disclosure > summary {
+    list-style: none;
+  }
+
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .disclosure[open] .disclosure-chevron {
+    rotate: 180deg;
   }
 
   /* Links inside running text: text colour, meaning carried by the
@@ -281,4 +354,30 @@
    breakpoint. @layer components classes do not receive Tailwind variants. */
 @utility device-mask-mobile {
   mask-image: linear-gradient(to bottom, black 70%, transparent);
+}
+
+/* Forced colours (Windows High Contrast) repaint surfaces from the system
+   palette: token borders vanish into the background and the glow becomes a
+   flat block. Unlayered, so it outranks every component and utility. */
+@media (forced-colors: active) {
+  body {
+    background-image: none;
+  }
+
+  .card,
+  .skip-link {
+    border: 1px solid CanvasText;
+  }
+
+  .site-header {
+    border-bottom-color: CanvasText;
+  }
+
+  :focus-visible {
+    outline-color: Highlight;
+  }
+
+  .nav-link[aria-current] {
+    text-decoration-color: Highlight;
+  }
 }
