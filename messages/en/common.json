@@ -16,13 +16,18 @@
   "a11y": {
     "skipToContent": "Skip to content",
     "languageSwitcher": "Language",
-    "switchTo": "Türkçe"
+    "localeTr": "Türkçe",
+    "localeEn": "English"
   },
   "footer": {
-    "madeBy": "Kenet is developed by {name}.",
+    "madeBy": "Kenet is developed by <link>{name}</link>.",
     "source": "Source code",
     "build": "Build {sha}, {date}",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "pagesLabel": "Pages",
+    "projectLabel": "Project",
+    "ownerSite": "Developer's site",
+    "issues": "Report a bug"
   },
   "notFound": {
     "code": "404",

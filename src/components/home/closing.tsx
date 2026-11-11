@@ -7,6 +7,10 @@ type ClosingProps = {
   storeBadgeSoon: string;
 };
 
+/**
+ * Closing band: no card, a rule above, statement and note on the left, the
+ * store entry on the right from sm up. On a phone everything stacks.
+ */
 export function Closing({
   line,
   note,
@@ -14,14 +18,16 @@ export function Closing({
   storeBadgeSoon,
 }: ClosingProps) {
   return (
-    <div>
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
-        <p className="text-[32px] font-semibold tracking-tight text-balance">
+    <div className="flex flex-col gap-6 border-t border-rule pt-10 sm:flex-row sm:items-end sm:justify-between sm:gap-10">
+      <div className="min-w-0">
+        <p className="text-[32px] leading-[1.15] font-semibold tracking-tight text-balance">
           {line}
         </p>
+        <p className="mt-3 text-[15px] leading-6 text-text-secondary">{note}</p>
+      </div>
+      <div className="shrink-0">
         <StoreBadge label={storeBadge} soonLabel={storeBadgeSoon} />
       </div>
-      <p className="mt-4 text-[15px] text-text-secondary">{note}</p>
     </div>
   );
 }

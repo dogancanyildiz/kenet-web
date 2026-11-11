@@ -67,6 +67,7 @@
     "site4": "Access logs of requests to the site are produced by the hosting stack: Cloudflare in front, the site's own server behind it. The logs are not used for analytics.",
     "changesTitle": "Changes and contact",
     "changesBody": "If this policy changes, the new text is published on this page and the date above is updated.",
-    "contactBody": "For questions and requests, use the channels on the <link>support page</link>."
+    "contactBody": "For questions and requests, use the channels on the <link>support page</link>.",
+    "tocLabel": "On this page"
   }
 }

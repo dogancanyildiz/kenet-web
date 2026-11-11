@@ -50,6 +50,13 @@ Kontrast alt sınırları: metin rolleri 4,5:1, kontrol çizgisi 3:1; `tests/des
 | 5b | Görsel doğrulama `scripts/screenshot.mjs` ile yapılır (yerel Chrome headless): 375/640/768/1280 px, açık ve koyu, Kontrastı Artır, Saydamlığı Azalt; yatay taşma sıfır. |
 | 6 | Künye cümlesi sayıyı öne çıkarır: sayı metin renginde yarı kalın, bağlaç ikincil renkte (ana sayfa metni bu kalıbı kullanabilir). |
 | 7 | Açık ve koyu modda yerleşim aynıdır. |
+| 8 | Ritim: `PageSection` bandı 48/64/80 px (telefon, `sm`, `lg`); bölüm başlığı ile içerik arası 24 px (`mt-6`). Alt bilgi son bandın hemen altında başlar (`mt-8`). |
+| 9 | Satır kırma: h1-h3 `text-wrap: balance`, paragraf `pretty`. Akan metin en çok 68 karakter (`.measure`): sayfa girişi, SSS cevabı, 404 açıklaması. |
+| 10 | Etiket: bölüm etiketi, sayfa üst satırı ve sütun başlığı tek sınıftır (`.eyebrow`, 13 px orta ağırlık, ikincil metin). |
+| 11 | Gezinme bağlantısı `.nav-link`: ikincil metin, hover'da metin rengi (üst bilgide ayrıca `well` zemin). Geçerli sayfa `aria-current` taşır, metin renginde kalır ve 2 px vurgu alt çizgisi alır; durum yalnız renkle anlatılmaz. |
+| 12 | Siteden çıkan bağlantı sağında 16 px eğik ok (`IconArrowUpRight`, `aria-hidden`) taşır; aynı sekmede açılır, `target` yoktur. |
+| 13 | Açılır satır (`details.disclosure`): yerel işaret gizlenir, sağda chevron açıkken 180° döner, geçiş yoktur. Bütün satır hedeftir, hover'da `well`, odak çerçevesi satırın içinde. |
+| 14 | Zorlanmış renkler (Windows Yüksek Karşıtlık): parıltı kalkar, kart ve üst bilgi sınırı `CanvasText`, odak ve geçerli sayfa çizgisi `Highlight`. `globals.css` sonunda katmansız blok. |
 
 ## Bileşenler
 
@@ -60,9 +67,14 @@ Kontrast alt sınırları: metin rolleri 4,5:1, kontrol çizgisi 3:1; `tests/des
 | Bölüm başlığı | `components/layout/section-heading.tsx` | Etiket `p` (13 px ikincil) ve cümle `h2` (28–30 px); bütün sayfalarda |
 | Telefon çerçevesi | `components/home/device-frame.tsx` | 390:844 iç oran, 44/54 px köşe, 8 px `device-bezel`; açık ve koyu görsel `picture` ile |
 | Mac penceresi | `components/home/window-frame.tsx` | 14 px köşe, `line` sınır, 28 px başlık şeridi ve üç boş daire |
-| Üst bilgi | `components/layout/header.tsx` | Marka, gezinme, dil |
-| Dil değiştirici | `components/layout/language-switcher.tsx` | Aynı sayfanın öteki dili |
-| Alt bilgi | `components/layout/footer.tsx` | Telif, bağlantılar, derleme |
+| Üst bilgi | `components/layout/header.tsx` | 68 px satır: marka; sağda iki ayrı yer işareti, sayfalar (`nav-links.tsx`) ve dil |
+| Sayfa bağlantıları | `components/layout/nav-links.tsx` | İstemci bileşeni yalnız `usePathname` için; geçerli sayfaya `aria-current="page"` |
+| Dil değiştirici | `components/layout/language-switcher.tsx` | TR ve EN (ince dikey ayraçla), Türkçe önce; kod ekranda, dilin kendi adı ekran okuyucuda (`a11y.localeTr`, `a11y.localeEn`); etkin dil `aria-current="true"`. 640 px altında yalnız öteki dil görünür (satır 320 px'e sığsın diye) |
+| Sayfa başlığı ek satırı | `components/layout/page-header.tsx` `meta` | Lead altında 14 px üçüncül metin (gizlilikte son güncelleme) |
+| Sayfa içi dizin | `components/privacy/privacy-toc.tsx` | "Bu sayfada": düz çapa listesi, solda `rule` çizgisi, hover'da `control`; `lg` ve üstünde yapışkan sol sütun. Betik ve kaydırma izleme yok |
+| Alt bilgi | `components/layout/footer.tsx` | Solda marka ve geliştirici cümlesi (ad cümle içi bağlantı), sağda iki sütun: Sayfalar, Proje (kaynak kodu, hata bildir, geliştiricinin sitesi). Alt şeritte telif ve derleme damgası (mono, üçüncül) |
+| Kapanış bandı | `components/home/closing.tsx` | Kart yok; üstte `rule`, solda cümle ve not, sağda mağaza düğmesi |
+| Satır içi simgeler | `components/ui/icons.tsx` | Eğik ok ve chevron; 1,5 çizgi, `currentColor` |
 | Marka işareti | `components/brand/brand-mark.tsx` | Uygulama simgesinin iki şeridi; mürekkep `currentColor`, vurgu `accent` |
 | Mağaza düğmesi | `components/store-badge.tsx` | Bağlantı yoksa pasif |
 

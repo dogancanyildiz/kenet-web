@@ -16,13 +16,18 @@
   "a11y": {
     "skipToContent": "İçeriğe geç",
     "languageSwitcher": "Dil",
-    "switchTo": "English"
+    "localeTr": "Türkçe",
+    "localeEn": "English"
   },
   "footer": {
-    "madeBy": "Kenet, {name} tarafından geliştirilir.",
+    "madeBy": "Kenet, <link>{name}</link> tarafından geliştirilir.",
     "source": "Kaynak kodu",
     "build": "Derleme {sha}, {date}",
-    "rights": "Tüm hakları saklıdır."
+    "rights": "Tüm hakları saklıdır.",
+    "pagesLabel": "Sayfalar",
+    "projectLabel": "Proje",
+    "ownerSite": "Geliştiricinin sitesi",
+    "issues": "Hata bildir"
   },
   "notFound": {
     "code": "404",

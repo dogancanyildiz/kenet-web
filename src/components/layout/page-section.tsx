@@ -6,14 +6,18 @@ type PageSectionProps = {
   className?: string;
 };
 
-/** One vertical band of the page, centred in the shell. */
+/**
+ * One vertical band of the page, centred in the shell. The rhythm grows with
+ * the viewport (48, 64, 80 px each side) so a phone does not scroll through
+ * 160 px of empty paper between two sections.
+ */
 export function PageSection({
   children,
   as: Tag = "section",
   className = "",
 }: PageSectionProps) {
   return (
-    <Tag className={`py-20 sm:py-24 ${className}`.trim()}>
+    <Tag className={`py-12 sm:py-16 lg:py-20 ${className}`.trim()}>
       <div className="page-shell">{children}</div>
     </Tag>
   );

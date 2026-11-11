@@ -8,6 +8,7 @@ import { SectionHeading } from "@/components/layout/section-heading";
 import { ReportCard } from "@/components/support/report-card";
 import { FaqCard } from "@/components/support/faq-card";
 import { PageSection } from "@/components/layout/page-section";
+import { IconArrowUpRight } from "@/components/ui/icons";
 
 type PageProps = { params: Promise<{ lang: string }> };
 
@@ -64,19 +65,20 @@ export default async function SupportPage({ params }: PageProps) {
       <PageHeader title={t("title")} lead={t("lead")} />
       <PageSection>
         <SectionHeading title={t("channelsTitle")} />
-        <ul className="mt-4 grid gap-4 sm:grid-cols-2">
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2">
           {channels.map((channel) => (
-            <li key={channel.title} className="card p-6">
+            <li key={channel.title} className="card flex flex-col p-6">
               <h3 className="text-lg font-semibold">{channel.title}</h3>
-              <p className="mt-2 leading-7 text-text-secondary">
+              <p className="mt-2 flex-1 leading-7 text-text-secondary">
                 {channel.body}
               </p>
               <a
                 href={channel.href}
                 rel="noopener noreferrer"
-                className="prose-link mt-4 inline-flex min-h-11 items-center font-medium"
+                className="prose-link mt-4 inline-flex min-h-11 items-center gap-1.5 self-start font-medium"
               >
                 {channel.label}
+                <IconArrowUpRight className="shrink-0 text-text-secondary" />
               </a>
             </li>
           ))}
@@ -84,7 +86,7 @@ export default async function SupportPage({ params }: PageProps) {
       </PageSection>
       <PageSection>
         <SectionHeading title={t("reportTitle")} />
-        <div className="mt-4">
+        <div className="mt-6">
           <ReportCard
             intro={t("reportIntro")}
             items={reportItems}
@@ -94,7 +96,7 @@ export default async function SupportPage({ params }: PageProps) {
       </PageSection>
       <PageSection>
         <SectionHeading title={t("faqTitle")} />
-        <div className="mt-4">
+        <div className="mt-6">
           <FaqCard items={faqItems} />
         </div>
       </PageSection>
