@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { resolveLocale } from "@/lib/route-params";
 import { buildPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/lib/json-ld";
+import { homeStructuredData } from "@/lib/structured-data";
 import { PageSection } from "@/components/layout/page-section";
 import { Hero } from "@/components/home/hero";
 import { Mechanism } from "@/components/home/mechanism";
@@ -37,27 +39,47 @@ export default async function HomePage({ params }: PageProps) {
 
   const phones = [
     {
-      srcLight: "/screens/today-light.webp",
-      srcDark: "/screens/today-dark.webp",
-      alt: t("screenTodayAlt"),
-      caption: t("screenToday"),
+      srcLight: "/screens/person-light.webp",
+      srcDark: "/screens/person-dark.webp",
+      alt: t("screenPersonAlt"),
+      title: t("screenPersonTitle"),
+      caption: t("screenPersonCaption"),
     },
     {
-      srcLight: "/screens/tasks-light.webp",
-      srcDark: "/screens/tasks-dark.webp",
-      alt: t("screenTasksAlt"),
-      caption: t("screenTasksList"),
+      srcLight: "/screens/people-light.webp",
+      srcDark: "/screens/people-dark.webp",
+      alt: t("screenPeopleAlt"),
+      title: t("screenPeopleTitle"),
+      caption: t("screenPeopleCaption"),
     },
     {
       srcLight: "/screens/kanban-light.webp",
       srcDark: "/screens/kanban-dark.webp",
       alt: t("screenKanbanAlt"),
-      caption: t("screenTasksKanban"),
+      title: t("screenKanbanTitle"),
+      caption: t("screenKanbanCaption"),
+    },
+    {
+      srcLight: "/screens/goal-light.webp",
+      srcDark: "/screens/goal-dark.webp",
+      alt: t("screenGoalAlt"),
+      title: t("screenGoalTitle"),
+      caption: t("screenGoalCaption"),
     },
   ] as const;
 
+  const tablet = {
+    srcLight: "/screens/ipad-person-light.webp",
+    srcDark: "/screens/ipad-person-dark.webp",
+    alt: t("tabletAlt"),
+    caption: t("tabletCaption"),
+  };
+
+  const structuredData = await homeStructuredData(locale);
+
   return (
     <>
+      <JsonLd data={structuredData} />
       <PageSection as="header" top="pt-10 sm:pt-14 lg:pt-20">
         <Hero
           title={t("title")}
@@ -66,6 +88,15 @@ export default async function HomePage({ params }: PageProps) {
           storeBadge={t("storeBadge")}
           storeBadgeSoon={t("storeBadgeSoon")}
           phoneAlt={t("phoneAlt")}
+          proof={{
+            label: t("proofLabel"),
+            items: [
+              t("proofNoAccount"),
+              t("proofMarkdown"),
+              t("proofObsidian"),
+            ],
+            privacy: t("proofNoData"),
+          }}
         />
       </PageSection>
 
@@ -98,6 +129,7 @@ export default async function HomePage({ params }: PageProps) {
           label={t("promisesLabel")}
           title={t("promisesTitle")}
           items={promises}
+          privacyLink={t("promisePrivacyLink")}
         />
       </PageSection>
 
@@ -106,8 +138,7 @@ export default async function HomePage({ params }: PageProps) {
           label={t("screensLabel")}
           title={t("screensTitle")}
           phones={phones}
-          macAlt={t("macAlt")}
-          macCaption={t("macCaption")}
+          tablet={tablet}
         />
       </PageSection>
 
@@ -145,6 +176,13 @@ export default async function HomePage({ params }: PageProps) {
         <Closing
           line={t("closingLine")}
           note={t("closingNote")}
+          privacy={(link) => t.rich("closingPrivacy", { link })}
+          platformsLabel={t("closingPlatformsLabel")}
+          platforms={[
+            t("closingPlatformMobile"),
+            t("closingPlatformMac"),
+            t("closingLanguage"),
+          ]}
           storeBadge={t("storeBadge")}
           storeBadgeSoon={t("storeBadgeSoon")}
         />

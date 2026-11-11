@@ -5,7 +5,7 @@
   "metadata": {
     "siteName": "Kenet",
     "defaultTitle": "Kenet: kişiler, konumlar ve zaman üzerine kurulu kişisel günlük",
-    "defaultDescription": "Yaz; kim, nerede ve ne zaman kendiliğinden bağlansın. Görevler ve hedefler aynı yerde. Verin Obsidian uyumlu düz Markdown dosyaları olarak hep senin. iPhone, iPad ve Mac."
+    "defaultDescription": "Kenet, hesap gerektirmeyen ve verisini düz Markdown dosyalarında tutan kişisel bir günlüktür. Gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlar; kasan Obsidian ile uyumludur."
   },
   "nav": {
     "home": "Ana sayfa",

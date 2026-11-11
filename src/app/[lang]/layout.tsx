@@ -9,7 +9,13 @@ import {
 import "../globals.css";
 import { routing } from "@/i18n/routing";
 import { siteUrl } from "@/lib/env";
-import { absoluteUrl } from "@/lib/seo";
+import {
+  absoluteUrl,
+  OG_LOCALES,
+  openGraphImage,
+  smartAppBanner,
+} from "@/lib/seo";
+import { site } from "@/lib/site";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
@@ -60,7 +66,11 @@ export async function generateMetadata({
   if (!hasLocale(routing.locales, lang)) notFound();
 
   const t = await getTranslations({ locale: lang, namespace: "metadata" });
+  const image = await openGraphImage(lang);
 
+  // Every page replaces openGraph and twitter through buildPageMetadata, and
+  // the 404 is the global not-found document, which skips this layout. These
+  // stay as a safety net for any future route that forgets its own metadata.
   return {
     metadataBase: new URL(siteUrl()),
     title: {
@@ -74,8 +84,16 @@ export async function generateMetadata({
       title: t("defaultTitle"),
       description: t("defaultDescription"),
       url: absoluteUrl(lang, "/"),
-      locale: lang === "tr" ? "tr_TR" : "en_US",
+      locale: OG_LOCALES[lang],
+      images: [image],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: t("defaultTitle"),
+      description: t("defaultDescription"),
+      images: [{ url: image.url, alt: image.alt }],
+    },
+    ...smartAppBanner(site.appStoreUrl),
     robots: {
       index: true,
       follow: true,

@@ -1,0 +1,20 @@
+# Kenet
+
+> Kenet is a personal journal that needs no account and keeps everything in plain Markdown files. It links the short entries you write during the day to people, places and time on its own, in a vault Obsidian can open.
+
+iPhone and iPad: in the first App Store release. Mac: reaches the store after iPhone and iPad. The interface is in Turkish and English and follows the language set for Kenet on your device. The app collects no data, and this site uses no cookies.
+
+This site has every page in Turkish on the root and in English under /en.
+
+## Pages
+
+- [Kenet](https://kenet.app/en): Home page in English
+- [Kenet](https://kenet.app/): Home page in Turkish
+- [Privacy](https://kenet.app/en/privacy): Privacy policy in English
+- [Gizlilik](https://kenet.app/gizlilik): Privacy policy in Turkish
+- [Support](https://kenet.app/en/support): Support channels and frequently asked questions in English
+- [Destek](https://kenet.app/destek): Support channels and frequently asked questions in Turkish
+
+## Optional
+
+- [Source code](https://github.com/dogancanyildiz/kenet): The app's source repository; issues are the support channel

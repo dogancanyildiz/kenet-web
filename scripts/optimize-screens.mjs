@@ -1,65 +1,84 @@
 #!/usr/bin/env node
-// Converts app screenshots (the Kenet repo's snapshot PNGs) into the WebP
-// files the site serves. Usage:
-//   node scripts/optimize-screens.mjs <kenet>/Tests/JournalTests/Snapshots/__Snapshots__
+// Converts Kenet app screenshots into the WebP files the site serves.
+// Usage:
+//   node scripts/optimize-screens.mjs [source root]
+// The source root defaults to .local/kaynak-ekranlar (gitignored). It holds
+// one folder per capture run; SHOTS below names the run and file for each
+// output, so a newer run is picked by editing one path. PNGs are not
+// committed.
 //
-// Phone shots are 780×1688 (2x of a 390×844 iPhone). The snapshots have no
-// tab bar, so the Today screen ends in ~240 px of empty background under
-// the composer, and a full-height list ends in a half-visible row. Every
-// phone shot is therefore cropped to the same PHONE_HEIGHT, chosen so the
-// cut falls between rows on Tasks (row separator) and between cards on
-// Kanban, and Today keeps a home-indicator-sized margin under the composer.
-// All phones share one aspect ratio (390:774) for DeviceFrame. Change the
-// height here and in device-frame.tsx together.
+// Phones: the iPhone captures are 1206×2622 (3x of 402×874) and are scaled
+// to 780 px wide without cropping. The status bar is a clean 09:41 with a
+// full battery, and the floating tab bar is part of how the app looks, so
+// both stay; DeviceFrame uses the same 1206:2622 ratio.
 //
-// The Mac shot is scaled to 1600 px wide. PNGs are not committed.
+// Tablet: the iPad captures are stored as 2064×2752 with EXIF orientation 8;
+// rotate() applies it, giving the 2752×2064 landscape image. The top strip
+// (status bar with the test build's name) and the bottom strip (window
+// resize handle in the corner) are cropped, then the result is scaled to
+// 1600 px wide.
 import { mkdir, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
-const PHONE_WIDTH = 780;
-const PHONE_HEIGHT = 1548;
-const MAC_WIDTH = 1600;
+const QUALITY = 75;
+const PHONE = { width: 1206, height: 2622, outWidth: 780 };
+const TABLET = { cropTop: 56, cropBottom: 64, outWidth: 1600 };
 
+const IPHONE = "k5-iphone";
+const IPAD = "tur-fark3birlesik-ipad";
+
+/** [source file, output name, kind] */
 const SHOTS = [
-  ["TodayScreenSnapshotTests/today.todayLight.png", "today-light", "phone"],
-  ["TodayScreenSnapshotTests/today.todayDark.png", "today-dark", "phone"],
-  ["TasksSnapshotTests/tasksScreen.tasksLight.png", "tasks-light", "phone"],
-  ["TasksSnapshotTests/tasksScreen.tasksDark.png", "tasks-dark", "phone"],
-  ["TasksSnapshotTests/tasksScreen.kanbanLight.png", "kanban-light", "phone"],
-  ["TasksSnapshotTests/tasksScreen.kanbanDark.png", "kanban-dark", "phone"],
-  ["TasksSnapshotTests/tasksMac.kanbanMacLight.png", "mac-kanban-light", "mac"],
+  [`${IPHONE}/01-bugun.png`, "today-light", "phone"],
+  [`${IPHONE}/20-koyu-bugun.png`, "today-dark", "phone"],
+  [`${IPHONE}/10-kisi-sayfasi.png`, "person-light", "phone"],
+  [`${IPHONE}/20-koyu-kisi-sayfasi.png`, "person-dark", "phone"],
+  [`${IPHONE}/09-kisiler-liste.png`, "people-light", "phone"],
+  [`${IPHONE}/20-koyu-kisiler.png`, "people-dark", "phone"],
+  [`${IPHONE}/06-gorevler-kanban.png`, "kanban-light", "phone"],
+  [`${IPHONE}/20-koyu-kanban.png`, "kanban-dark", "phone"],
+  [`${IPHONE}/12-hedef-ayrintisi.png`, "goal-light", "phone"],
+  [`${IPHONE}/20-koyu-hedef-ayrintisi.png`, "goal-dark", "phone"],
+  [`${IPAD}/10-kisi-sayfasi.png`, "ipad-person-light", "tablet"],
+  [`${IPAD}/20-koyu-kisi-sayfasi.png`, "ipad-person-dark", "tablet"],
 ];
 
-const source = process.argv[2];
-if (!source) {
-  console.error("usage: node scripts/optimize-screens.mjs <__Snapshots__ dir>");
-  process.exit(1);
-}
+const root = resolve(process.argv[2] ?? ".local/kaynak-ekranlar");
 const outDir = fileURLToPath(new URL("../public/screens/", import.meta.url));
 await mkdir(outDir, { recursive: true });
 
 let total = 0;
 for (const [file, name, kind] of SHOTS) {
-  const image = sharp(join(source, file));
-  const { width, height } = await image.metadata();
+  const path = join(root, file);
+  // rotate() with no angle applies the EXIF orientation.
+  const upright = await sharp(path).rotate().toBuffer();
+  const { width = 0, height = 0 } = await sharp(upright).metadata();
+  const image = sharp(upright);
   if (kind === "phone") {
-    if (width !== PHONE_WIDTH || (height ?? 0) < PHONE_HEIGHT) {
+    if (width !== PHONE.width || height !== PHONE.height) {
       throw new Error(
-        `${file}: expected ${PHONE_WIDTH} px wide and at least ${PHONE_HEIGHT} px tall, got ${width}×${height}`
+        `${file}: expected ${PHONE.width}×${PHONE.height}, got ${width}×${height}`
       );
     }
-    image.extract({
-      left: 0,
-      top: 0,
-      width: PHONE_WIDTH,
-      height: PHONE_HEIGHT,
-    });
+    image.resize({ width: PHONE.outWidth });
   } else {
-    image.resize({ width: MAC_WIDTH, withoutEnlargement: true });
+    if (width <= height) {
+      throw new Error(
+        `${file}: expected a landscape iPad shot, got ${width}×${height}`
+      );
+    }
+    image
+      .extract({
+        left: 0,
+        top: TABLET.cropTop,
+        width,
+        height: height - TABLET.cropTop - TABLET.cropBottom,
+      })
+      .resize({ width: TABLET.outWidth });
   }
-  const buffer = await image.webp({ quality: 80 }).toBuffer();
+  const buffer = await image.webp({ quality: QUALITY, effort: 6 }).toBuffer();
   // Write the encoded bytes as is; re-encoding through sharp would
   // compress twice.
   await writeFile(join(outDir, `${name}.webp`), buffer);

@@ -46,7 +46,7 @@ Kontrast alt sınırları: metin rolleri 4,5:1, kontrol çizgisi 3:1; `tests/des
 | 3 | Durumu yalnız renk anlatmaz. Mağaza kaydı yokken düğme yerine ikincil renkte sakin bir "Yakında App Store'da" satırı durur: çerçeve, dolgu ve `aria-disabled` yoktur, tıklanır izlenimi vermez; durumu sözcük anlatır. Bağlantı gelince `accent` düğme olur. |
 | 4 | Dokunma hedefleri en az 44 px (`min-h-11`). |
 | 5 | Hareket yoktur: parıltı durağan, geçiş animasyonu yok. |
-| 5a | Ürün görseli yalnız gerçek ekran görüntüsüdür (Kenet snapshot testleri); stok görsel, illüstrasyon, eğik ya da filtreli ekran yok. Görseller `scripts/optimize-screens.mjs` ile WebP'ye çevrilir. |
+| 5a | Ürün görseli yalnız gerçek ekran görüntüsüdür (Kenet arayüz turu, kurgusal örnek kasa); stok görsel, illüstrasyon, eğik ya da filtreli ekran yok. Her ekranın açık ve koyu çifti vardır; koyu çifti olmayan ekran (Graph, harita) seçilmez. Görseller `scripts/optimize-screens.mjs` ile WebP'ye çevrilir. |
 | 5b | Görsel doğrulama `scripts/screenshot.mjs` ile yapılır (yerel Chrome headless): 375/640/768/1280 px, açık ve koyu, Kontrastı Artır, Saydamlığı Azalt; yatay taşma sıfır. |
 | 6 | Künye cümlesi sayıyı öne çıkarır: sayı metin renginde yarı kalın, bağlaç ikincil renkte (ana sayfa metni bu kalıbı kullanabilir). |
 | 7 | Açık ve koyu modda yerleşim aynıdır. |
@@ -67,8 +67,8 @@ Kontrast alt sınırları: metin rolleri 4,5:1, kontrol çizgisi 3:1; `tests/des
 | Kabuk bandı | `components/layout/page-section.tsx` | Dikey bant, `page-shell` ile ortalanır (en çok 64 rem) |
 | Sayfa başlığı | `components/layout/page-header.tsx` | h1 40/48 px ve bir paragraf |
 | Bölüm başlığı | `components/layout/section-heading.tsx` | Etiket `p` (13 px ikincil) ve cümle `h2` (28–30 px); bütün sayfalarda |
-| Telefon çerçevesi | `components/home/device-frame.tsx` | 390:774 iç oran (ekran görüntüsü composer altından kırpılır, bkz. `scripts/optimize-screens.mjs`), 44/54 px köşe, 8 px `device-bezel`; açık ve koyu görsel `picture` ile |
-| Mac penceresi | `components/home/window-frame.tsx` | 14 px köşe, `line` sınır, 28 px başlık şeridi ve üç boş daire |
+| Cihaz çerçevesi | `components/home/device-frame.tsx` | `device="phone"`: 390:848 iç oran (iPhone ekranı kırpılmadan; durum çubuğu ve sekme çubuğu kalır), 44/54 px köşe, 8 px `device-bezel`. `device="tablet"`: yatay iPad, 800:565 iç oran (durum çubuğu ve alttaki pencere tutamağı şeridi kırpılır), 20/32 px köşe, 6/12 px çerçeve. Açık ve koyu görsel `picture` ile; oranlar `scripts/optimize-screens.mjs` ile birlikte değişir |
+| Ekran karesi | `components/home/screens.tsx` | Mağaza tarzı kare: `surface` zemin, `rule` sınır, 20 px köşe, 5:7 oran; üstte 17 px yarı kalın kısa başlık ve 13 px ikincil satır, altta telefon karenin alt kenarından taşar ve kırpılır |
 | Üst bilgi | `components/layout/header.tsx` | 68 px satır: marka; sağda iki ayrı yer işareti, sayfalar (`nav-links.tsx`) ve dil |
 | Sayfa bağlantıları | `components/layout/nav-links.tsx` | İstemci bileşeni yalnız `usePathname` için; geçerli sayfaya `aria-current="page"` |
 | Dil değiştirici | `components/layout/language-switcher.tsx` | TR ve EN (ince dikey ayraçla), Türkçe önce; kod ekranda, dilin kendi adı ekran okuyucuda (`a11y.localeTr`, `a11y.localeEn`); etkin dil `aria-current="true"`. İki dil her genişlikte görünür; ayraç iki yanda 6 px boşlukla durur, odak halkası ona değmez. 320 px'te satır sığsın diye sayfa bağlantıları `sm` altında 8 px yan dolgu alır ve 380 px altında marka adı gizlenir, işaret ve erişilebilir ad kalır |
@@ -84,3 +84,7 @@ Kontrast alt sınırları: metin rolleri 4,5:1, kontrol çizgisi 3:1; `tests/des
 ## Simge
 
 `src/app/icon.svg` uygulamanın `app-icon.svg` dosyasının kopyasıdır; `npm run icons` PNG türevlerini üretir. Simge değişince önce uygulama deposunda değişir, sonra buraya kopyalanır.
+
+## Paylaşım kartı
+
+`public/og/kenet-2026-11.png`, 1200×630, `npm run og` (`scripts/render-og.mjs`) üretir ve commit'lenir. Açık Şafak zemini (`paper`) ve parıltı (`glow-a`, `glow-b` %16) `globals.css` dosyasından okunur; üstünde uygulama simgesi, iPhone'da Bugün ve kişi sayfası, iPad'de kişi sayfası durur. Kural 5a burada da geçerli: gerçek ekran, eğik ya da filtreli değil; çerçeve `device-bezel`. Kartta yazı yoktur: sharp SVG metnini makinedeki yazı tipleriyle çizer ve site yazı tipi taşımaz. Başlık, açıklama ve alt metin (`messages/*/seo.json`) sayfanın dilinde kartın yanında gider. Simge ya da bu üç ekran değişince betik yeniden koşulur.

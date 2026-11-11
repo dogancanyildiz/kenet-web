@@ -14,7 +14,8 @@
     "format:write": "prettier --write .",
     "verify:routes": "node scripts/assert-static-routes.mjs",
     "release:check": "node scripts/release-version.mjs --dry-run",
-    "icons": "node scripts/render-icons.mjs"
+    "icons": "node scripts/render-icons.mjs",
+    "og": "node scripts/render-og.mjs"
   },
   "engines": {
     "node": ">=24"

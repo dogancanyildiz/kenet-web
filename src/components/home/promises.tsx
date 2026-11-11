@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Link } from "@/i18n/navigation";
 import { SectionHeading } from "@/components/layout/section-heading";
 import {
   IconDocument,
@@ -15,6 +16,8 @@ type PromisesProps = {
   label: string;
   title: string;
   items: readonly PromiseItem[];
+  /** Link under the first promise ("your data is yours") to the policy. */
+  privacyLink: string;
 };
 
 const ICONS: readonly ReactNode[] = [
@@ -23,7 +26,7 @@ const ICONS: readonly ReactNode[] = [
   <IconSwap key="swap" />,
 ];
 
-export function Promises({ label, title, items }: PromisesProps) {
+export function Promises({ label, title, items, privacyLink }: PromisesProps) {
   return (
     <>
       <SectionHeading label={label} title={title} />
@@ -43,6 +46,14 @@ export function Promises({ label, title, items }: PromisesProps) {
               <p className="mt-1 text-[15px] leading-6 text-text-secondary">
                 {item.body}
               </p>
+              {index === 0 ? (
+                <Link
+                  href="/privacy"
+                  className="prose-link mt-1 inline-flex min-h-11 items-center text-[15px] font-medium"
+                >
+                  {privacyLink}
+                </Link>
+              ) : null}
             </div>
           </li>
         ))}

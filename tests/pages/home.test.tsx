@@ -1,6 +1,8 @@
 // @vitest-environment jsdom
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 import { render, screen } from "@testing-library/react";
-import { createTranslator } from "next-intl";
+import { NextIntlClientProvider, createTranslator } from "next-intl";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { loadMessages } from "@/i18n/messages";
 import type { AppLocale } from "@/i18n/routing";
@@ -75,6 +77,15 @@ vi.mock("next-intl/server", () => ({
   },
 }));
 
+// The client Link reads the current pathname for its active state; there is
+// no router in jsdom.
+vi.mock("next/navigation", () => ({
+  usePathname: () => "/",
+  useRouter: () => ({ push: () => {}, replace: () => {}, prefetch: () => {} }),
+  redirect: () => {},
+  permanentRedirect: () => {},
+}));
+
 describe("home page", () => {
   let HomePage: typeof import("@/app/[lang]/page").default;
 
@@ -84,8 +95,29 @@ describe("home page", () => {
 
   async function renderHome(lang: AppLocale) {
     const tree = await HomePage({ params: Promise.resolve({ lang }) });
-    return render(tree);
+    const messages = await loadMessages(lang);
+    return render(
+      <NextIntlClientProvider locale={lang} messages={messages} timeZone="UTC">
+        {tree}
+      </NextIntlClientProvider>
+    );
   }
+
+  it("embeds the SoftwareApplication graph as JSON-LD", async () => {
+    for (const lang of ["tr", "en"] as const) {
+      const { container, unmount } = await renderHome(lang);
+      const scripts = container.querySelectorAll(
+        'script[type="application/ld+json"]'
+      );
+      expect(scripts).toHaveLength(1);
+      const graph = JSON.parse(scripts[0]?.textContent ?? "")["@graph"];
+      const types = graph.map((node: { "@type": string }) => node["@type"]);
+      expect(types).toContain("SoftwareApplication");
+      // WebSite only on the Turkish root, where Google reads the site name.
+      expect(types.includes("WebSite")).toBe(lang === "tr");
+      unmount();
+    }
+  });
 
   it("renders Turkish with one h1 and four statement h2s", async () => {
     await renderHome("tr");
@@ -174,10 +206,11 @@ describe("home page", () => {
       expect(img.getAttribute("alt")?.trim().length).toBeGreaterThan(0);
     }
 
-    const mac = images.find((img) =>
-      (img.getAttribute("src") ?? "").includes("mac-kanban")
+    const tablet = images.find((img) =>
+      (img.getAttribute("src") ?? "").includes("ipad-person-light")
     );
-    expect(mac).toBeTruthy();
+    expect(tablet).toBeTruthy();
+    expect(tablet?.closest('[data-device="tablet"]')).toBeTruthy();
 
     // One high priority, eagerly loaded image (the hero); every other
     // screenshot loads lazily.
@@ -193,6 +226,40 @@ describe("home page", () => {
         "lazy"
       );
     }
+  });
+
+  it("shows the hero phone, four store-style phone tiles and one iPad", async () => {
+    const { container } = await renderHome("tr");
+    expect(container.querySelectorAll('[data-device="phone"]')).toHaveLength(5);
+    expect(container.querySelectorAll('[data-device="tablet"]')).toHaveLength(
+      1
+    );
+    const tiles = [...container.querySelectorAll("figure")].filter((figure) =>
+      figure.querySelector('[data-device="phone"]')
+    );
+    expect(
+      tiles.map((tile) => tile.querySelector("figcaption p")?.textContent)
+    ).toEqual([
+      "Kişinin geçmişi tek sayfada",
+      "Kişiler ve konumlar",
+      "Görevler Kanban'da da",
+      "Hedefe miktarla ilerle",
+    ]);
+  });
+
+  it("references only screenshots that exist, and every screenshot is used", async () => {
+    const { container } = await renderHome("tr");
+    const used = new Set<string>();
+    for (const node of container.querySelectorAll("img, source")) {
+      for (const attr of ["src", "srcset"]) {
+        const value = node.getAttribute(attr);
+        if (value?.startsWith("/screens/")) used.add(value.slice(9));
+      }
+    }
+    const files = readdirSync(join(process.cwd(), "public/screens")).filter(
+      (file) => file.endsWith(".webp")
+    );
+    expect([...used].sort()).toEqual([...files].sort());
   });
 
   it("preloads the hero once per colour scheme, each behind its media query", async () => {
@@ -259,6 +326,59 @@ describe("home page", () => {
     const { container } = await renderHome("tr");
     for (const link of container.querySelectorAll("a[href^='http']")) {
       expect(link.getAttribute("rel")).toBe("noopener noreferrer");
+    }
+  });
+
+  it.each(["tr", "en"] as const)(
+    "uses one definition (%s): the hero lead is the meta description, 25 to 45 words",
+    async (lang) => {
+      const messages = (await loadMessages(lang)) as {
+        home: { lead: string };
+        metadata: { defaultDescription: string };
+      };
+      const lead = messages.home.lead;
+      expect(messages.metadata.defaultDescription).toBe(lead);
+      const words = lead.split(/\s+/).length;
+      expect(words).toBeGreaterThanOrEqual(25);
+      expect(words).toBeLessThanOrEqual(45);
+      // What it is, no account and plain Markdown come before a search
+      // result cuts the description.
+      const head = lead.slice(0, 150);
+      expect(head).toContain("Markdown");
+      expect(head).toMatch(lang === "tr" ? /hesap/ : /account/);
+    }
+  );
+
+  it("links the privacy policy from the proof strip, the first promise and the closing", async () => {
+    const { container } = await renderHome("tr");
+    const proof = screen.getByRole("list", { name: "Kısaca" });
+    expect(proof.querySelectorAll("li")).toHaveLength(4);
+    const links = [...container.querySelectorAll('a[href="/gizlilik"]')].map(
+      (a) => a.textContent
+    );
+    expect(links).toEqual([
+      "Uygulama veri toplamaz",
+      "Gizlilik politikasını oku",
+      "Gizlilik politikası",
+    ]);
+  });
+
+  it("states the platform status and the interface language in the closing", async () => {
+    await renderHome("en");
+    expect(
+      screen.getByText("Mac: reaches the store after iPhone and iPad.")
+    ).toBeTruthy();
+    expect(
+      screen.getAllByRole("link", { name: "Privacy policy" })[0]
+    ).toHaveAttribute("href", "/en/privacy");
+  });
+
+  it("never claims the vault always survives deleting the app", async () => {
+    for (const lang of ["tr", "en"] as const) {
+      const text = JSON.stringify(await loadMessages(lang));
+      expect(text).not.toMatch(
+        /uygulama silinse de dosyalar kalır|files stay even if the app is deleted/i
+      );
     }
   });
 });

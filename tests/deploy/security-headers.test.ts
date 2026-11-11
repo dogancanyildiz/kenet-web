@@ -114,4 +114,11 @@ describe("caching", () => {
       "same-origin"
     );
   });
+
+  it("lets link previews embed the share card for a day", async () => {
+    const { forSource } = await loadHeaders("production");
+    const headers = forSource("/og/:path*");
+    expect(value(headers, "Cross-Origin-Resource-Policy")).toBe("cross-origin");
+    expect(value(headers, "Cache-Control")).toBe("public, max-age=86400");
+  });
 });

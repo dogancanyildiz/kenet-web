@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { resolveLocale } from "@/lib/route-params";
-import { buildPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/lib/json-ld";
+import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { buildFaqPage } from "@/lib/structured-data";
 import { PageHeader } from "@/components/layout/page-header";
 import { SectionHeading } from "@/components/layout/section-heading";
 import { ReportCard } from "@/components/support/report-card";
@@ -60,8 +62,17 @@ export default async function SupportPage({ params }: PageProps) {
     { question: t("faqIcloudQ"), answer: t("faqIcloudA") },
   ];
 
+  // FAQPage carries the same array the page renders, so the markup can only
+  // ever describe questions a reader sees.
+  const faqStructuredData = buildFaqPage({
+    locale,
+    url: absoluteUrl(locale, "/support"),
+    items: faqItems,
+  });
+
   return (
     <>
+      <JsonLd data={faqStructuredData} />
       <PageHeader title={t("title")} lead={t("lead")} />
       <PageSection>
         <SectionHeading title={t("channelsTitle")} />

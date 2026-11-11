@@ -25,7 +25,7 @@
     "faqObsidianQ": "Obsidian ile açılır mı?",
     "faqObsidianA": "Kasa Obsidian ile aynı biçimi kullanır. Kenet var olan bir kasayı yerinde açar; eksik klasör ve şablonları yalnız onayınla ekler. Mac'te Obsidian yedek editör olarak kalabilir.",
     "faqBackupQ": "Verimi nasıl taşırım ya da yedeklerim?",
-    "faqBackupA": "Verin kasa klasöründeki düz Markdown dosyalarıdır; dışa aktarma adımı yoktur. Dosyalar her metin düzenleyicide okunur ve klasörü başka bir yere kopyalayabilirsin.",
+    "faqBackupA": "Verin kasa klasöründeki düz Markdown dosyalarıdır; dışa aktarma adımı yoktur. Dosyalar her metin düzenleyicide okunur ve klasörü başka bir yere kopyalayabilirsin. iPhone ve iPad'de cihazdaki yerel kasa uygulamayla birlikte silinir; uygulamayı silmeden önce klasörü kopyala. iCloud Drive'daki ya da seçtiğin klasördeki kasa yerinde kalır.",
     "faqIcloudQ": "iCloud zorunlu mu?",
     "faqIcloudA": "Hayır. iCloud'da saklamak isteğe bağlıdır. Yerel bir kasa kullanabilir ya da kendi seçtiğin bir klasörü açabilirsin."
   }
