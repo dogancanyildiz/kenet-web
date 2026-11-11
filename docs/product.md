@@ -49,10 +49,11 @@ Sitede ürün hakkında yeni bir iddia ancak kenet deposunda karşılığı vars
 |---|---|---|
 | Hedef sayfasında miktar paneli: sayı klavyesi, hedefe göre hızlı ekleme, "Hedefe tamamla" | Ana sayfa hedef karesi, mağaza metni | `docs/decisions.md` 2026-11-11 "Hedef miktarı ayrıntıda"; `App/Screens/Goals/GoalAmountPanel.swift` |
 | Takvim etkinliği ekleme, düzenleme, silme; görev ve olay takvime yazılmaz | Gizlilik takvim satırı, mağaza metni | `docs/decisions.md` 2026-11-11 "Takvim etkinliği yazma"; `App/Screens/Calendar/CalendarEventSheets.swift`; `App/Resources/InfoPlist.xcstrings` takvim izin metni |
-| Kişi sayfasında yaklaşan etkinlikler ve "Doğum günü ekle" (tarih kişi dosyasındaki alandan) | Ana sayfa kişi karesi, gizlilik takvim satırı | `docs/decisions.md` 2026-11-11 "Doğum günü alanı"; `App/Screens/Entities/EntityCalendarSection.swift`; `Packages/Core/Sources/VaultFormat/PersonBirthday.swift` |
-| iPad ve Mac gün ayrıntısında tek Program kartı | Ana sayfa iPad alt yazısı | `docs/screens.md` "Geniş ekran (iPad, Mac)"; PR #383 |
+| Kişi sayfasında yaklaşan etkinlikler (yalnız takvim izni varken) ve "Doğum günü ekle" (tarih kişi dosyasındaki alandan) | Ana sayfa kişi karesi, gizlilik takvim satırı | `App/Screens/Entities/EntityView.swift` (`canRead` kapısı); `docs/decisions.md` 2026-11-11 "Doğum günü alanı"; `App/Screens/Entities/EntityCalendarSection.swift`; `Packages/Core/Sources/VaultFormat/PersonBirthday.swift` |
+| Geniş ekranda (iPad, Mac) geçmiş gün açılınca tek Program kartı (İngilizce arayüzde "Schedule") | Ana sayfa iPad alt yazısı | `docs/screens.md` "Geniş ekran (iPad, Mac)"; `App/Screens/Today/DayView.swift` `pastDayScrollContent` ve `usesProgramLayout`; PR #383 |
+| Ana ekran zincir widget'ı | Mağaza metni | `Widgets/JournalWidgets.swift` `GoalChainWidget`; `docs/roadmap.md` Aşama 11 "Ana ekran widget'ı". Kilit ekranı ve hızlı giriş widget'ları da kodda var (`LockScreenWidget`, `QuickEntryWidget`, `QuickEntryControl`; Aşama 11) ama gerçek cihazda denenmedi; site ve mağaza metni bu yüzden onları anmaz |
 | Arayüz Türkçe ve İngilizce, uygulama dilini izler | Ana sayfa kapanışı | `docs/product.md` "Arayüz dili"; PR #383, `Tests/JournalTests/PresentationLocaleLanguageTests.swift` |
-| Yerel kasa uygulamayla silinir, iCloud ve seçilen klasör kalır | Ana sayfa vaat 1, gizlilik kasa satırı, destek SSS | `docs/architecture.md` "Kasa konumu" (`Documents/Vault`); `raporlar/asama-17/inceleme/rapor-yayin.md` Y7 |
+| iPhone ve iPad'de yerel kasa uygulamayla silinir, iCloud ve seçilen klasör kalır (Mac için iddia yok) | Ana sayfa vaat 1, gizlilik kasa satırı, destek SSS | `docs/architecture.md` "Kasa konumu" (`Documents/Vault`); `raporlar/asama-17/inceleme/rapor-yayin.md` Y7 |
 
 ## Kitle
 

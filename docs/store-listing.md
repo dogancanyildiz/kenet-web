@@ -4,21 +4,21 @@
 
 **Durum:** Taslak, 2026-11-11. Mağazaya girmeden önce sahibin onayı gerekir. İlk mağaza sürümü iPhone ve iPad içindir; Mac sonra gelir, bu yüzden metin Mac'i anmaz.
 
-Kurallar: fiyat, "ücretsiz", "açık kaynak", şifreleme ve puan iddiası yok; kilit ekranı ve hızlı giriş widget'ları anılmaz (kenet `docs/product.md` "Kısmen"). Anahtar sözcükler ad ve alt başlıktaki sözcükleri tekrar etmez; virgülle ayrılır, boşluk yoktur.
+Kurallar: fiyat, "ücretsiz", "açık kaynak", şifreleme ve puan iddiası yok; kilit ekranı ve hızlı giriş widget'ları anılmaz: kodda varlar (kenet `Widgets/JournalWidgets.swift`, `docs/roadmap.md` Aşama 11) ama gerçek cihazda denenmediler. Anahtar sözcükler ad ve alt başlıktaki sözcükleri tekrar etmez, başka uygulama ya da marka adı taşımaz (App Store kuralı 2.3.7); virgülle ayrılır, boşluk yoktur.
 
 ## Sınırlar ve ölçüm
 
-Sayılar Python `len()` (Unicode karakter) ve UTF-8 bayt olarak ölçüldü. Apple sınırı karakterdir; anahtar sözcükte Türkçe harfler bazı raporlarda bayt sayıldığı için bayt da 100 altında tutuldu.
+Sayılar Python `len()` (Unicode karakter) ve UTF-8 bayt olarak ölçüldü. Apple sınırı karakterdir; anahtar sözcükte Türkçe harfler bazı raporlarda bayt sayıldığı için bayt da 100'ün altında kalır (tr 95 bayt).
 
 | Alan | Sınır | tr karakter | tr bayt | en karakter | en bayt |
 |---|---|---|---|---|---|
 | Uygulama adı | 30 | 5 | 5 | 5 | 5 |
-| Alt başlık | 30 | 29 | 32 | 28 | 28 |
+| Alt başlık | 30 | 29 | 32 | 29 | 29 |
 | Tanıtım metni | 170 | 164 | 177 | 165 | 165 |
-| Anahtar sözcükler | 100 | 89 | 95 | 98 | 98 |
+| Anahtar sözcükler | 100 | 88 | 95 | 97 | 97 |
 | Bu sürümdeki yenilikler | 4000 | 35 | 38 | 37 | 37 |
-| Açıklama | 4000 | 2603 | 2813 | 2671 | 2675 |
-| İnceleme notu (yalnız en girilir) | 4000 | 1531 | 1664 | 1619 | 1621 |
+| Açıklama | 4000 | 2597 | 2809 | 2662 | 2666 |
+| İnceleme notu (yalnız en girilir) | 4000 | 1699 | 1842 | 1823 | 1827 |
 
 ## Adresler
 
@@ -48,10 +48,10 @@ Kişi, konum ve zamanla günlük
 Yaz; kim, nerede ve ne zaman kendiliğinden bağlansın. Hesap yok, veri toplanmaz; günlüğün Obsidian ile aynı biçimde düz Markdown dosyalarında, seçtiğin yerde durur.
 ```
 
-### Anahtar sözcükler (89/100)
+### Anahtar sözcükler (88/100)
 
 ```text
-günce,ajanda,markdown,obsidian,hedef,alışkanlık,görev,kanban,takvim,not,zincir,hatırlatma
+günce,ajanda,markdown,hedef,alışkanlık,görev,kanban,takvim,not,zincir,hatırlatma,kişisel
 ```
 
 ### Bu sürümdeki yenilikler (35/4000)
@@ -60,7 +60,7 @@ günce,ajanda,markdown,obsidian,hedef,alışkanlık,görev,kanban,takvim,not,zin
 Kenet'in App Store'daki ilk sürümü.
 ```
 
-### Açıklama (2603/4000)
+### Açıklama (2597/4000)
 
 ```text
 Kenet, gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlayan kişisel bir günlüktür. Görevler ve hedefler de aynı yerde durur. Her şey düz Markdown dosyalarına yazılır; hesap açmazsın, uygulama veri toplamaz.
@@ -81,7 +81,7 @@ Takvim
 Günün etkinliklerini günlüğünün yanında görürsün ve bir etkinlikten olay taslağı hazırlarsın. Etkinlikleri uygulamadan ekler, düzenler ve silersin. Görevlerin ve olayların takvime yazılmaz.
 
 Geri dönüş
-Haftalık ve aylık özetler, bu gün geçmişte, görüşme ritmi ve önemli tarihler yazmaya devam etmen için sebep verir.
+Haftalık ve aylık özetler, bu gün geçmişte, görüşme ritmi ve önemli tarihler yazdıklarını sana geri getirir.
 
 Dosyalar senin
 Kasa, Obsidian ile aynı biçimde düz Markdown dosyalarından oluşur; var olan bir Obsidian kasasını yerinde açabilirsin. SQLite yalnız arama için bir indekstir, gerçek kaynak dosyalardır. Kasayı cihazında, kendi iCloud Drive'ında ya da seçtiğin bir klasörde tutarsın. iCloud Drive'daki ya da seçtiğin klasördeki kasa uygulamayı silsen de kalır; cihazdaki yerel kasa uygulamayla birlikte silinir.
@@ -104,10 +104,10 @@ Gizlilik politikası: https://kenet.app/gizlilik
 Kenet
 ```
 
-### Alt başlık (28/30)
+### Alt başlık (29/30)
 
 ```text
-Journal of people and places
+Journal: people, places, time
 ```
 
 ### Tanıtım metni (165/170)
@@ -116,10 +116,10 @@ Journal of people and places
 Write; let who, where and when link themselves. No account, no data collected; your journal lives in plain Markdown files, in Obsidian's format, wherever you choose.
 ```
 
-### Anahtar sözcükler (98/100)
+### Anahtar sözcükler (97/100)
 
 ```text
-diary,markdown,obsidian,habit,goal,tasks,kanban,calendar,notes,streak,planner,log,tracker,reminder
+diary,markdown,habit,goal,tasks,kanban,calendar,notes,streak,planner,log,tracker,reminder,offline
 ```
 
 ### Bu sürümdeki yenilikler (37/4000)
@@ -128,7 +128,7 @@ diary,markdown,obsidian,habit,goal,tasks,kanban,calendar,notes,streak,planner,lo
 The first App Store release of Kenet.
 ```
 
-### Açıklama (2671/4000)
+### Açıklama (2662/4000)
 
 ```text
 Kenet is a personal journal that links the short entries you write during the day to people, places and time. Tasks and goals live in the same place. Everything is written to plain Markdown files; you never create an account, and the app collects no data.
@@ -149,7 +149,7 @@ Calendar
 See the day's events next to your journal and draft an entry from an event. Add, edit and delete events from the app. Your tasks and entries are never written to the calendar.
 
 Looking back
-Weekly and monthly summaries, on this day, keep-in-touch reminders and important dates give you a reason to keep writing.
+Weekly and monthly summaries, on this day, meeting cadence and important dates bring what you wrote back to you.
 
 Your files
 The vault is a folder of plain Markdown files in the same format as Obsidian, and Kenet opens an existing Obsidian vault in place. SQLite is only an index for search; the files are the source of truth. Keep the vault on your device, in your own iCloud Drive or in a folder you pick. A vault in iCloud Drive or in a folder you picked stays if you delete the app; a local vault on the device is deleted with the app.
@@ -168,18 +168,20 @@ Privacy policy: https://kenet.app/en/privacy
 
 İnceleme notu dile göre değil, uygulamaya tek girilir; inceleyici için İngilizcesi girilir. Türkçesi kayıt içindir.
 
-### en (1619/4000)
+Göndermeden önce: hızlı giriş örneği ("Coffee with Ece in Kadıköy", ilk seferde oluşturma önerisi, sonra kendiliğinden bağlanma) ve Ayarlar yolu İngilizce arayüzde gerçek cihazda doğrulanmalıdır. Sayfa, bölüm ve düğme adları kenet `App/Resources/Localizable.xcstrings` kataloğundan alındı ("Takvim ve Konum" = "Calendar and Location", "Konuma girince" = "On arrival", "Her zaman konum izni ver" = "Allow Always location access").
+
+### en (1823/4000)
 
 ```text
 No account or sign-in is needed, so there is no demo account.
 
-On first launch the app asks where the vault (a folder of Markdown files) should live: iCloud Drive, on this device, or a folder you pick. Any choice works for review; the on-device option needs no setup. To see linked content, type a line such as "Coffee with Ece in Kadıköy" in the quick entry field on the Today screen. When a name is new or ambiguous, the app asks before it creates or links a person.
+On first launch the app asks where the vault (a folder of Markdown files) should live: iCloud Drive, on this device, or a folder you pick. Any choice works for review; the on-device option needs no setup. To see linked content, type a line such as "Coffee with Ece in Kadıköy" in the quick entry field on the Today screen. The vault starts empty, so the first time the app offers to create Ece as a person and Kadıköy as a place; after that, the same names link on their own. When a name is ambiguous, the app asks instead of guessing.
 
 No permission is requested at launch. Each one is requested from the screen or setting that uses it:
 - Calendar (full access): shows the day's events, drafts an entry from an event, shows a person's upcoming events, and saves the events the user adds, edits or deletes in the app. Tasks and entries are never written to the calendar. Requested when the user taps the calendar permission button.
 - Location when in use: suggests nearby saved places while writing, shows the map and fills a place's coordinates.
-- Location always: requested only when the user turns on a goal's location behaviour, so that arriving at a chosen place can mark that goal or send a reminder while the app is closed.
-- Notifications: task, goal and evening journal reminders, scheduled on the device.
+- Location always: requested only from Settings > Calendar and Location > On arrival, when the user taps "Allow Always location access". It lets arriving at a place linked to a goal mark that goal or send a reminder while the app is closed.
+- Notifications: task, goal, meeting cadence and evening journal reminders, scheduled on the device.
 - Face ID: the optional app lock, off by default.
 
 Importing from Contacts uses the system contact picker and Journaling Suggestions uses the system picker; neither asks for permission.
@@ -190,18 +192,18 @@ Privacy policy: https://kenet.app/en/privacy
 Support: https://kenet.app/en/support
 ```
 
-### tr (1531/4000)
+### tr (1699/4000)
 
 ```text
 Hesap ya da giriş yoktur, bu yüzden deneme hesabı da yoktur.
 
-İlk açılışta uygulama kasanın (Markdown dosyalarından oluşan bir klasör) nerede duracağını sorar: iCloud Drive, bu cihaz ya da seçilen bir klasör. İnceleme için her seçenek çalışır; cihaz seçeneği kurulum istemez. Bağlanmış içeriği görmek için Bugün ekranındaki hızlı giriş alanına "Ece ile Kadıköy'de kahve" gibi bir satır yazılır. Ad yeni ya da belirsizse uygulama kişi oluşturmadan ya da bağlamadan önce sorar.
+İlk açılışta uygulama kasanın (Markdown dosyalarından oluşan bir klasör) nerede duracağını sorar: iCloud Drive, bu cihaz ya da seçilen bir klasör. İnceleme için her seçenek çalışır; cihaz seçeneği kurulum istemez. Bağlanmış içeriği görmek için Bugün ekranındaki hızlı giriş alanına "Ece ile Kadıköy'de kahve" gibi bir satır yazılır. Kasa boş başlar; uygulama ilk seferde Ece'yi kişi, Kadıköy'ü konum olarak oluşturmayı önerir, sonra aynı adlar kendiliğinden bağlanır. Ad belirsizse uygulama tahmin etmez, sorar.
 
 İlk açılışta izin istenmez. Her izin onu kullanan ekrandan ya da ayardan istenir:
 - Takvim (tam erişim): günün etkinliklerini göstermek, bir etkinlikten olay taslağı hazırlamak, kişinin yaklaşan etkinliklerini göstermek ve kullanıcının uygulamada eklediği, düzenlediği ya da sildiği etkinliği kaydetmek. Görevler ve olaylar takvime yazılmaz. Kullanıcı takvim izin düğmesine basınca istenir.
 - Konum, kullanımdayken: yazarken yakındaki kayıtlı konumları önermek, haritayı göstermek, bir konumun koordinatını doldurmak.
-- Konum, her zaman: yalnız kullanıcı bir hedefin konum davranışını açınca istenir; seçilen yere varınca uygulama kapalıyken de o hedefi işaretlemek ya da hatırlatmak için.
-- Bildirimler: görev, hedef ve akşam günlük hatırlatmaları; cihazda planlanır.
+- Konum, her zaman: yalnız Ayarlar > Takvim ve Konum > Konuma girince bölümündeki "Her zaman konum izni ver" düğmesiyle istenir; hedefe bağlı bir yere varınca uygulama kapalıyken de o hedefi işaretlemek ya da hatırlatmak için.
+- Bildirimler: görev, hedef, görüşme ritmi ve akşam günlük hatırlatmaları; cihazda planlanır.
 - Face ID: isteğe bağlı uygulama kilidi, varsayılan olarak kapalı.
 
 Rehberden içe aktarma sistemin kişi seçicisini, Günlük Önerileri sistemin seçicisini kullanır; ikisi de izin istemez.
