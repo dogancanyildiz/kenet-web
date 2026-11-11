@@ -37,9 +37,9 @@ Site bu üç vaadi anlatır; başka vaat eklenmez.
 
 ## Tanım cümlesi
 
-Ana sayfa `lead` metni ile `metadata.defaultDescription` aynı metindir (`messages/*/home.json`, `messages/*/common.json`); `tests/pages/home.test.tsx` eşitliği, 40-60 kelimeyi ve ilk 150 karakterde "Markdown" ile hesap bilgisini kilitler. Metin değişirse iki dosya birlikte değişir.
+Ana sayfa `lead` metni ile `metadata.defaultDescription` aynı metindir (`messages/*/home.json`, `messages/*/common.json`); `tests/pages/home.test.tsx` eşitliği, 25-45 kelimeyi (kısa tutulur: hero paragrafı telefonda uzamasın, sahibin kararı 2026-11-11) ve ilk 150 karakterde "Markdown" ile hesap bilgisini kilitler. Metin değişirse iki dosya birlikte değişir.
 
-> Kenet, iPhone, iPad ve Mac için hesap gerektirmeyen, verisi düz Markdown dosyaları olan kişisel bir günlüktür. Gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlar; belirsiz bir adda tahmin etmez, sorar. Görevler ve hedefler aynı yerde durur. Kasa Obsidian ile aynı biçimdedir ve senin seçtiğin yerde kalır.
+> Kenet, hesap gerektirmeyen ve verisini düz Markdown dosyalarında tutan kişisel bir günlüktür. Gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlar; kasan Obsidian ile uyumludur.
 
 ## Sitede anılan özellikler ve kanıtı
 

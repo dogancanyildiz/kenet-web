@@ -1,6 +1,6 @@
 # Kenet
 
-> Kenet is a personal journal for iPhone, iPad and Mac that needs no account and keeps your data in plain Markdown files. It links the short entries you write during the day to people, places and time, and asks when a name is ambiguous. Tasks and goals live here too. The vault matches Obsidian's format and stays where you choose.
+> Kenet is a personal journal that needs no account and keeps everything in plain Markdown files. It links the short entries you write during the day to people, places and time on its own, in a vault Obsidian can open.
 
 iPhone and iPad: in the first App Store release. Mac: reaches the store after iPhone and iPad. The interface is in Turkish and English and follows the language set for Kenet on your device. The app collects no data, and this site uses no cookies.
 

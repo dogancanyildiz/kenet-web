@@ -330,7 +330,7 @@ describe("home page", () => {
   });
 
   it.each(["tr", "en"] as const)(
-    "uses one definition (%s): the hero lead is the meta description, 40 to 60 words",
+    "uses one definition (%s): the hero lead is the meta description, 25 to 45 words",
     async (lang) => {
       const messages = (await loadMessages(lang)) as {
         home: { lead: string };
@@ -339,8 +339,8 @@ describe("home page", () => {
       const lead = messages.home.lead;
       expect(messages.metadata.defaultDescription).toBe(lead);
       const words = lead.split(/\s+/).length;
-      expect(words).toBeGreaterThanOrEqual(40);
-      expect(words).toBeLessThanOrEqual(60);
+      expect(words).toBeGreaterThanOrEqual(25);
+      expect(words).toBeLessThanOrEqual(45);
       // What it is, no account and plain Markdown come before a search
       // result cuts the description.
       const head = lead.slice(0, 150);
