@@ -39,15 +39,9 @@ export function LanguageSwitcher() {
           const isActive = locale === active;
           const { code, nameKey } = LOCALES[locale];
           return (
-            <li
-              key={locale}
-              className={`items-center ${isActive ? "hidden sm:flex" : "flex"}`}
-            >
+            <li key={locale} className="flex items-center">
               {index > 0 ? (
-                <span
-                  aria-hidden="true"
-                  className="hidden h-3.5 w-px bg-line sm:block"
-                />
+                <span aria-hidden="true" className="block h-3.5 w-px bg-line" />
               ) : null}
               <Link
                 href={pathname}

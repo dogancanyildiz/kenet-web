@@ -17,7 +17,7 @@ export function Header() {
           className="flex min-h-11 shrink-0 items-center gap-2 rounded-control text-[17px] font-semibold tracking-tight"
         >
           <BrandMark size={24} />
-          <span>{tBrand("name")}</span>
+          <span className="max-[379px]:hidden">{tBrand("name")}</span>
         </Link>
         {/* Two landmarks side by side, not nested: pages, then language. */}
         <div className="flex min-w-0 items-center gap-1 sm:gap-3">

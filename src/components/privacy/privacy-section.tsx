@@ -16,7 +16,7 @@ export function PrivacySection({ id, title, children }: PrivacySectionProps) {
   return (
     <section id={id} aria-labelledby={headingId}>
       <SectionHeading id={headingId} title={title} />
-      <div className="card mt-4 p-6 sm:p-8">{children}</div>
+      <div className="card mt-6 p-6 sm:p-8">{children}</div>
     </section>
   );
 }

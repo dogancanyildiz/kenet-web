@@ -6,7 +6,7 @@ import { buildInfo, copyrightRange } from "@/lib/build-info";
 import { site } from "@/lib/site";
 
 const columnLabel = "eyebrow";
-const columnLink = "nav-link gap-1.5 hover:text-text";
+const columnLink = "nav-link gap-1.5";
 
 /**
  * Brand and maker on the left, two short link columns on the right, legal
@@ -22,11 +22,9 @@ export async function Footer() {
   const build = buildInfo();
   const range = copyrightRange();
 
-  const external = [
-    { href: site.appRepoUrl, label: t("source") },
-    { href: site.appIssuesUrl, label: t("issues") },
-    { href: site.ownerUrl, label: t("ownerSite") },
-  ];
+  // The maker's site is already linked from the sentence on the left, so the
+  // project column carries only the source and the bug report path.
+  const external = [{ href: site.appRepoUrl, label: t("source") }];
 
   return (
     <footer className="mt-8 border-t border-rule text-sm text-text-secondary">
@@ -80,6 +78,16 @@ export async function Footer() {
               {t("projectLabel")}
             </p>
             <ul className="mt-2">
+              <li>
+                {/* Bug reports go through the support page first: it lists
+                    what to include and warns that GitHub issues are public. */}
+                <Link
+                  href={{ pathname: "/support", hash: "report" }}
+                  className={columnLink}
+                >
+                  {t("issues")}
+                </Link>
+              </li>
               {external.map((item) => (
                 <li key={item.href}>
                   <a

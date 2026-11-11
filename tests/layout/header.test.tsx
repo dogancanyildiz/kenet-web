@@ -105,4 +105,12 @@ describe("language switcher", () => {
     // The visible code is decoration; the name comes from the sr-only text.
     expect(turkish.textContent).toContain("TR");
   });
+
+  it("shows both languages at every width", async () => {
+    await renderHeader("tr", "/");
+    const nav = screen.getByRole("navigation", { name: "Dil" });
+    for (const li of nav.querySelectorAll("li")) {
+      expect(li.className).not.toMatch(/(^|\s)hidden(\s|$)/);
+    }
+  });
 });

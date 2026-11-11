@@ -7,7 +7,7 @@
 | Öğe | Yer | Davranış |
 |---|---|---|
 | İçeriğe geç bağlantısı | Belgenin ilk odaklanabilir öğesi | Odaklanınca görünür |
-| Üst bilgi | Sabit (sticky), 68 px, `paper` %85 ve bulanıklık; Saydamlığı Azalt'ta opak. Marka işareti 24 px ve "Kenet"; Gizlilik, Destek ve TR ve EN (ince dikey ayraçla) sağda, 44 px | Geçerli sayfa ve dil vurgu alt çizgisi taşır (`aria-current`). Dil bağlantısı aynı sayfanın öteki dilini açar; telefonda yalnız öteki dil görünür. `scroll-padding-top` üst bilgi kadar |
+| Üst bilgi | Sabit (sticky), 68 px, `paper` %85 ve bulanıklık; Saydamlığı Azalt'ta opak. Marka işareti 24 px ve "Kenet"; Gizlilik, Destek ve TR ve EN (ince dikey ayraçla) sağda, 44 px | Geçerli sayfa ve dil vurgu alt çizgisi taşır (`aria-current`). Dil bağlantısı aynı sayfanın öteki dilini açar; iki dil her genişlikte görünür, 380 px altında marka adı gizlenir. `scroll-padding-top` üst bilgi kadar |
 | Ana içerik | `main#main` | Odak hedefidir |
 | Alt bilgi | Marka ve "Kenet, Doğan Can YILDIZ tarafından geliştirilir." (ad bağlantı); Sayfalar ve Proje sütunları; alt şeritte telif aralığı ve derleme bilgisi | Derleme bilgisi değişken boşsa gizlenir; dış bağlantılar eğik ok taşır |
 

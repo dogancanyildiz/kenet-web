@@ -4,6 +4,7 @@ type PageSectionProps = {
   children: ReactNode;
   as?: "section" | "header" | "div";
   className?: string;
+  id?: string;
 };
 
 /**
@@ -15,9 +16,10 @@ export function PageSection({
   children,
   as: Tag = "section",
   className = "",
+  id,
 }: PageSectionProps) {
   return (
-    <Tag className={`py-12 sm:py-16 lg:py-20 ${className}`.trim()}>
+    <Tag id={id} className={`py-12 sm:py-16 lg:py-20 ${className}`.trim()}>
       <div className="page-shell">{children}</div>
     </Tag>
   );

@@ -84,7 +84,7 @@ export default async function SupportPage({ params }: PageProps) {
           ))}
         </ul>
       </PageSection>
-      <PageSection>
+      <PageSection id="report">
         <SectionHeading title={t("reportTitle")} />
         <div className="mt-6">
           <ReportCard

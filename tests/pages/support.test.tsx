@@ -57,6 +57,8 @@ describe.each([
     );
     expect(heading).toBeDefined();
     expect(heading!.parentElement!.querySelectorAll("li")).toHaveLength(7);
+    // The footer's "report a bug" link lands on this anchor.
+    expect(heading!.closest("section#report")).not.toBeNull();
     expect(container.textContent).toContain(m.reportPrivacy);
   });
 

@@ -23,8 +23,17 @@ vi.mock("@/i18n/navigation", () => ({
     href,
     children,
     ...props
-  }: AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }) => (
-    <a href={href} {...props}>
+  }: Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
+    href: string | { pathname: string; hash?: string };
+  }) => (
+    <a
+      href={
+        typeof href === "string"
+          ? href
+          : `${href.pathname}${href.hash ? `#${href.hash}` : ""}`
+      }
+      {...props}
+    >
       {children}
     </a>
   ),
@@ -53,12 +62,23 @@ describe("footer", () => {
       ...container.querySelectorAll<HTMLAnchorElement>('a[href^="https://"]'),
     ];
     expect(external.map((a) => a.getAttribute("href")).sort()).toEqual(
-      [site.appRepoUrl, site.appIssuesUrl, site.ownerUrl, site.ownerUrl].sort()
+      [site.appRepoUrl, site.ownerUrl].sort()
     );
     for (const a of external) {
       expect(a.getAttribute("rel")).toBe("noopener noreferrer");
       expect(a.hasAttribute("target")).toBe(false);
     }
+  });
+
+  it("routes bug reports through the support page, not straight to GitHub", async () => {
+    const { container } = await renderFooter("tr");
+    const project = screen.getByRole("navigation", { name: "Proje" });
+    expect(
+      within(project).getByRole("link", { name: "Hata bildir" })
+    ).toHaveAttribute("href", "/support#report");
+    expect(
+      container.querySelector(`a[href="${site.appIssuesUrl}"]`)
+    ).toBeNull();
   });
 
   it("links the maker's name inside the sentence", async () => {
