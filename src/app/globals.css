@@ -160,7 +160,7 @@
     font-family: var(--font-sans-stack);
     -webkit-font-smoothing: antialiased;
     text-size-adjust: 100%;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
   }
 
   body {
