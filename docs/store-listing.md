@@ -17,8 +17,8 @@ Sayılar Python `len()` (Unicode karakter) ve UTF-8 bayt olarak ölçüldü. App
 | Tanıtım metni | 170 | 164 | 177 | 165 | 165 |
 | Anahtar sözcükler | 100 | 88 | 95 | 97 | 97 |
 | Bu sürümdeki yenilikler | 4000 | 35 | 38 | 37 | 37 |
-| Açıklama | 4000 | 2597 | 2809 | 2662 | 2666 |
-| İnceleme notu (yalnız en girilir) | 4000 | 1699 | 1842 | 1823 | 1827 |
+| Açıklama | 4000 | 2711 | 2929 | 2796 | 2800 |
+| İnceleme notu (yalnız en girilir) | 4000 | 1802 | 1955 | 1920 | 1926 |
 
 ## Adresler
 
@@ -60,13 +60,13 @@ günce,ajanda,markdown,hedef,alışkanlık,görev,kanban,takvim,not,zincir,hatı
 Kenet'in App Store'daki ilk sürümü.
 ```
 
-### Açıklama (2597/4000)
+### Açıklama (2711/4000)
 
 ```text
 Kenet, gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlayan kişisel bir günlüktür. Görevler ve hedefler de aynı yerde durur. Her şey düz Markdown dosyalarına yazılır; hesap açmazsın, uygulama veri toplamaz.
 
 Sen yaz, Kenet bağlasın
-"Ece ile Kadıköy'de kahve" yazarsın; Kenet Ece'yi kişi sayfasına, Kadıköy'ü konum sayfasına bağlar ve satırı saatiyle gün dosyana ekler. Belirsiz bir ad olursa tahmin etmez, sana sorar. Klasörleme ya da etiketleme yapmazsın.
+"Ece ile Kadıköy'de kahve" yazarsın; Kenet Ece'yi kişi sayfasına, Kadıköy'ü konum sayfasına bağlar ve satırı saatiyle gün dosyana ekler. Yeni bir kişi ya da yeri ilk kez `@` ile yazarsın ("@Ece"), Kenet onu oluşturmayı önerir; sonra adı yazman yeter. Belirsiz bir ad olursa tahmin etmez, sana sorar. Klasörleme ya da etiketleme yapmazsın.
 
 Kişiler ve konumlar
 Her kişinin kendi sayfası vardır: son görüşme, o kişiyle yaşananlar ve onunla ilgili açık görevler. Kişi sayfası o kişiyle ilgili yaklaşan takvim etkinliklerini de gösterir; doğum gününü kişi dosyasındaki tarihten takvime eklersin. Bağlantıları Graph'ta ve haritada görürsün. Rehberinden seçtiğin kişileri içe aktarabilirsin.
@@ -128,13 +128,13 @@ diary,markdown,habit,goal,tasks,kanban,calendar,notes,streak,planner,log,tracker
 The first App Store release of Kenet.
 ```
 
-### Açıklama (2662/4000)
+### Açıklama (2796/4000)
 
 ```text
 Kenet is a personal journal that links the short entries you write during the day to people, places and time. Tasks and goals live in the same place. Everything is written to plain Markdown files; you never create an account, and the app collects no data.
 
 You write, Kenet links
-Type "Coffee with Ece in Kadıköy" and Kenet links Ece to her person page, Kadıköy to its place page, and adds the line to your day file with its time. When a name is ambiguous, it asks instead of guessing. No folders, no tagging.
+Type "Coffee with Ece in Kadıköy" and Kenet links Ece to her person page, Kadıköy to its place page, and adds the line to your day file with its time. The first time, you type a new person or place with `@` ("@Ece") and Kenet offers to create it; after that, the name alone is enough. When a name is ambiguous, it asks instead of guessing. No folders, no tagging.
 
 People and places
 Every person has a page: when you last met, what happened together and the open tasks that involve them. The page also shows upcoming calendar events with that person, and you can add their birthday to your calendar from the date in their file. See the links in Graph and on a map. Import people you pick from your contacts.
@@ -168,14 +168,14 @@ Privacy policy: https://kenet.app/en/privacy
 
 İnceleme notu dile göre değil, uygulamaya tek girilir; inceleyici için İngilizcesi girilir. Türkçesi kayıt içindir.
 
-Göndermeden önce: hızlı giriş örneği ("Coffee with Ece in Kadıköy", ilk seferde oluşturma önerisi, sonra kendiliğinden bağlanma) ve Ayarlar yolu İngilizce arayüzde gerçek cihazda doğrulanmalıdır. Sayfa, bölüm ve düğme adları kenet `App/Resources/Localizable.xcstrings` kataloğundan alındı ("Takvim ve Konum" = "Calendar and Location", "Konuma girince" = "On arrival", "Her zaman konum izni ver" = "Allow Always location access").
+Göndermeden önce: Ayarlar yolu İngilizce arayüzde gerçek cihazda doğrulanmalıdır. Hızlı giriş örneği 2026-11-12'de İngilizce arayüzde uçtan uca test edildi (kenet e2e): `@` olmadan yalnız bilinen adlar tanınır; boş kasada "Coffee with @Ece in @Kadıköy" yazınca "Create new person" ve "Create new place" önerileri çıkar, onaylanınca dosyalar oluşur ve bağlanır. Sayfa, bölüm ve düğme adları kenet `App/Resources/Localizable.xcstrings` kataloğundan alındı ("Takvim ve Konum" = "Calendar and Location", "Konuma girince" = "On arrival", "Her zaman konum izni ver" = "Allow Always location access").
 
-### en (1823/4000)
+### en (1920/4000)
 
 ```text
 No account or sign-in is needed, so there is no demo account.
 
-On first launch the app asks where the vault (a folder of Markdown files) should live: iCloud Drive, on this device, or a folder you pick. Any choice works for review; the on-device option needs no setup. To see linked content, type a line such as "Coffee with Ece in Kadıköy" in the quick entry field on the Today screen. The vault starts empty, so the first time the app offers to create Ece as a person and Kadıköy as a place; after that, the same names link on their own. When a name is ambiguous, the app asks instead of guessing.
+On first launch the app asks where the vault (a folder of Markdown files) should live: iCloud Drive, on this device, or a folder you pick. Any choice works for review; the on-device option needs no setup. To see linked content, type "Coffee with @Ece in @Kadıköy" in the quick entry field on the Today screen. The vault starts empty: the @ marks a new name, and the app shows "Create new person" for Ece and "Create new place" for Kadıköy. Confirm both; the person and place files are created and the line links to them. After that, "Ece" and "Kadıköy" link without the @. When a name is ambiguous, the app asks instead of guessing.
 
 No permission is requested at launch. Each one is requested from the screen or setting that uses it:
 - Calendar (full access): shows the day's events, drafts an entry from an event, shows a person's upcoming events, and saves the events the user adds, edits or deletes in the app. Tasks and entries are never written to the calendar. Requested when the user taps the calendar permission button.
@@ -192,12 +192,12 @@ Privacy policy: https://kenet.app/en/privacy
 Support: https://kenet.app/en/support
 ```
 
-### tr (1699/4000)
+### tr (1802/4000)
 
 ```text
 Hesap ya da giriş yoktur, bu yüzden deneme hesabı da yoktur.
 
-İlk açılışta uygulama kasanın (Markdown dosyalarından oluşan bir klasör) nerede duracağını sorar: iCloud Drive, bu cihaz ya da seçilen bir klasör. İnceleme için her seçenek çalışır; cihaz seçeneği kurulum istemez. Bağlanmış içeriği görmek için Bugün ekranındaki hızlı giriş alanına "Ece ile Kadıköy'de kahve" gibi bir satır yazılır. Kasa boş başlar; uygulama ilk seferde Ece'yi kişi, Kadıköy'ü konum olarak oluşturmayı önerir, sonra aynı adlar kendiliğinden bağlanır. Ad belirsizse uygulama tahmin etmez, sorar.
+İlk açılışta uygulama kasanın (Markdown dosyalarından oluşan bir klasör) nerede duracağını sorar: iCloud Drive, bu cihaz ya da seçilen bir klasör. İnceleme için her seçenek çalışır; cihaz seçeneği kurulum istemez. Bağlanmış içeriği görmek için Bugün ekranındaki hızlı giriş alanına "@Ece ile @Kadıköy'de kahve" yazılır. Kasa boş başlar: `@` yeni bir adı işaretler, uygulama Ece için "Yeni kişi oluştur", Kadıköy için "Yeni konum oluştur" önerir. İkisi onaylanınca kişi ve konum dosyaları oluşur ve satır onlara bağlanır. Sonra "Ece" ve "Kadıköy" `@` olmadan da bağlanır. Ad belirsizse uygulama tahmin etmez, sorar.
 
 İlk açılışta izin istenmez. Her izin onu kullanan ekrandan ya da ayardan istenir:
 - Takvim (tam erişim): günün etkinliklerini göstermek, bir etkinlikten olay taslağı hazırlamak, kişinin yaklaşan etkinliklerini göstermek ve kullanıcının uygulamada eklediği, düzenlediği ya da sildiği etkinliği kaydetmek. Görevler ve olaylar takvime yazılmaz. Kullanıcı takvim izin düğmesine basınca istenir.
