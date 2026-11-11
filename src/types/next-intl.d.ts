@@ -2,6 +2,7 @@ import type { routing } from "@/i18n/routing";
 import type common from "../../messages/en/common.json";
 import type home from "../../messages/en/home.json";
 import type privacy from "../../messages/en/privacy.json";
+import type seo from "../../messages/en/seo.json";
 import type support from "../../messages/en/support.json";
 
 /**
@@ -14,6 +15,10 @@ import type support from "../../messages/en/support.json";
 declare module "next-intl" {
   interface AppConfig {
     Locale: (typeof routing.locales)[number];
-    Messages: typeof common & typeof home & typeof privacy & typeof support;
+    Messages: typeof common &
+      typeof home &
+      typeof privacy &
+      typeof support &
+      typeof seo;
   }
 }

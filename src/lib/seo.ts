@@ -34,7 +34,56 @@ export function buildLanguageAlternates(
 }
 
 /** og:locale values; Facebook and LinkedIn expect the underscore form. */
-const OG_LOCALES = { en: "en_US", tr: "tr_TR" } as const;
+export const OG_LOCALES = { en: "en_US", tr: "tr_TR" } as const;
+
+/**
+ * Share card per locale, rendered by scripts/render-og.mjs. Both locales point
+ * at one textless card for now: the screens on it are the Turkish UI tour, so
+ * an English file would be the same pixels. The alt text and the title next
+ * to it are per language.
+ */
+export const OG_IMAGES: Record<
+  AppLocale,
+  { path: string; width: number; height: number }
+> = {
+  tr: { path: "/og/kenet.png", width: 1200, height: 630 },
+  en: { path: "/og/kenet.png", width: 1200, height: 630 },
+};
+
+/** og:image entry for one locale; the url is absolute on the site origin. */
+export async function openGraphImage(locale: AppLocale) {
+  const t = await getTranslations({ locale, namespace: "seo" });
+  const image = OG_IMAGES[locale];
+  return {
+    url: `${siteUrl()}${image.path}`,
+    width: image.width,
+    height: image.height,
+    alt: t("ogImageAlt"),
+    type: "image/png",
+  };
+}
+
+/**
+ * Numeric App Store id out of a listing url
+ * (https://apps.apple.com/tr/app/kenet/id1234567890). null when there is no
+ * url yet or it carries no id.
+ */
+export function appStoreIdFromUrl(url: string | null): string | null {
+  if (!url) return null;
+  return url.match(/\/id(\d+)(?:[/?#]|$)/)?.[1] ?? null;
+}
+
+/**
+ * Smart App Banner (<meta name="apple-itunes-app">). Absent while the app is
+ * not in the store: a banner without an id does nothing. Filling
+ * site.appStoreUrl turns it on.
+ */
+export function smartAppBanner(
+  appStoreUrl: string | null
+): Pick<Metadata, "itunes"> {
+  const appId = appStoreIdFromUrl(appStoreUrl);
+  return appId ? { itunes: { appId } } : {};
+}
 
 /**
  * Complete metadata for one static page: title, description, canonical,
@@ -52,6 +101,7 @@ export async function buildPageMetadata(
   const openGraphTitle = options.absoluteTitle
     ? options.title
     : `${options.title} | ${siteName}`;
+  const image = await openGraphImage(locale);
 
   return {
     title: options.absoluteTitle ? { absolute: options.title } : options.title,
@@ -70,11 +120,13 @@ export async function buildPageMetadata(
       alternateLocale: routing.locales
         .filter((candidate) => candidate !== locale)
         .map((candidate) => OG_LOCALES[candidate]),
+      images: [image],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: openGraphTitle,
       description: options.description,
+      images: [{ url: image.url, alt: image.alt }],
     },
   };
 }

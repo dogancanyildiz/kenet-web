@@ -25,7 +25,7 @@
     "faqObsidianQ": "Can I open it with Obsidian?",
     "faqObsidianA": "The vault uses the same format as Obsidian. Kenet opens an existing vault in place and adds any missing folders and templates only with your approval. On the Mac, Obsidian can stay as a backup editor.",
     "faqBackupQ": "How do I move or back up my data?",
-    "faqBackupA": "Your data is the plain Markdown files in the vault folder; there is no export step. Any text editor opens them, and you can copy the folder elsewhere.",
+    "faqBackupA": "Your data is the plain Markdown files in the vault folder; there is no export step. Any text editor opens them, and you can copy the folder elsewhere. On iPhone and iPad a local vault on the device is deleted together with the app, so copy the folder before you delete the app. A vault in iCloud Drive or in a folder you picked stays where it is.",
     "faqIcloudQ": "Is iCloud required?",
     "faqIcloudA": "No. Storing the vault in iCloud is optional. You can use a local vault or open a folder you pick yourself."
   }

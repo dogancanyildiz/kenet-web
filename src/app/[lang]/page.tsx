@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { resolveLocale } from "@/lib/route-params";
 import { buildPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/lib/json-ld";
+import { homeStructuredData } from "@/lib/structured-data";
 import { PageSection } from "@/components/layout/page-section";
 import { Hero } from "@/components/home/hero";
 import { Mechanism } from "@/components/home/mechanism";
@@ -73,8 +75,11 @@ export default async function HomePage({ params }: PageProps) {
     caption: t("tabletCaption"),
   };
 
+  const structuredData = await homeStructuredData(locale);
+
   return (
     <>
+      <JsonLd data={structuredData} />
       <PageSection as="header" top="pt-10 sm:pt-14 lg:pt-20">
         <Hero
           title={t("title")}
@@ -83,6 +88,15 @@ export default async function HomePage({ params }: PageProps) {
           storeBadge={t("storeBadge")}
           storeBadgeSoon={t("storeBadgeSoon")}
           phoneAlt={t("phoneAlt")}
+          proof={{
+            label: t("proofLabel"),
+            items: [
+              t("proofNoAccount"),
+              t("proofMarkdown"),
+              t("proofObsidian"),
+            ],
+            privacy: t("proofNoData"),
+          }}
         />
       </PageSection>
 
@@ -115,6 +129,7 @@ export default async function HomePage({ params }: PageProps) {
           label={t("promisesLabel")}
           title={t("promisesTitle")}
           items={promises}
+          privacyLink={t("promisePrivacyLink")}
         />
       </PageSection>
 
@@ -161,6 +176,13 @@ export default async function HomePage({ params }: PageProps) {
         <Closing
           line={t("closingLine")}
           note={t("closingNote")}
+          privacy={(link) => t.rich("closingPrivacy", { link })}
+          platformsLabel={t("closingPlatformsLabel")}
+          platforms={[
+            t("closingPlatformMobile"),
+            t("closingPlatformMac"),
+            t("closingLanguage"),
+          ]}
           storeBadge={t("storeBadge")}
           storeBadgeSoon={t("storeBadgeSoon")}
         />

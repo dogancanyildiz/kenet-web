@@ -11,7 +11,7 @@
 | Vaat cümlesi | "Yaz; kim, nerede ve ne zaman kendiliğinden bağlansın. Dosyalar hep senin." |
 | Platform | iPhone, iPad ve Mac. Mac uygulaması mağazaya sonra girer. |
 | Veri | Obsidian uyumlu Markdown kasa; SQLite yalnız indeks. Hesap yok, bulut hesabı yok; iCloud kasası isteğe bağlı. |
-| Dil | Türkçe ve İngilizce |
+| Dil | Türkçe ve İngilizce. Uygulamanın arayüzü cihazda Kenet için seçili dili izler. |
 | Lisans | Tüm hakları saklıdır. Gelir modeli ilk mağaza yayınından önce karara bağlanır. |
 
 ## Üç vaat
@@ -20,7 +20,7 @@ Site bu üç vaadi anlatır; başka vaat eklenmez.
 
 | Vaat | Siteye yansıması |
 |---|---|
-| Veri kullanıcınındır | Markdown gerçek kaynaktır, kasa yereldir, hesap yoktur, uygulama silinse de dosyalar kalır. |
+| Veri kullanıcınındır | Markdown gerçek kaynaktır, kasa yereldir, hesap yoktur. iCloud Drive'daki ya da seçilen klasördeki kasa uygulama silinse de kalır; iPhone ve iPad'de uygulama klasöründeki yerel kasa uygulamayla birlikte silinir (kenet `rapor-yayin.md` Y7). Site bu ayrımı atlamaz. |
 | Hiçbir şey kaybolmaz | Önce dosyaya yazar, sonra indeksi günceller; tanımadığına dokunmaz; silmede onay ya da geri alma. |
 | Başka platforma taşınabilir | Kasa Obsidian ile aynıdır; uygulamaya özgü sözdizimi yoktur; kasa şifrelenmez. |
 
@@ -34,6 +34,25 @@ Site bu üç vaadi anlatır; başka vaat eklenmez.
 | 4 | Tek çekirdek, çok ekran |
 | 5 | Geri bir şey verir |
 | 6 | Belirsizse sor |
+
+## Tanım cümlesi
+
+Ana sayfa `lead` metni ile `metadata.defaultDescription` aynı metindir (`messages/*/home.json`, `messages/*/common.json`); `tests/pages/home.test.tsx` eşitliği, 40-60 kelimeyi ve ilk 150 karakterde "Markdown" ile hesap bilgisini kilitler. Metin değişirse iki dosya birlikte değişir.
+
+> Kenet, iPhone, iPad ve Mac için hesap gerektirmeyen, verisi düz Markdown dosyaları olan kişisel bir günlüktür. Gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlar; belirsiz bir adda tahmin etmez, sorar. Görevler ve hedefler aynı yerde durur. Kasa Obsidian ile aynı biçimdedir ve senin seçtiğin yerde kalır.
+
+## Sitede anılan özellikler ve kanıtı
+
+Sitede ürün hakkında yeni bir iddia ancak kenet deposunda karşılığı varsa yazılır.
+
+| İddia | Nerede | Kanıt (kenet deposu) |
+|---|---|---|
+| Hedef sayfasında miktar paneli: sayı klavyesi, hedefe göre hızlı ekleme, "Hedefe tamamla" | Ana sayfa hedef karesi, mağaza metni | `docs/decisions.md` 2026-11-11 "Hedef miktarı ayrıntıda"; `App/Screens/Goals/GoalAmountPanel.swift` |
+| Takvim etkinliği ekleme, düzenleme, silme; görev ve olay takvime yazılmaz | Gizlilik takvim satırı, mağaza metni | `docs/decisions.md` 2026-11-11 "Takvim etkinliği yazma"; `App/Screens/Calendar/CalendarEventSheets.swift`; `App/Resources/InfoPlist.xcstrings` takvim izin metni |
+| Kişi sayfasında yaklaşan etkinlikler ve "Doğum günü ekle" (tarih kişi dosyasındaki alandan) | Ana sayfa kişi karesi, gizlilik takvim satırı | `docs/decisions.md` 2026-11-11 "Doğum günü alanı"; `App/Screens/Entities/EntityCalendarSection.swift`; `Packages/Core/Sources/VaultFormat/PersonBirthday.swift` |
+| iPad ve Mac gün ayrıntısında tek Program kartı | Ana sayfa iPad alt yazısı | `docs/screens.md` "Geniş ekran (iPad, Mac)"; PR #383 |
+| Arayüz Türkçe ve İngilizce, uygulama dilini izler | Ana sayfa kapanışı | `docs/product.md` "Arayüz dili"; PR #383, `Tests/JournalTests/PresentationLocaleLanguageTests.swift` |
+| Yerel kasa uygulamayla silinir, iCloud ve seçilen klasör kalır | Ana sayfa vaat 1, gizlilik kasa satırı, destek SSS | `docs/architecture.md` "Kasa konumu" (`Documents/Vault`); `raporlar/asama-17/inceleme/rapor-yayin.md` Y7 |
 
 ## Kitle
 
@@ -49,7 +68,7 @@ Site bu üç vaadi anlatır; başka vaat eklenmez.
 | Sayfa | Amaç | Ölçüt |
 |---|---|---|
 | `/` | Ürünü bir ekranda anlatmak ve mağazaya yönlendirmek | İlk ekranda vaat cümlesi ve mağaza düğmesi görünür |
-| `/gizlilik` | Mağaza kaydının istediği politika; uygulamanın eriştiği veriyi ve toplamadığını açık yazmak | Her izin (takvim, konum, bildirim, iCloud) amaçla birlikte listelenir; sitenin çerezsiz olduğu yazar |
+| `/gizlilik` | Mağaza kaydının istediği politika; uygulamanın eriştiği veriyi ve toplamadığını açık yazmak | Her izin (takvim, konum, bildirim, iCloud) amaçla birlikte listelenir; takvime neyin yazıldığı açıktır; sitenin çerezsiz olduğu yazar |
 | `/destek` | Sorun ve soru kanalı | GitHub konuları ve geliştirici iletişimi; bir hata bildiriminde istenen bilgi listesi |
 
 ## Kaynak belgeler

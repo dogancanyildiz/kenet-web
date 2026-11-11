@@ -84,3 +84,7 @@ Kontrast alt sınırları: metin rolleri 4,5:1, kontrol çizgisi 3:1; `tests/des
 ## Simge
 
 `src/app/icon.svg` uygulamanın `app-icon.svg` dosyasının kopyasıdır; `npm run icons` PNG türevlerini üretir. Simge değişince önce uygulama deposunda değişir, sonra buraya kopyalanır.
+
+## Paylaşım kartı
+
+`public/og/kenet.png`, 1200×630, `npm run og` (`scripts/render-og.mjs`) üretir ve commit'lenir. Açık Şafak zemini (`paper`) ve parıltı (`glow-a`, `glow-b` %16) `globals.css` dosyasından okunur; üstünde uygulama simgesi, iPhone'da Bugün ve kişi sayfası, iPad'de kişi sayfası durur. Kural 5a burada da geçerli: gerçek ekran, eğik ya da filtreli değil; çerçeve `device-bezel`. Kartta yazı yoktur: sharp SVG metnini makinedeki yazı tipleriyle çizer ve site yazı tipi taşımaz. Başlık, açıklama ve alt metin (`messages/*/seo.json`) sayfanın dilinde kartın yanında gider. Simge ya da bu üç ekran değişince betik yeniden koşulur.

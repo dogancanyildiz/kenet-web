@@ -19,7 +19,7 @@ type PageProps = { params: Promise<{ lang: string }> };
  * Date of the policy text in force. Change it together with the text; the
  * page formats it per locale. Midnight UTC so the day never shifts.
  */
-const UPDATED = "2026-11-10";
+const UPDATED = "2026-11-11";
 
 const listClass = `${bulletListClass} grid gap-2 [&:not(:first-child)]:mt-4`;
 
