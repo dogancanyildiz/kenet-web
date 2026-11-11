@@ -32,7 +32,8 @@ describe("llms.txt", () => {
     const sentences = lines[start]!.split(/(?<=\.)\s+/);
     expect(sentences.length).toBeGreaterThan(1);
     for (const sentence of sentences) {
-      const approved = catalog.includes(sentence.replace(/"/g, '\\"'));
+      // The catalog is raw JSON text, so compare against the JSON-escaped form.
+      const approved = catalog.includes(JSON.stringify(sentence).slice(1, -1));
       expect(approved, `not in messages/en: ${sentence}`).toBe(true);
     }
   });
