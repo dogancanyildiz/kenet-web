@@ -94,7 +94,7 @@ describe.each(PAGES)("head of $path", ({ load, urls }) => {
       expect(og.locale).toBe(lang === "tr" ? "tr_TR" : "en_US");
       expect(og.images).toEqual([
         {
-          url: "https://kenet.app/og/kenet.png",
+          url: "https://kenet.app/og/kenet-2026-11.png",
           width: 1200,
           height: 630,
           alt: seo.ogImageAlt,
@@ -107,7 +107,7 @@ describe.each(PAGES)("head of $path", ({ load, urls }) => {
       };
       expect(twitter.card).toBe("summary_large_image");
       expect(twitter.images).toEqual([
-        { url: "https://kenet.app/og/kenet.png", alt: seo.ogImageAlt },
+        { url: "https://kenet.app/og/kenet-2026-11.png", alt: seo.ogImageAlt },
       ]);
     }
   );
@@ -124,7 +124,7 @@ describe("layout head", () => {
       expect(
         (metadata.openGraph as { images: Array<{ url: string }> }).images[0]
           ?.url
-      ).toBe("https://kenet.app/og/kenet.png");
+      ).toBe("https://kenet.app/og/kenet-2026-11.png");
     }
   );
 
@@ -133,6 +133,21 @@ describe("layout head", () => {
       params: Promise.resolve({ lang: "tr" }),
     });
     expect(metadata.itunes).toBeUndefined();
+  });
+
+  it("wires the Smart App Banner once the store url carries an id", async () => {
+    const { site } = await import("@/lib/site");
+    const mutable = site as { appStoreUrl: string | null };
+    const original = mutable.appStoreUrl;
+    mutable.appStoreUrl = "https://apps.apple.com/tr/app/kenet/id1234567890";
+    try {
+      const metadata = await layoutMetadata({
+        params: Promise.resolve({ lang: "tr" }),
+      });
+      expect(metadata.itunes).toEqual({ appId: "1234567890" });
+    } finally {
+      mutable.appStoreUrl = original;
+    }
   });
 
   it("keeps snippets unlimited for search and answer engines", async () => {

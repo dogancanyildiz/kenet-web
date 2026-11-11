@@ -46,8 +46,8 @@ export const OG_IMAGES: Record<
   AppLocale,
   { path: string; width: number; height: number }
 > = {
-  tr: { path: "/og/kenet.png", width: 1200, height: 630 },
-  en: { path: "/og/kenet.png", width: 1200, height: 630 },
+  tr: { path: "/og/kenet-2026-11.png", width: 1200, height: 630 },
+  en: { path: "/og/kenet-2026-11.png", width: 1200, height: 630 },
 };
 
 /** og:image entry for one locale; the url is absolute on the site origin. */

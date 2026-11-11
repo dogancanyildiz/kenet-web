@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Renders the Open Graph card (public/og/kenet.png, 1200×630) from committed
+// Renders the Open Graph card (public/og/kenet-2026-11.png, 1200×630) from committed
 // inputs only: the app icon (src/app/icon.svg) and three real screens
 // (public/screens/today-light, person-light, ipad-person-light). Run after
 // any of them changes; the PNG is committed so the build needs no rasterizer.
@@ -31,7 +31,10 @@ const HEIGHT = 630;
 /** Light Şafak tokens, read from globals.css so a palette change follows. */
 async function readTokens() {
   const css = await readFile(repo("src/app/globals.css"), "utf8");
-  const root = css.slice(css.indexOf(":root {"));
+  // Only the first (light) :root block: a token missing there must fail
+  // instead of silently picking up the dark value further down.
+  const start = css.indexOf(":root {");
+  const root = css.slice(start, css.indexOf("\n}", start));
   const token = (name) => {
     const match = root.match(new RegExp(`--${name}:\\s*(#[0-9a-fA-F]{6})`));
     if (!match) throw new Error(`token --${name} not found in globals.css`);
@@ -45,7 +48,7 @@ async function readTokens() {
   };
 }
 
-const CARDS = [{ file: "kenet.png" }];
+const CARDS = [{ file: "kenet-2026-11.png" }];
 
 function background({ paper, glowA, glowB }) {
   // Same shape as --glow: an ellipse from the top left, plum then amber,

@@ -92,7 +92,7 @@ describe("sitemap.xml", () => {
 
 describe("share card file", () => {
   it("is a 1200x630 png under 8 MB", async () => {
-    const buffer = readFileSync("public/og/kenet.png");
+    const buffer = readFileSync("public/og/kenet-2026-11.png");
     const meta = await sharp(buffer).metadata();
     expect(meta.format).toBe("png");
     expect([meta.width, meta.height]).toEqual([1200, 630]);

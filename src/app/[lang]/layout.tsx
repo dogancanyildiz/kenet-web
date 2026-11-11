@@ -68,8 +68,9 @@ export async function generateMetadata({
   const t = await getTranslations({ locale: lang, namespace: "metadata" });
   const image = await openGraphImage(lang);
 
-  // Every page replaces openGraph and twitter through buildPageMetadata; these
-  // are the fallback for the not-found document.
+  // Every page replaces openGraph and twitter through buildPageMetadata, and
+  // the 404 is the global not-found document, which skips this layout. These
+  // stay as a safety net for any future route that forgets its own metadata.
   return {
     metadataBase: new URL(siteUrl()),
     title: {
