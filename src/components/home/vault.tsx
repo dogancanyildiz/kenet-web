@@ -19,6 +19,16 @@ type Segment =
   | { kind: "wiki"; name: string };
 
 const WIKI = /\[\[([^\]]+)\]\]/g;
+/** Leading indent plus a list or task marker ("- ", "- [ ] "). */
+const HANG = /^(\s*)(?:[-*] (?:\[.\] )?)?/;
+
+/**
+ * Width in ch that a wrapped line hangs from, so continuation lines start
+ * under the text after the marker and the file keeps its Markdown shape.
+ */
+function hangWidth(line: string): number {
+  return HANG.exec(line)?.[0].length ?? 0;
+}
 const FRONTMATTER_KEY = /^(\s*)([A-Za-z][\w-]*)(:.*)$/;
 
 /** Split a vault line into wiki links and (for frontmatter) key spans. */
@@ -119,20 +129,35 @@ export function Vault({
               </li>
             ))}
           </ul>
-          <pre
-            tabIndex={0}
-            aria-label={fileLabel}
-            className="min-w-0 overflow-x-auto font-[family-name:var(--font-mono-stack)] text-[13px] leading-6 text-text"
-          >
-            <code>
-              {lines.map((line, index) => (
-                <span key={index} className="block">
-                  <FileLine segments={parseLine(line)} />
-                  {index < lines.length - 1 ? "\n" : null}
-                </span>
-              ))}
-            </code>
-          </pre>
+          {/* Lines wrap instead of scrolling (pre-wrap keeps the indent),
+              so the block needs no tab stop; the figure names it. */}
+          <figure className="min-w-0">
+            <figcaption className="sr-only">{fileLabel}</figcaption>
+            <pre className="font-[family-name:var(--font-mono-stack)] text-[13px] leading-6 break-words whitespace-pre-wrap text-text">
+              <code>
+                {lines.map((line, index) => {
+                  const hang = hangWidth(line);
+                  return (
+                    <span
+                      key={index}
+                      className="block"
+                      style={
+                        hang > 0
+                          ? {
+                              paddingInlineStart: `${hang}ch`,
+                              textIndent: `-${hang}ch`,
+                            }
+                          : undefined
+                      }
+                    >
+                      <FileLine segments={parseLine(line)} />
+                      {index < lines.length - 1 ? "\n" : null}
+                    </span>
+                  );
+                })}
+              </code>
+            </pre>
+          </figure>
         </div>
         <p className="mt-6 text-[15px] leading-6 text-text-secondary">{note}</p>
       </div>

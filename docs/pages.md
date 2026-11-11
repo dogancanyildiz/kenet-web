@@ -18,14 +18,14 @@ anlatmak yerine gösterir. Bölüm başlığı kalıbı: küçük etiket `p` ve 
 
 | Sıra | Bölüm | İçerik |
 |---|---|---|
-| 1 | Hero | Solda h1 vaat cümlesi (40/48/56 px), bir cümle lead, mağaza düğmesi ve yanında "iPhone, iPad ve Mac"; sağda `DeviceFrame` içinde gerçek Bugün ekranı (açık ve koyu çift, `picture` ile tek indirme, preload). Mobilde telefon altta, üst 340 px görünür ve zemine solar. Parıltı iki tonlu (mürdüm ve kehribar), yalnız üst 900 px |
-| 2 | Nasıl çalışır | h2 "Sen yaz. Kişiyi, konumu ve zamanı Kenet bağlasın." Tek kart, üç satır, `rule` ile ayrılır: Yazdığın (hızlı giriş kapsülü, Olay seçili), Gördüğün (aynı cümle; `Ece` düz mavi, `Kadıköy` noktalı yeşil alt çizgi, ek `'de` çizgi dışında), Dosyada (mono: `- 09:41 [[Ece Yalın|Ece]] ile [[Kadıköy]]'de kahve ^a1b2c3`) |
+| 1 | Hero | Solda h1 vaat cümlesi (40/48/56 px), bir cümle lead, mağaza girişi (kayıt yokken "Yakında App Store'da" metni, düğme değil) ve yanında "iPhone, iPad ve Mac"; sağda `DeviceFrame` içinde gerçek Bugün ekranı (açık ve koyu çift, `picture` ile tek indirme, preload). Mobilde telefon altta, üst 340 px görünür ve zemine solar. Parıltı iki tonlu (mürdüm ve kehribar), yalnız üst 900 px |
+| 2 | Nasıl çalışır | h2 "Sen yaz. Kişiyi, konumu ve zamanı Kenet bağlasın." Tek kart, üç satır, `rule` ile ayrılır: Yazdığın (hızlı giriş kapsülü, Olay seçili), Gördüğün (aynı cümle; `Ece` düz mavi, `Kadıköy` noktalı yeşil alt çizgi, ek `'de` çizgi dışında), Dosyada (mono, kaydırmaz, sarar; `design.md` kural 9a: `- 09:41 [[Ece Yalın|Ece]] ile [[Kadıköy]]'de kahve ^a1b2c3`) |
 | 3 | Üç vaat | h2 "Dosyalar hep senin." Tek kart, üç satır, solda 44 px işaret sütunu (belge, görev kutusu, çift ok; inline SVG), başlık ve bir cümle |
 | 4 | Ekranlar | h2 "Her gün açılan ekran sade kalır; ayrıntı öteki sekmelerde." Üç telefon (Bugün, Görevler listesi, Kanban) `lg` ve üstünde yan yana, altında yatay şerit; `WindowFrame` içinde Mac Kanban (yalnız açık görsel, koyu modda `elevated` zemin ve `line` sınır) ve alt yazı |
 | 5 | Kasa | h2 "Obsidian ile aynı kasa. Dışa aktarma yok." Tek kart iki sütun: klasör ağacı ve gün dosyası örneği (`kenet/docs/vault-format.md` örneğinin dile göre kısaltılmışı, blok kimlikli; Obsidian Tasks emoji'leri dosyanın parçası). Altında "SQLite yalnız indekstir; gerçek kaynak bu dosyalar." |
-| 6 | Kapanış | Kart yok, üstte `rule`: solda "iPhone, iPad ve Mac için." (32 px `p`) ve altında "Veri düz Markdown dosyaları olarak hep senin.", sağda mağaza düğmesi (telefonda alt alta) |
+| 6 | Kapanış | Kart yok, üstte `rule`: solda "iPhone, iPad ve Mac için." (32 px `p`) ve altında "Veri düz Markdown dosyaları olarak hep senin.", sağda mağaza girişi (telefonda alt alta) |
 
-Görseller `public/screens/*.webp` (Kenet snapshot testlerinden, `scripts/optimize-screens.mjs`; 780×1688 ve 1600×1047, toplam 316 KB); hepsi eager yüklenir. Bileşenler `src/components/home/`: `hero`, `mechanism`, `promises`, `promise-icons`, `screens`, `vault`, `closing`, `device-frame`, `window-frame`. Testler `tests/pages/home.test.tsx` ve `tests/design/compiled-css.test.ts` (derlenmiş CSS: maske, parıltı yüksekliği, KA ve Saydamlığı Azalt'ta parıltı kapalı).
+Görseller `public/screens/*.webp` (Kenet snapshot testlerinden, `scripts/optimize-screens.mjs`; telefonlar 780×1688 kaynaktan 780×1548 kırpılır, böylece Bugün ekranında composer altında boş zemin, listelerde yarım satır kalmaz; Mac 1600×1047; toplam 313 KB). Hero görseli eager ve yüksek öncelikli, ötekiler lazy yüklenir. Bileşenler `src/components/home/`: `hero`, `mechanism`, `promises`, `promise-icons`, `screens`, `vault`, `closing`, `device-frame`, `window-frame`. Testler `tests/pages/home.test.tsx` ve `tests/design/compiled-css.test.ts` (derlenmiş CSS: maske, parıltı yüksekliği, KA ve Saydamlığı Azalt'ta parıltı kapalı).
 
 ## Gizlilik `/gizlilik`
 
@@ -47,14 +47,14 @@ Her satır Kenet kodundaki ve belgelerindeki kanıta dayanır; kanıt tablosu PR
 |---|---|---|
 | 1 | Başlık | "Destek", bir paragraf |
 | 2 | Kanallar | h2 ve iki eşit yükseklikte kart (h3): GitHub'da konu aç; geliştirici iletişim sayfası. Bağlantı kartın dibinde, eğik oklu. E-posta yok (karar 2026-11-10) |
-| 3 | Hata bildirirken | Tek kart: cihaz, sistem sürümü, Kenet sürümü, ne yaptın, ne bekledin, ne oldu, ekran görüntüsü; "GitHub konuları herkese açıktır" uyarısı |
+| 3 | Hata bildirirken | Tek kart, madde işaretleri gizlilikteki gibi `accent` (`bulletListClass`): cihaz, sistem sürümü, Kenet sürümü, ne yaptın, ne bekledin, ne oldu, ekran görüntüsü; "GitHub konuları herkese açıktır" uyarısı |
 | 4 | Sık sorulanlar | Tek kart, dört `details.disclosure`: kasa nerede durur; Obsidian ile açılır mı; veri nasıl taşınır ya da yedeklenir; iCloud zorunlu mu. Sağda chevron, bütün satır tıklanır |
 
 Bileşenler `src/components/support/`; test `tests/pages/support.test.tsx`.
 
 ## 404
 
-Dilini yoldan okur (`/en/...` İngilizce, kalanı Türkçe). Üstte marka bağlantısı, `404` etiketi, başlık (sayfa başlığı ölçeği), bir cümle, ana sayfaya dönüş ve öteki dilin ana sayfası.
+Dilini yoldan okur (`/en/...` İngilizce, kalanı Türkçe). Üstte marka bağlantısı, `404` etiketi, başlık (sayfa başlığı ölçeği), bir cümle, ana sayfaya dönüş ve öteki dilin ana sayfası (iki bağlantı da 44 px dokunma hedefi).
 
 ## Geçişler
 

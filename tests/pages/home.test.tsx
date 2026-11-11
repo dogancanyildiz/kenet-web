@@ -228,6 +228,33 @@ describe("home page", () => {
     expect(container.textContent).not.toContain("'a teklifi gönder");
   });
 
+  it("wraps the file samples instead of scrolling them", async () => {
+    const { container } = await renderHome("tr");
+    const blocks = container.querySelectorAll("pre");
+    expect(blocks).toHaveLength(2);
+    for (const pre of blocks) {
+      // Wrapped text never scrolls, so no tab stop and no unrolled label.
+      expect(pre.className).toContain("whitespace-pre-wrap");
+      expect(pre.className).not.toContain("overflow-x-auto");
+      expect(pre.hasAttribute("tabindex")).toBe(false);
+      expect(pre.hasAttribute("aria-label")).toBe(false);
+      // The name lives on the enclosing figure.
+      const figure = pre.closest("figure");
+      expect(figure?.querySelector("figcaption")?.textContent).toMatch(
+        /^(Örnek gün dosyası|Dosyadaki örnek satır)$/
+      );
+    }
+  });
+
+  it("shows the coming-soon store entry as text, not as a control", async () => {
+    const { container } = await renderHome("tr");
+    for (const soon of screen.getAllByText("Yakında App Store'da")) {
+      expect(soon.closest("a, button")).toBeNull();
+      expect(soon.className).not.toMatch(/\b(border|bg-)/);
+    }
+    expect(container.querySelector("[aria-disabled]")).toBeNull();
+  });
+
   it("marks any external link noopener noreferrer", async () => {
     const { container } = await renderHome("tr");
     for (const link of container.querySelectorAll("a[href^='http']")) {

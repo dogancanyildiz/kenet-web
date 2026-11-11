@@ -110,7 +110,11 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
             {t("skipToContent")}
           </a>
           <Header />
-          <main id="main" tabIndex={-1} className="flex-1 outline-none">
+          <main
+            id="main"
+            tabIndex={-1}
+            className="flex-1 pb-12 outline-none sm:pb-16 lg:pb-20"
+          >
             {children}
           </main>
           <Footer />

@@ -55,11 +55,11 @@ export default async function GlobalNotFound() {
           <p className="measure mt-4 text-[18px] leading-7 text-text-secondary">
             {t("description")}
           </p>
-          <ul className="mt-8 flex flex-wrap gap-6">
+          <ul className="mt-6 flex flex-wrap gap-x-6">
             <li>
               <a
                 href={pathnameForLocale(locale, "/")}
-                className="prose-link font-medium"
+                className="prose-link inline-flex min-h-11 items-center font-medium"
               >
                 {t("backHome")}
               </a>
@@ -70,7 +70,7 @@ export default async function GlobalNotFound() {
                   href={pathnameForLocale(otherLocale, "/")}
                   hrefLang={otherLocale}
                   lang={otherLocale}
-                  className="prose-link font-medium"
+                  className="prose-link inline-flex min-h-11 items-center font-medium"
                 >
                   {other("backHome")}
                 </a>

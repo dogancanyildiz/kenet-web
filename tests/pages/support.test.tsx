@@ -57,6 +57,10 @@ describe.each([
     );
     expect(heading).toBeDefined();
     expect(heading!.parentElement!.querySelectorAll("li")).toHaveLength(7);
+    // Same accent markers as the privacy lists (shared bulletListClass).
+    expect(heading!.parentElement!.querySelector("ul")!.className).toContain(
+      "marker:text-accent"
+    );
     // The footer's "report a bug" link lands on this anchor.
     expect(heading!.closest("section#report")).not.toBeNull();
     expect(container.textContent).toContain(m.reportPrivacy);

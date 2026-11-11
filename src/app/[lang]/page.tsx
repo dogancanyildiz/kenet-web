@@ -58,7 +58,7 @@ export default async function HomePage({ params }: PageProps) {
 
   return (
     <>
-      <PageSection as="header" className="pt-10 sm:pt-14">
+      <PageSection as="header" top="pt-10 sm:pt-14 lg:pt-20">
         <Hero
           title={t("title")}
           lead={t("lead")}

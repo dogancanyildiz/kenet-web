@@ -20,8 +20,10 @@ const LOCALES: Record<
  * returns the internal template (`/privacy`), which is exactly what Link
  * needs to localize.
  *
- * Below 640 px only the other language shows: the header row has to hold the
- * mark, two page links and this switcher at 320 px without overflowing.
+ * Both codes show at every width. The rule between them sits 6 px off each
+ * link so the 2 px focus ring (2 px offset) never touches it; to keep the
+ * header row inside 320 px the page links drop to 8 px side padding below
+ * 640 px and the header hides the brand name below 380 px.
  */
 export function LanguageSwitcher() {
   const active = useLocale();
@@ -41,7 +43,10 @@ export function LanguageSwitcher() {
           return (
             <li key={locale} className="flex items-center">
               {index > 0 ? (
-                <span aria-hidden="true" className="block h-3.5 w-px bg-line" />
+                <span
+                  aria-hidden="true"
+                  className="mx-1.5 block h-3.5 w-px bg-line"
+                />
               ) : null}
               <Link
                 href={pathname}

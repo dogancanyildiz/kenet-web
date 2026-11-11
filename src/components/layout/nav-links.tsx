@@ -25,7 +25,7 @@ export function NavLinks() {
           <Link
             href={href}
             aria-current={pathname === href ? "page" : undefined}
-            className="nav-link px-2.5 hover:bg-well sm:px-3"
+            className="nav-link px-2 hover:bg-well sm:px-3"
           >
             {t(key)}
           </Link>

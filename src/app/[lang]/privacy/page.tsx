@@ -11,6 +11,7 @@ import {
 } from "@/components/privacy/data-access-list";
 import { PrivacySection } from "@/components/privacy/privacy-section";
 import { PrivacyToc } from "@/components/privacy/privacy-toc";
+import { bulletListClass } from "@/components/ui/bullet-list";
 
 type PageProps = { params: Promise<{ lang: string }> };
 
@@ -20,8 +21,7 @@ type PageProps = { params: Promise<{ lang: string }> };
  */
 const UPDATED = "2026-11-10";
 
-const listClass =
-  "grid list-disc gap-2 pl-5 leading-7 marker:text-accent [&:not(:first-child)]:mt-4";
+const listClass = `${bulletListClass} grid gap-2 [&:not(:first-child)]:mt-4`;
 
 export async function generateMetadata({
   params,
