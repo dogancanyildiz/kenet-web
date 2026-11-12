@@ -207,7 +207,7 @@ describe("home page", () => {
     }
 
     const tablet = images.find((img) =>
-      (img.getAttribute("src") ?? "").includes("ipad-person-light")
+      (img.getAttribute("src") ?? "").includes("ipad-today-light")
     );
     expect(tablet).toBeTruthy();
     expect(tablet?.closest('[data-device="tablet"]')).toBeTruthy();

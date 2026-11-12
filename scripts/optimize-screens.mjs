@@ -26,11 +26,10 @@ const QUALITY = 75;
 const PHONE = { width: 1320, height: 2868, outWidth: 780 };
 const TABLET = { cropTop: 56, cropBottom: 64, outWidth: 1600 };
 
-// screen-tour.sh --store run of 2026-11-12 (kenet dev f96cca4d). The iPad
-// Today shot carries the calendar permission band, so the tablet keeps the
-// person page.
-const IPHONE = "store-261112/iphone";
-const IPAD = "store-261112/ipad";
+// Second screen-tour.sh --store run of 2026-11-12: the iPad Today shot shows
+// three sample calendar events instead of the permission band.
+const IPHONE = "store-261112b/iphone";
+const IPAD = "store-261112b/ipad";
 
 /** [source file, output name, kind] */
 const SHOTS = [
@@ -44,8 +43,8 @@ const SHOTS = [
   [`${IPHONE}/20-koyu-kanban.png`, "kanban-dark", "phone"],
   [`${IPHONE}/12-hedef-ayrintisi.png`, "goal-light", "phone"],
   [`${IPHONE}/20-koyu-hedef-ayrintisi.png`, "goal-dark", "phone"],
-  [`${IPAD}/10-kisi-sayfasi.png`, "ipad-person-light", "tablet"],
-  [`${IPAD}/20-koyu-kisi-sayfasi.png`, "ipad-person-dark", "tablet"],
+  [`${IPAD}/01-bugun.png`, "ipad-today-light", "tablet"],
+  [`${IPAD}/20-koyu-bugun.png`, "ipad-today-dark", "tablet"],
 ];
 
 const root = resolve(process.argv[2] ?? ".local/kaynak-ekranlar");

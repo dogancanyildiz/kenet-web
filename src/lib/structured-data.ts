@@ -28,7 +28,7 @@ export const OPERATING_SYSTEM = "iOS, iPadOS";
 const SCREENSHOTS = [
   "today-light.webp",
   "person-light.webp",
-  "ipad-person-light.webp",
+  "ipad-today-light.webp",
 ];
 
 /** GitHub profile of the owner, derived from the app repository url. */
