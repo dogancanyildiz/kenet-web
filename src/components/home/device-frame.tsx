@@ -21,7 +21,7 @@ type DeviceFrameProps = {
 
 /**
  * Intrinsic sizes in CSS px; keep in step with scripts/optimize-screens.mjs.
- * Phone: full 1206×2622 capture at 780 px wide, uncropped (status bar and
+ * Phone: full 1320×2868 capture at 780 px wide, uncropped (status bar and
  * tab bar stay). Tablet: landscape iPad capture with the status bar and the
  * resize-handle strip cropped, 1600×1130.
  */
@@ -38,8 +38,8 @@ const SIZES: Record<
 > = {
   phone: {
     width: 390,
-    height: 848,
-    aspect: "aspect-[390/848]",
+    height: 847,
+    aspect: "aspect-[1320/2868]",
     shell: "rounded-[44px] p-2 sm:rounded-[54px]",
     screen: "rounded-[36px] sm:rounded-[46px]",
     sizes: "(max-width: 1023px) 260px, 340px",

@@ -7,10 +7,10 @@
 // output, so a newer run is picked by editing one path. PNGs are not
 // committed.
 //
-// Phones: the iPhone captures are 1206×2622 (3x of 402×874) and are scaled
-// to 780 px wide without cropping. The status bar is a clean 09:41 with a
+// Phones: the iPhone captures are the 6.9" store size, 1320×2868 (3x of
+// 440×956), and are scaled to 780 px wide without cropping. The status bar is a clean 09:41 with a
 // full battery, and the floating tab bar is part of how the app looks, so
-// both stay; DeviceFrame uses the same 1206:2622 ratio.
+// both stay; DeviceFrame uses the same 1320:2868 ratio.
 //
 // Tablet: the iPad captures are stored as 2064×2752 with EXIF orientation 8;
 // rotate() applies it, giving the 2752×2064 landscape image. The top strip
@@ -23,11 +23,14 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 const QUALITY = 75;
-const PHONE = { width: 1206, height: 2622, outWidth: 780 };
+const PHONE = { width: 1320, height: 2868, outWidth: 780 };
 const TABLET = { cropTop: 56, cropBottom: 64, outWidth: 1600 };
 
-const IPHONE = "k5-iphone";
-const IPAD = "tur-fark3birlesik-ipad";
+// screen-tour.sh --store run of 2026-11-12 (kenet dev f96cca4d). The iPad
+// Today shot carries the calendar permission band, so the tablet keeps the
+// person page.
+const IPHONE = "store-261112/iphone";
+const IPAD = "store-261112/ipad";
 
 /** [source file, output name, kind] */
 const SHOTS = [
