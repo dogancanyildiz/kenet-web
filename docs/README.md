@@ -1,4 +1,4 @@
-# kenet-web belgeleri
+# kenet.app belgeleri
 
 **Amaç:** Bu klasör sitenin kararlarını, sayfa tariflerini, tasarım kurallarını ve panel adımlarını tutar.
 

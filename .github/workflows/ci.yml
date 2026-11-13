@@ -77,17 +77,17 @@ jobs:
           # this job is only a gate.
           push: false
           load: true
-          tags: kenet-web-ci:${{ github.sha }}
+          tags: kenet-app-ci:${{ github.sha }}
           build-args: |
             NEXT_PUBLIC_SITE_URL=https://kenet.app
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Start the smoke container
-        run: docker run -d --name kenet-web-smoke -p 3131:3000 kenet-web-ci:${{ github.sha }}
+        run: docker run -d --name kenet-app-smoke -p 3131:3000 kenet-app-ci:${{ github.sha }}
       - name: Assert the image ships a healthcheck
         run: |
           set -euo pipefail
-          config=$(docker inspect --format '{{json .Config.Healthcheck}}' kenet-web-smoke)
+          config=$(docker inspect --format '{{json .Config.Healthcheck}}' kenet-app-smoke)
           if [ "$config" = "null" ]; then
             echo "image has no HEALTHCHECK configured" >&2
             exit 1
@@ -97,7 +97,7 @@ jobs:
           set -euo pipefail
           status="starting"
           for _ in $(seq 1 30); do
-            status=$(docker inspect --format '{{.State.Health.Status}}' kenet-web-smoke)
+            status=$(docker inspect --format '{{.State.Health.Status}}' kenet-app-smoke)
             echo "health status: $status"
             if [ "$status" = "healthy" ] || [ "$status" = "unhealthy" ]; then
               break
@@ -106,7 +106,7 @@ jobs:
           done
           if [ "$status" != "healthy" ]; then
             echo "container did not report healthy in time" >&2
-            docker logs kenet-web-smoke
+            docker logs kenet-app-smoke
             exit 1
           fi
       - name: Probe the health endpoint from outside the container
@@ -119,4 +119,4 @@ jobs:
           [ "$code" = "200" ]
       - name: Stop and remove the smoke container
         if: always()
-        run: docker rm -f kenet-web-smoke || true
+        run: docker rm -f kenet-app-smoke || true

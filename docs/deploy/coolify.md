@@ -9,7 +9,7 @@
 
 ## Coolify
 
-1. Yeni kaynak: GitHub App ile `dogancanyildiz/kenet-web`, dal `main`, build pack **Dockerfile**.
+1. Yeni kaynak: GitHub App ile `dogancanyildiz/kenet.app`, dal `main`, build pack **Dockerfile**.
 2. Build değişkenleri: `NEXT_PUBLIC_SITE_URL=https://kenet.app`. `NEXT_PUBLIC_BUILD_SHA` ve `NEXT_PUBLIC_BUILD_DATE` boş bırakılır; Dockerfile `SOURCE_COMMIT` ve derleme saatine düşer.
 3. Port 3000; sağlık kontrolü imajın kendi `HEALTHCHECK` komutudur (`/api/health`).
 4. Alan adı `https://kenet.app`. "Redirect to www" kapalı; `www` kaydı yok.
