@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { BrandMark } from "@/components/brand/brand-mark";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { NavLinks } from "@/components/layout/nav-links";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 
 export function Header() {
   const t = useTranslations("nav");
@@ -19,12 +20,14 @@ export function Header() {
           <BrandMark size={24} />
           <span className="max-[379px]:hidden">{tBrand("name")}</span>
         </Link>
-        {/* Two landmarks side by side, not nested: pages, then language. */}
+        {/* Two landmarks side by side, not nested: pages, then language;
+            the theme button sits outside both. */}
         <div className="flex min-w-0 items-center gap-1 sm:gap-3">
           <nav aria-label={t("primary")}>
             <NavLinks />
           </nav>
           <LanguageSwitcher />
+          <ThemeToggle />
         </div>
       </div>
     </header>

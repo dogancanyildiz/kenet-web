@@ -58,7 +58,7 @@ const cases = [
       "Bu site",
       "Değişiklikler ve iletişim",
     ],
-    updated: "Son güncelleme: 11 Kasım 2026",
+    updated: "Son güncelleme: 13 Kasım 2026",
     supportHref: "/destek",
   },
   {
@@ -71,7 +71,7 @@ const cases = [
       "This site",
       "Changes and contact",
     ],
-    updated: "Last updated: November 11, 2026",
+    updated: "Last updated: November 13, 2026",
     supportHref: "/en/support",
   },
 ];
@@ -107,7 +107,7 @@ describe.each(cases)("privacy page ($lang)", (c) => {
     await renderPage(c.lang);
     const time = document.querySelector("time");
 
-    expect(time?.getAttribute("dateTime")).toBe("2026-11-11");
+    expect(time?.getAttribute("dateTime")).toBe("2026-11-13");
     expect(time?.parentElement?.textContent).toBe(c.updated);
   });
 
