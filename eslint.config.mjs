@@ -32,14 +32,14 @@ const eslintConfig = defineConfig([
     ".claude/**",
   ]),
   {
-    name: "kenet-web/severity",
+    name: "kenet.app/severity",
     rules: nextDefaultsRaisedToError,
   },
   {
     // Type-aware linting, restricted to the TypeScript extensions tsconfig.json
     // covers: the .mjs config files and scripts/*.mjs carry no type
     // information, and projectService would fail to place them in a program.
-    name: "kenet-web/type-aware",
+    name: "kenet.app/type-aware",
     files: ["**/*.{mts,ts,cts,tsx}"],
     languageOptions: {
       parserOptions: {

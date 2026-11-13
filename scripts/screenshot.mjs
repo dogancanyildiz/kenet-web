@@ -26,7 +26,7 @@ const CHROME =
   process.env.CHROME_BIN ??
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const port = 9222 + Math.floor(Math.random() * 500);
-const profile = join(tmpdir(), `kenet-web-shot-${process.pid}`);
+const profile = join(tmpdir(), `kenet-app-shot-${process.pid}`);
 const chrome = spawn(
   CHROME,
   [
