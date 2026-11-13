@@ -5,6 +5,20 @@ Bu dosya [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) biçimini izle
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-13
+
+### Features
+
+- `c216c4b` üst çubukta açık ve koyu tema düğmesi (#24)
+
+### Other
+
+- `b743227` dal koruması kuruldu (#23)
+- `9cab9cb` kanonik host www.kenet.app (#21)
+- `be67d35` **release**: sync version v0.2.0 (#20)
+
+**Tam değişiklik listesi**: [v0.2.0...v0.3.0](https://github.com/dogancanyildiz/kenet.app/compare/v0.2.0...v0.3.0)
+
 ## [0.2.0] - 2026-11-13
 
 ### Features
