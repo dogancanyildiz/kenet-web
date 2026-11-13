@@ -26,7 +26,7 @@
 
 ## GitHub
 
-1. Dal koruması `main` ve `dev`: zorunlu kontroller `Quality checks`, `Docker image`, `CodeQL analysis`; adları değişmemeli.
+1. Dal koruması `main` ve `dev` (2026-11-13): zorunlu kontroller `Quality checks`, `Docker image`, `CodeQL analysis`; adları değişmemeli. Birleştirme yalnız PR ile, yöneticiler de dahil; force push ve dal silme kapalı. Depoda squash ve merge commit açık, rebase kapalı; birleşen dal silinir.
 2. Settings → Actions → General: "Allow GitHub Actions to create and approve pull requests" açık (release iş akışının sürüm eşitleme PR'ı için).
 3. Dependabot güvenlik güncellemeleri açık.
 
