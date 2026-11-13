@@ -69,8 +69,8 @@ export default async function HomePage({ params }: PageProps) {
   ] as const;
 
   const tablet = {
-    srcLight: "/screens/ipad-person-light.webp",
-    srcDark: "/screens/ipad-person-dark.webp",
+    srcLight: "/screens/ipad-today-light.webp",
+    srcDark: "/screens/ipad-today-dark.webp",
     alt: t("tabletAlt"),
     caption: t("tabletCaption"),
   };

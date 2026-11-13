@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Renders the Open Graph card (public/og/kenet-2026-11.png, 1200×630) from committed
 // inputs only: the app icon (src/app/icon.svg) and three real screens
-// (public/screens/today-light, person-light, ipad-person-light). Run after
+// (public/screens/kanban-light, person-light, ipad-today-light). Run after
 // any of them changes; the PNG is committed so the build needs no rasterizer.
 //
 //   npm run og
@@ -156,13 +156,13 @@ for (const card of CARDS) {
     .png()
     .toBuffer();
 
-  const tablet = await device(repo("public/screens/ipad-person-light.webp"), {
+  const tablet = await device(repo("public/screens/ipad-today-light.webp"), {
     width: 700,
     bezel: 12,
     radius: 28,
     bezelColor: tokens.bezel,
   });
-  const today = await device(repo("public/screens/today-light.webp"), {
+  const kanban = await device(repo("public/screens/kanban-light.webp"), {
     width: 236,
     bezel: 8,
     radius: 40,
@@ -177,7 +177,7 @@ for (const card of CARDS) {
 
   const layers = [
     ...(await place(tablet, 452, 70)),
-    ...(await place(today, 72, 214)),
+    ...(await place(kanban, 72, 214)),
     ...(await place(person, 300, 150)),
     { input: icon, left: 72, top: 64 },
   ];
