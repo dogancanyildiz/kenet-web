@@ -17,7 +17,8 @@
     "skipToContent": "İçeriğe geç",
     "languageSwitcher": "Dil",
     "localeTr": "Türkçe",
-    "localeEn": "English"
+    "localeEn": "English",
+    "themeToggle": "Açık ve koyu tema arasında geç"
   },
   "footer": {
     "madeBy": "Kenet, <link>{name}</link> tarafından geliştirilir.",

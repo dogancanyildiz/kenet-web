@@ -1,8 +1,11 @@
 /* Şafak design language on the web. Source of truth for the values:
    kenet/docs/design.md, "Renk belirteçleri". Every colour token has four
    variants: light, dark and the Increase Contrast (KA) pair of each. The
-   site follows the system appearance; there is no site-level theme switch
-   (design rule 3). Scope automatic source detection to src/ so class names
+   site follows the system appearance unless the header theme button pinned
+   light or dark: then <html data-theme> carries the choice. The dark and
+   dark KA values therefore appear twice, once under the system query and
+   once under [data-theme="dark"]; tests/design/tokens.test.ts keeps each
+   pair identical. Scope automatic source detection to src/ so class names
    quoted in docs/ and tests/ never reach the stylesheet. */
 @import "tailwindcss" source("../");
 
@@ -73,7 +76,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --paper: #0e0f11;
     --elevated: #141518;
     --surface: #1a1b1f;
@@ -101,6 +104,41 @@
   }
 }
 
+:root[data-theme="dark"] {
+  --paper: #0e0f11;
+  --elevated: #141518;
+  --surface: #1a1b1f;
+  --well: #212228;
+  --rule: rgb(255 255 255 / 7%);
+  --line: rgb(255 255 255 / 12%);
+  --control: #7c7f88;
+  --text: #f2f2f4;
+  --text-secondary: #a7aab2;
+  --text-tertiary: #8e9199;
+  --accent: #d08bc4;
+  --on-accent: #1b0e18;
+  --accent-soft: rgb(208 139 196 / 16%);
+  --warning: #e3b86a;
+  --danger: #ff6b6b;
+  --person: #8fb3f0;
+  --place: #7fd1a6;
+  --device-shadow: 0 24px 80px -32px rgb(0 0 0 / 0.6);
+  --glow: radial-gradient(
+    900px 600px at 12% 0,
+    color-mix(in srgb, var(--glow-a) 45%, transparent) 0%,
+    color-mix(in srgb, var(--glow-b) 14%, transparent) 38%,
+    transparent 70%
+  );
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 /* Increase Contrast: surfaces stay, foreground and lines strengthen. */
 @media (prefers-contrast: more) {
   :root {
@@ -122,7 +160,27 @@
 }
 
 @media (prefers-contrast: more) and (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
+    --paper: #08090a;
+    --elevated: #0e0f11;
+    --rule: rgb(255 255 255 / 16%);
+    --line: rgb(255 255 255 / 24%);
+    --control: #a3a6ae;
+    --text: #ffffff;
+    --text-secondary: #cdd0d6;
+    --text-tertiary: #b4b7be;
+    --accent: #e8bce0;
+    --on-accent: #12091a;
+    --warning: #f0cf8e;
+    --danger: #ffb4b4;
+    --person: #b8d0f8;
+    --place: #aee5c6;
+    --glow: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root[data-theme="dark"] {
     --paper: #08090a;
     --elevated: #0e0f11;
     --rule: rgb(255 255 255 / 16%);
@@ -143,7 +201,10 @@
 
 /* Reduce Transparency removes the glow as well (design.md, "Parıltı"). */
 @media (prefers-reduced-transparency: reduce) {
-  :root {
+  /* Listed with the theme selectors so it outranks the dark blocks. */
+  :root,
+  :root:not([data-theme="light"]),
+  :root[data-theme] {
     --glow: none;
   }
 
@@ -335,13 +396,50 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    .only-light {
+    :root:not([data-theme="light"]) .only-light {
       display: none;
     }
 
-    .only-dark {
+    :root:not([data-theme="light"]) .only-dark {
       display: block;
     }
+  }
+
+  :root[data-theme="dark"] .only-light {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .only-dark {
+    display: block;
+  }
+
+  /* Theme button: the moon offers dark while light is on screen, the sun
+     offers light while dark is. Same selectors as the tokens, so the glyph
+     always matches the page. */
+  .theme-toggle {
+    cursor: pointer;
+  }
+
+  .theme-toggle .theme-icon-sun {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-toggle .theme-icon-moon {
+      display: none;
+    }
+
+    :root:not([data-theme="light"]) .theme-toggle .theme-icon-sun {
+      display: block;
+    }
+  }
+
+  :root[data-theme="dark"] .theme-toggle .theme-icon-moon {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .theme-toggle .theme-icon-sun {
+    display: block;
   }
 
   .site-header {

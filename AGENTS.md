@@ -10,15 +10,15 @@
 
 ## Proje özeti
 
-| Konu         | Değer                                                                                                                                                                 |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ad           | kenet.app (depo `github.com/dogancanyildiz/kenet.app`; yerel klasör `kenet-web` kalabilir): tanıtım sitesi. Ürün Kenet'tir, deposu `github.com/dogancanyildiz/kenet`. |
-| Yığın        | Next.js 16 App Router, React 19, next-intl, Tailwind 4, vitest. `output: standalone`.                                                                                 |
-| Diller       | Türkçe kökte (`/`, `/gizlilik`, `/destek`), İngilizce `/en` altında (`/en`, `/en/privacy`, `/en/support`).                                                            |
-| Sayfalar     | Ana sayfa, gizlilik politikası, destek. Mağaza kaydı `kenet.app/gizlilik` ve `kenet.app/destek` adreslerini ister; bu yollar değişmez.                                |
-| Tasarım      | Şafak tasarım dili, kaynak `kenet/docs/design.md`. Site sistem görünümünü izler; tema anahtarı yoktur.                                                                |
-| Barındırma   | Coolify, Dockerfile build pack, önde Traefik ve Cloudflare proxy. `main` dalından yayın.                                                                              |
-| Kanonik host | `www.kenet.app`. `kenet.app` (apex) yolu koruyarak 301 ile www'ye gider (karar 2026-11-13).                                                                           |
+| Konu         | Değer                                                                                                                                                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ad           | kenet.app (depo `github.com/dogancanyildiz/kenet.app`; yerel klasör `kenet-web` kalabilir): tanıtım sitesi. Ürün Kenet'tir, deposu `github.com/dogancanyildiz/kenet`.     |
+| Yığın        | Next.js 16 App Router, React 19, next-intl, Tailwind 4, vitest. `output: standalone`.                                                                                     |
+| Diller       | Türkçe kökte (`/`, `/gizlilik`, `/destek`), İngilizce `/en` altında (`/en`, `/en/privacy`, `/en/support`).                                                                |
+| Sayfalar     | Ana sayfa, gizlilik politikası, destek. Mağaza kaydı `kenet.app/gizlilik` ve `kenet.app/destek` adreslerini ister; bu yollar değişmez.                                    |
+| Tasarım      | Şafak tasarım dili, kaynak `kenet/docs/design.md`. Site sistem görünümünü izler; üst çubuktaki tema düğmesi açık ya da koyuyu sabitleyebilir (`localStorage`, çerez yok). |
+| Barındırma   | Coolify, Dockerfile build pack, önde Traefik ve Cloudflare proxy. `main` dalından yayın.                                                                                  |
+| Kanonik host | `www.kenet.app`. `kenet.app` (apex) yolu koruyarak 301 ile www'ye gider (karar 2026-11-13).                                                                               |
 
 ## Başlangıç akışı
 
