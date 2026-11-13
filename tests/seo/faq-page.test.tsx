@@ -48,8 +48,8 @@ describe.each(["tr", "en"] as const)("support FAQPage (%s)", (lang) => {
     expect(data.inLanguage).toBe(lang);
     expect(data.url).toBe(
       lang === "tr"
-        ? "https://kenet.app/destek"
-        : "https://kenet.app/en/support"
+        ? "https://www.kenet.app/destek"
+        : "https://www.kenet.app/en/support"
     );
 
     const visible = [...container.querySelectorAll("details")].map(

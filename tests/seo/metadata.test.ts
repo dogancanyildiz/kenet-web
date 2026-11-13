@@ -41,22 +41,22 @@ const PAGES: Array<{
   {
     path: "/",
     load: homeMetadata,
-    urls: { tr: "https://kenet.app/", en: "https://kenet.app/en" },
+    urls: { tr: "https://www.kenet.app/", en: "https://www.kenet.app/en" },
   },
   {
     path: "/privacy",
     load: privacyMetadata,
     urls: {
-      tr: "https://kenet.app/gizlilik",
-      en: "https://kenet.app/en/privacy",
+      tr: "https://www.kenet.app/gizlilik",
+      en: "https://www.kenet.app/en/privacy",
     },
   },
   {
     path: "/support",
     load: supportMetadata,
     urls: {
-      tr: "https://kenet.app/destek",
-      en: "https://kenet.app/en/support",
+      tr: "https://www.kenet.app/destek",
+      en: "https://www.kenet.app/en/support",
     },
   },
 ];
@@ -94,7 +94,7 @@ describe.each(PAGES)("head of $path", ({ load, urls }) => {
       expect(og.locale).toBe(lang === "tr" ? "tr_TR" : "en_US");
       expect(og.images).toEqual([
         {
-          url: "https://kenet.app/og/kenet-2026-11.png",
+          url: "https://www.kenet.app/og/kenet-2026-11.png",
           width: 1200,
           height: 630,
           alt: seo.ogImageAlt,
@@ -107,7 +107,10 @@ describe.each(PAGES)("head of $path", ({ load, urls }) => {
       };
       expect(twitter.card).toBe("summary_large_image");
       expect(twitter.images).toEqual([
-        { url: "https://kenet.app/og/kenet-2026-11.png", alt: seo.ogImageAlt },
+        {
+          url: "https://www.kenet.app/og/kenet-2026-11.png",
+          alt: seo.ogImageAlt,
+        },
       ]);
     }
   );
@@ -124,7 +127,7 @@ describe("layout head", () => {
       expect(
         (metadata.openGraph as { images: Array<{ url: string }> }).images[0]
           ?.url
-      ).toBe("https://kenet.app/og/kenet-2026-11.png");
+      ).toBe("https://www.kenet.app/og/kenet-2026-11.png");
     }
   );
 

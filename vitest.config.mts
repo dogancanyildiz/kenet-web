@@ -21,7 +21,7 @@ export default defineConfig({
     setupFiles: ["./tests/setup/vitest.setup.ts"],
     watch: false,
     env: {
-      NEXT_PUBLIC_SITE_URL: "https://kenet.app",
+      NEXT_PUBLIC_SITE_URL: "https://www.kenet.app",
     },
     server: {
       deps: {

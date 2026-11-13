@@ -56,7 +56,7 @@ describe("legacy app redirects", () => {
 
   it("leaves the English pages to next-intl, served in place", () => {
     for (const path of ["/en/privacy", "/en/support"]) {
-      const response = proxy(new NextRequest(`https://kenet.app${path}`));
+      const response = proxy(new NextRequest(`https://www.kenet.app${path}`));
       expect(response.status, path).toBe(200);
       expect(response.headers.get("location"), path).toBeNull();
       expect(response.headers.get("x-middleware-next"), path).toBe("1");
@@ -66,9 +66,11 @@ describe("legacy app redirects", () => {
   // Without the config rule next-intl would still answer /privacy, but with a
   // temporary 307. The config rule runs first and makes it a cacheable 308.
   it("upgrades next-intl's own temporary answer to a permanent one", () => {
-    const response = proxy(new NextRequest("https://kenet.app/privacy"));
+    const response = proxy(new NextRequest("https://www.kenet.app/privacy"));
     expect(response.status).toBe(307);
-    expect(response.headers.get("location")).toBe("https://kenet.app/gizlilik");
+    expect(response.headers.get("location")).toBe(
+      "https://www.kenet.app/gizlilik"
+    );
     expect(redirectFor("/privacy")?.permanent).toBe(true);
   });
 });

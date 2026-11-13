@@ -24,9 +24,9 @@ Sayılar Python `len()` (Unicode karakter) ve UTF-8 bayt olarak ölçüldü. App
 
 | Alan | tr | en |
 |---|---|---|
-| Destek URL'si | `https://kenet.app/destek` | `https://kenet.app/en/support` |
-| Gizlilik politikası URL'si | `https://kenet.app/gizlilik` | `https://kenet.app/en/privacy` |
-| Pazarlama URL'si (isteğe bağlı) | `https://kenet.app/` | `https://kenet.app/en` |
+| Destek URL'si | `https://www.kenet.app/destek` | `https://www.kenet.app/en/support` |
+| Gizlilik politikası URL'si | `https://www.kenet.app/gizlilik` | `https://www.kenet.app/en/privacy` |
+| Pazarlama URL'si (isteğe bağlı) | `https://www.kenet.app/` | `https://www.kenet.app/en` |
 
 ## Türkçe (tr)
 
@@ -93,7 +93,7 @@ Uygulamayı açmadan Siri ve Kısayollar ile olay ya da görev eklersin; paylaş
 
 Arayüz Türkçe ve İngilizcedir.
 
-Gizlilik politikası: https://kenet.app/gizlilik
+Gizlilik politikası: https://www.kenet.app/gizlilik
 ```
 
 ## İngilizce (en)
@@ -161,7 +161,7 @@ Add an event or a task with Siri and Shortcuts without opening the app, send tex
 
 The interface is in English and Turkish.
 
-Privacy policy: https://kenet.app/en/privacy
+Privacy policy: https://www.kenet.app/en/privacy
 ```
 
 ## İnceleme notu (App Review)
@@ -188,8 +188,8 @@ Importing from Contacts uses the system contact picker and Journaling Suggestion
 
 The app has no server, no analytics and no third-party SDK other than GRDB (the local SQLite index).
 
-Privacy policy: https://kenet.app/en/privacy
-Support: https://kenet.app/en/support
+Privacy policy: https://www.kenet.app/en/privacy
+Support: https://www.kenet.app/en/support
 ```
 
 ### tr (1802/4000)
