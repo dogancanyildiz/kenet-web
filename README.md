@@ -1,103 +1,128 @@
-# kenet-web
+<p align="center">
+  <img src="src/app/icon.svg" width="96" height="96" alt="Kenet simgesi">
+</p>
 
-[![CI](https://github.com/dogancanyildiz/kenet-web/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dogancanyildiz/kenet-web/actions/workflows/ci.yml)
+<h1 align="center">Kenet</h1>
 
-**Amaç:** README depoya giriş noktasıdır: siteyi, durumu, kurulumu ve belge haritasını tek sayfada verir.
+<p align="center">
+  <b>Yaz; kim, nerede ve ne zaman kendiliğinden bağlansın.</b>
+</p>
 
-**Kapsam:**
+<p align="center">
+  <a href="https://kenet.app">kenet.app</a> ·
+  <a href="https://kenet.app/gizlilik">Gizlilik</a> ·
+  <a href="https://kenet.app/destek">Destek</a> ·
+  <a href="#english">English</a>
+</p>
 
-- Site özeti, durum, yığın
-- Kurulum, betikler, ortam değişkenleri
-- Belge haritası, dağıtım, lisans
+<p align="center">
+  <img src="public/og/kenet-2026-11.png" alt="Kenet iPhone'da görev panosu ve kişi sayfası, iPad'de Bugün ekranı" width="840">
+</p>
 
-## Site özeti
+Kenet, hesap gerektirmeyen ve verisini düz Markdown dosyalarında tutan kişisel bir günlüktür. Gün
+içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlar; kasan Obsidian
+ile uyumludur.
 
-| Konu       | Bilgi                                                                                                                            |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Alan adı   | `kenet.app`; alınamazsa `kenetapp.com` (Kenet kararı 2026-10-21)                                                                 |
-| Ürün       | Kenet: kişiler, konumlar ve olaylar üzerine kurulu kişisel günlük; iPhone, iPad ve Mac. Deposu `github.com/dogancanyildiz/kenet` |
-| Sayfalar   | `/` ana sayfa, `/gizlilik`, `/destek`; İngilizce `/en`, `/en/privacy`, `/en/support`                                             |
-| Yığın      | Next.js 16 App Router, React 19, next-intl, Tailwind 4, vitest; `output: standalone`                                             |
-| Tasarım    | Şafak tasarım dili, kaynağı `kenet/docs/design.md`; site sistem görünümünü izler                                                 |
-| Barındırma | Coolify, Dockerfile build pack, Traefik ve Cloudflare arkasında                                                                  |
+Bu depo Kenet'in tanıtım sitesi **kenet.app**'in kaynağıdır. Uygulamanın kendisi
+[dogancanyildiz/kenet](https://github.com/dogancanyildiz/kenet) deposundadır.
 
-## Proje durumu
+## Nasıl çalışır
 
-**Tablo, 2026-11-10 tarihindeki durumu verir.**
+Hızlı giriş alanına bir satır yazarsın:
 
-| Konu  | Durum                                                                                                                                    |
-| ----- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Aşama | 1: iskelet. Rotalar, iki dil, belirteçler, güvenlik başlıkları, CI ve Dockerfile hazır.                                                  |
-| Açık  | Ana sayfa metni ve görselleri, gizlilik politikası metni, destek sayfası ayrıntısı, Coolify ve Cloudflare kurulumu, App Store bağlantısı |
-| Sürüm | Yok; ilk sürüm `main`'e ilk birleştirmede `release.yml` ile kesilir                                                                      |
-
-Ayrıntı `docs/roadmap.md` belgesindedir.
-
-## Kurulum
-
-```bash
-nvm use            # Node 24, .nvmrc
-npm install
-cp .env.example .env.local
-npm run dev        # http://localhost:3000
+```text
+Ece ile Kadıköy'de kahve
 ```
 
-`NEXT_PUBLIC_SITE_URL` yedeksizdir: yoksa `npm run build` düşer, çünkü sessiz bir yedek
-`robots.txt` ve `sitemap.xml` dosyalarına yanlış host yazardı.
+Kasanda Ece ve Kadıköy varsa Kenet satırı o kişiye ve konuma bağlar. Gün dosyana düz Markdown olarak yazılır:
 
-## Betikler
-
-| Betik                   | Ne yapar                                                                                                      |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`           | Geliştirme sunucusu                                                                                           |
-| `npm run build`         | Üretim derlemesi, `.next/standalone`                                                                          |
-| `npm run start`         | Üretim derlemesini sunar                                                                                      |
-| `npm run lint`          | ESLint, tip duyarlı kurallar, uyarı sıfır                                                                     |
-| `npm run typecheck`     | `tsc --noEmit`                                                                                                |
-| `npm test`              | vitest; CI `--coverage` ekler                                                                                 |
-| `npm run format`        | Prettier denetimi; `format:write` yazar                                                                       |
-| `npm run verify:routes` | Derlemeden sonra her sayfanın iki dilde prerender edildiğini ve `/api` rotalarının dinamik kaldığını doğrular |
-| `npm run icons`         | `src/app/icon.svg` dosyasından `icon.png` ve `apple-icon.png` üretir; simge değişince çalıştırılır            |
-| `npm run release:check` | `main`'e sonraki birleştirmenin keseceği sürümü basar, hiçbir şey yazmaz                                      |
-
-## Ortam değişkenleri
-
-| Değişken                 | Coolify katmanı | Zorunlu | Not                                                                                                              |
-| ------------------------ | --------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`   | Build           | Evet    | `https://kenet.app`. `next build` istemci paketine gömer.                                                        |
-| `NEXT_PUBLIC_BUILD_SHA`  | Build           | Hayır   | Altbilgideki commit. CI `github.sha` geçer; Coolify'da boş bırakılır, Dockerfile `SOURCE_COMMIT` değerine düşer. |
-| `NEXT_PUBLIC_BUILD_DATE` | Build           | Hayır   | ISO derleme zamanı; boşsa derleme anındaki UTC.                                                                  |
-
-Site çerez kullanmaz, hesap açmaz ve üçüncü taraf betik yüklemez. Ölçüm eklenmesi ayrı bir karardır.
-
-## Belge haritası
-
-| Belge                    | Konu                                                |
-| ------------------------ | --------------------------------------------------- |
-| `AGENTS.md`              | Ajan kuralları, değişmez kurallar, kalite kapıları  |
-| `docs/roadmap.md`        | Aşamalar ve aktif aşama                             |
-| `docs/product.md`        | Sitenin anlattığı ürün, hedef kitle, sayfa amaçları |
-| `docs/pages.md`          | Sayfa sayfa içerik ve yerleşim                      |
-| `docs/design.md`         | Şafak'ın web uyarlaması, belirteçler, kurallar      |
-| `docs/decisions.md`      | Karar günlüğü                                       |
-| `docs/deploy/coolify.md` | Coolify ve Cloudflare kurulum adımları              |
-
-## Dağıtım
-
-Coolify bu depoyu GitHub App ile izler ve `main`'e her push'ta Dockerfile build pack ile derler.
-İmaj `.next/standalone` içinden `node server.js` çalıştırır; sağlık kontrolü `/api/health`.
-Yerel doğrulama:
-
-```bash
-docker compose up --build -d
-curl -s http://127.0.0.1:3000/api/health
-docker compose down
+```markdown
+- 09:41 [[Ece Yalın|Ece]] ile [[Kadıköy]]'de kahve ^a1b2c3
 ```
 
-Dallanma `feature/*` → `dev` → `main`. `main`'e her birleştirme `release.yml` ile Conventional
-Commits'ten sürüm türetir, etiket ve GitHub Release üretir, sürüm eşitleme PR'ını `dev`'e açar.
+Belirsiz bir ad varsa uygulama sorar, tahmin etmez.
+
+## Üç vaat
+
+| Vaat                            | Ne demek                                                                                                                                                                                                                  |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Veri senin**                  | Markdown gerçek kaynaktır, hesap yoktur. Dosyaları uygulama olmadan da okursun. iCloud Drive'daki ya da seçtiğin klasördeki kasa, uygulamayı silsen de kalır; iPhone ve iPad'de cihazdaki yerel kasa uygulamayla silinir. |
+| **Hiçbir şey kaybolmaz**        | Kenet önce dosyaya yazar, sonra indeksi günceller. Tanımadığı metne dokunmaz. Silmede onay ya da geri alma vardır.                                                                                                        |
+| **Başka platforma taşınabilir** | Kasa Obsidian ile aynıdır. Uygulamaya özgü sözdizimi yoktur, kasa şifrelenmez.                                                                                                                                            |
+
+## Ekranlar
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/screens/today-dark.webp">
+    <img src="public/screens/today-light.webp" width="160" alt="Bugün ekranı: hafta şeridi, hedefler, görevler ve hızlı giriş">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/screens/person-dark.webp">
+    <img src="public/screens/person-light.webp" width="160" alt="Kişi sayfası: son görüşme grafiği ve o günün kişi ve konumları">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/screens/people-dark.webp">
+    <img src="public/screens/people-light.webp" width="160" alt="Kişiler ve Konumlar: Graph ve Harita girişleri, kişi listesi">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/screens/kanban-dark.webp">
+    <img src="public/screens/kanban-light.webp" width="160" alt="Görevler Kanban görünümü: durum sütunlarında görev kartları">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/screens/goal-dark.webp">
+    <img src="public/screens/goal-light.webp" width="160" alt="Hedef ayrıntısı: miktar alanı, hızlı ekleme, zincir ve ısı haritası">
+  </picture>
+</p>
+
+- **Kişinin geçmişi tek sayfada:** son görüşme, o günün kişi ve konumları. Takvim iznin varsa
+  yaklaşan etkinlikler burada görünür.
+- **Görevler Kanban'da da:** proje etiketli görevler durum sütunlarında; aynı görevler liste ve
+  zaman çizelgesinde de.
+- **Hedefe miktarla ilerle:** miktarı sayı klavyesiyle yaz, hızlı ekle ya da hedefe tamamla.
+- **iPad:** kenar çubuğu, liste ve sayfa yan yana durur.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="public/screens/ipad-today-dark.webp">
+    <img src="public/screens/ipad-today-light.webp" width="720" alt="Kenet iPad'de yatay: kenar çubuğu, günlük takvimi ve Bugün ekranı">
+  </picture>
+</p>
+
+## Durum
+
+| Platform       | Durum                                                                |
+| -------------- | -------------------------------------------------------------------- |
+| iPhone ve iPad | Mağazaya ilk sürümle girer.                                          |
+| Mac            | Mağazaya iPhone ve iPad sürümünden sonra girer.                      |
+| Dil            | Arayüz Türkçe ve İngilizcedir; cihazda Kenet için seçili dili izler. |
+
+Uygulama veri toplamaz, bu site çerez kullanmaz, hesap açmaz ve üçüncü taraf betik yüklemez.
+Ayrıntı [gizlilik politikasında](https://kenet.app/gizlilik).
+
+## Destek
+
+Hata ve öneriler için uygulama deposunda
+[konu aç](https://github.com/dogancanyildiz/kenet/issues). Hata bildirirken istenen bilgiler
+[destek sayfasında](https://kenet.app/destek#report).
+
+## Bu depo
+
+Site Next.js ile yazılmıştır; her sayfa Türkçe kökte, İngilizce `/en` altındadır. Yerel kurulum,
+betikler ve yayın akışı [docs/development.md](docs/development.md), belge haritası
+[docs/README.md](docs/README.md) içindedir.
+
+## English
+
+**Kenet** is a personal journal that needs no account and keeps everything in plain Markdown
+files. It links the short entries you write during the day to people, places and time on its own,
+in a vault Obsidian can open.
+
+This repository is the source of the Kenet website, [kenet.app](https://kenet.app/en). The app
+itself lives in [dogancanyildiz/kenet](https://github.com/dogancanyildiz/kenet).
+[Privacy](https://kenet.app/en/privacy) · [Support](https://kenet.app/en/support)
 
 ## Lisans
 
-Site kodu ve metinleri için lisans kararı açıktır (`docs/decisions.md`). Karar verilene kadar tüm
-hakları saklıdır. Kenet uygulamasının lisansı kendi deposundadır.
+Site kodu ve metinleri için lisans kararı açıktır; karar verilene kadar tüm hakları saklıdır.
+Kenet uygulamasının lisansı kendi deposundadır.
