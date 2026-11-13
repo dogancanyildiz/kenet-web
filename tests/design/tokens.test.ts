@@ -57,7 +57,11 @@ const KA_DARK_QUERY =
 const light = block(null);
 const dark = { ...light, ...block(DARK_QUERY, SYSTEM_DARK) };
 const lightKa = { ...light, ...block(KA_QUERY) };
+// Light KA (:root) still applies in dark for any token the dark blocks do
+// not set, so it sits under them here as it does in the cascade.
 const darkKa = {
+  ...light,
+  ...lightKa,
   ...dark,
   ...block(KA_DARK_QUERY, SYSTEM_DARK),
 };

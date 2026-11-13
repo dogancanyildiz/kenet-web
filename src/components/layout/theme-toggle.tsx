@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { IconMoon, IconSun } from "@/components/ui/icons";
 import {
@@ -41,10 +41,11 @@ export function ThemeToggle() {
   const t = useTranslations("a11y");
   const pathname = usePathname();
 
-  // Screenshot <source> elements are server-rendered with the system query;
-  // re-point them after hydration and after every navigation, which brings
-  // new ones.
-  useEffect(() => {
+  // Screenshot <source> elements and the theme-color metas are
+  // server-rendered with the system query; re-point them after hydration and
+  // after every navigation, which brings new ones. Layout effect so a page
+  // reached by client navigation never paints the other theme's image.
+  useLayoutEffect(() => {
     applyThemeChoice(document, currentChoice());
   }, [pathname]);
 

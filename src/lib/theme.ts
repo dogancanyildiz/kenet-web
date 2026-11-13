@@ -15,12 +15,22 @@ const LIGHT_QUERY = "(prefers-color-scheme: light)";
 
 /**
  * Runs inline in <head> before the first paint, so a pinned theme never
- * flashes the system one. Kept to plain ES5 and wrapped in try/catch:
- * storage can be blocked (private windows, disabled site data).
+ * flashes the system one. It also marks <html data-js> (the theme button is
+ * hidden without JavaScript, where it could not work) and, while the page
+ * is still parsing, re-points each screenshot <source> as it arrives, so
+ * the browser picks the pinned theme's image on the first try instead of
+ * after hydration. Same mapping as applyThemeChoice; tests/lib/theme.test.ts
+ * keeps the two in step. The theme-color metas are left to
+ * applyThemeChoice after hydration: they sit in React-managed <head>.
+ * Plain ES5, storage wrapped in try/catch (private windows, blocked data).
  */
-export const THEME_BOOT_SCRIPT = `(function(){try{var v=localStorage.getItem(${JSON.stringify(
+export const THEME_BOOT_SCRIPT = `(function(){var d=document,r=d.documentElement,t=null;r.setAttribute("data-js","");try{var v=localStorage.getItem(${JSON.stringify(
   THEME_STORAGE_KEY
-)});if(v==="light"||v==="dark")document.documentElement.setAttribute("data-theme",v)}catch(e){}})();`;
+)});if(v==="light"||v==="dark")t=v}catch(e){}if(!t)return;r.setAttribute("data-theme",t);var D=${JSON.stringify(
+  DARK_QUERY
+)},L=${JSON.stringify(
+  LIGHT_QUERY
+)};function fix(el){var o=el.getAttribute("data-scheme-media");if(o===null){o=el.getAttribute("media");if(o!==D&&o!==L)return;el.setAttribute("data-scheme-media",o)}var m=(o===D?"dark":"light")===t?"all":"not all";if(el.getAttribute("media")!==m)el.setAttribute("media",m)}function scan(){var l=d.querySelectorAll("source[media]");for(var i=0;i<l.length;i++)fix(l[i])}if(typeof MutationObserver==="function"){var mo=new MutationObserver(scan);mo.observe(r,{childList:true,subtree:true});d.addEventListener("DOMContentLoaded",function(){mo.disconnect();scan()})}})();`;
 
 export function readThemeChoice(
   storage: Pick<Storage, "getItem"> | null

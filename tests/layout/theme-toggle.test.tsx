@@ -6,7 +6,8 @@ import { loadMessages } from "@/i18n/messages";
 import { THEME_STORAGE_KEY } from "@/lib/theme";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 
-vi.mock("@/i18n/navigation", () => ({ usePathname: () => "/" }));
+let pathname = "/";
+vi.mock("@/i18n/navigation", () => ({ usePathname: () => pathname }));
 
 let systemDark = false;
 beforeEach(() => {
@@ -22,15 +23,21 @@ afterEach(() => {
   localStorage.clear();
   document.documentElement.removeAttribute("data-theme");
   systemDark = false;
+  pathname = "/";
+  document.body.querySelectorAll("picture").forEach((p) => p.remove());
 });
+
+let lastRerender: () => void = () => {};
 
 async function renderToggle(lang: "tr" | "en" = "tr") {
   const messages = await loadMessages(lang);
-  render(
+  const tree = () => (
     <NextIntlClientProvider locale={lang} messages={messages} timeZone="UTC">
       <ThemeToggle />
     </NextIntlClientProvider>
   );
+  const { rerender } = render(tree());
+  lastRerender = () => rerender(tree());
   return screen.getByRole("button", {
     name:
       lang === "tr"
@@ -70,5 +77,18 @@ describe("theme toggle", () => {
       new StorageEvent("storage", { key: THEME_STORAGE_KEY })
     );
     expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
+  });
+
+  it("re-points screenshots a client navigation brings in", async () => {
+    localStorage.setItem(THEME_STORAGE_KEY, "dark");
+    document.documentElement.setAttribute("data-theme", "dark");
+    await renderToggle();
+    const picture = document.createElement("picture");
+    picture.innerHTML =
+      '<source media="(prefers-color-scheme: dark)" srcset="/d.webp">';
+    document.body.append(picture);
+    pathname = "/support";
+    lastRerender();
+    expect(picture.querySelector("source")!.getAttribute("media")).toBe("all");
   });
 });

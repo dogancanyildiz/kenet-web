@@ -13,6 +13,7 @@ import {
 afterEach(() => {
   localStorage.clear();
   document.documentElement.removeAttribute("data-theme");
+  document.documentElement.removeAttribute("data-js");
   document.head.innerHTML = "";
   document.body.innerHTML = "";
 });
@@ -56,6 +57,52 @@ describe("boot script", () => {
   it("is plain ES5 with no em dash", () => {
     expect(THEME_BOOT_SCRIPT).not.toMatch(/=>|\bconst\b|\blet\b|`/);
     expect(THEME_BOOT_SCRIPT).not.toContain("—");
+  });
+});
+
+describe("boot script while parsing", () => {
+  it("re-points screenshot sources as they arrive, like applyThemeChoice", async () => {
+    localStorage.setItem(THEME_STORAGE_KEY, "light");
+    runBoot();
+    expect(document.documentElement.hasAttribute("data-js")).toBe(true);
+    document.body.innerHTML = `
+      <picture><source media="(prefers-color-scheme: dark)" srcset="/d.webp"><img src="/l.webp" alt=""></picture>
+      <picture><source media="(min-width: 800px)" srcset="/w.webp"><img src="/n.webp" alt=""></picture>`;
+    await Promise.resolve();
+    const boot = [...document.querySelectorAll("source")].map((s) => [
+      s.getAttribute("media"),
+      s.getAttribute("data-scheme-media"),
+    ]);
+    expect(boot[0]).toEqual(["not all", "(prefers-color-scheme: dark)"]);
+
+    // Same result as the client-side function on fresh markup.
+    document.body.innerHTML = document.body.innerHTML.replace(
+      /media="not all" data-scheme-media="[^"]*"/,
+      'media="(prefers-color-scheme: dark)"'
+    );
+    applyThemeChoice(document, "light");
+    const client = [...document.querySelectorAll("source")].map((s) => [
+      s.getAttribute("media"),
+      s.getAttribute("data-scheme-media"),
+    ]);
+    expect(client).toEqual(boot);
+  });
+
+  it("stops watching once the document is parsed", async () => {
+    localStorage.setItem(THEME_STORAGE_KEY, "dark");
+    runBoot();
+    document.dispatchEvent(new Event("DOMContentLoaded"));
+    document.body.innerHTML = `<picture><source media="(prefers-color-scheme: dark)" srcset="/d.webp"></picture>`;
+    await Promise.resolve();
+    expect(document.querySelector("source")!.getAttribute("media")).toBe(
+      "(prefers-color-scheme: dark)"
+    );
+  });
+
+  it("marks data-js even when nothing is pinned", () => {
+    runBoot();
+    expect(document.documentElement.hasAttribute("data-js")).toBe(true);
+    expect(document.documentElement.hasAttribute("data-theme")).toBe(false);
   });
 });
 

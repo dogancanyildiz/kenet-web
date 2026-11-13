@@ -420,6 +420,12 @@
     cursor: pointer;
   }
 
+  /* Without JavaScript the button could not work; the boot script marks
+     <html data-js> before the first paint. */
+  :root:not([data-js]) .theme-toggle {
+    display: none;
+  }
+
   .theme-toggle .theme-icon-sun {
     display: none;
   }
