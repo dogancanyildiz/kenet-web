@@ -37,7 +37,7 @@ npm run dev        # http://localhost:3000
 
 | Değişken                 | Coolify katmanı | Zorunlu | Not                                                                                                              |
 | ------------------------ | --------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`   | Build           | Evet    | `https://kenet.app`. `next build` istemci paketine gömer.                                                        |
+| `NEXT_PUBLIC_SITE_URL`   | Build           | Evet    | `https://www.kenet.app`. `next build` istemci paketine gömer.                                                        |
 | `NEXT_PUBLIC_BUILD_SHA`  | Build           | Hayır   | Altbilgideki commit. CI `github.sha` geçer; Coolify'da boş bırakılır, Dockerfile `SOURCE_COMMIT` değerine düşer. |
 | `NEXT_PUBLIC_BUILD_DATE` | Build           | Hayır   | ISO derleme zamanı; boşsa derleme anındaki UTC.                                                                  |
 

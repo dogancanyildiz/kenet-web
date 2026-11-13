@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://kenet.app">kenet.app</a> ·
-  <a href="https://kenet.app/gizlilik">Gizlilik</a> ·
-  <a href="https://kenet.app/destek">Destek</a> ·
+  <a href="https://www.kenet.app">www.kenet.app</a> ·
+  <a href="https://www.kenet.app/gizlilik">Gizlilik</a> ·
+  <a href="https://www.kenet.app/destek">Destek</a> ·
   <a href="#english">English</a>
 </p>
 
@@ -98,13 +98,13 @@ Belirsiz bir ad varsa uygulama sorar, tahmin etmez.
 | Dil            | Arayüz Türkçe ve İngilizcedir; cihazda Kenet için seçili dili izler. |
 
 Uygulama veri toplamaz, bu site çerez kullanmaz, hesap açmaz ve üçüncü taraf betik yüklemez.
-Ayrıntı [gizlilik politikasında](https://kenet.app/gizlilik).
+Ayrıntı [gizlilik politikasında](https://www.kenet.app/gizlilik).
 
 ## Destek
 
 Hata ve öneriler için uygulama deposunda
 [konu aç](https://github.com/dogancanyildiz/kenet/issues). Hata bildirirken istenen bilgiler
-[destek sayfasında](https://kenet.app/destek#report).
+[destek sayfasında](https://www.kenet.app/destek#report).
 
 ## Bu depo
 
@@ -118,9 +118,9 @@ betikler ve yayın akışı [docs/development.md](docs/development.md), belge ha
 files. It links the short entries you write during the day to people, places and time on its own,
 in a vault Obsidian can open.
 
-This repository is the source of the Kenet website, [kenet.app](https://kenet.app/en). The app
+This repository is the source of the Kenet website, [www.kenet.app](https://www.kenet.app/en). The app
 itself lives in [dogancanyildiz/kenet](https://github.com/dogancanyildiz/kenet).
-[Privacy](https://kenet.app/en/privacy) · [Support](https://kenet.app/en/support)
+[Privacy](https://www.kenet.app/en/privacy) · [Support](https://www.kenet.app/en/support)
 
 ## Lisans
 

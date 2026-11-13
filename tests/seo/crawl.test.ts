@@ -54,7 +54,7 @@ describe("robots.txt", () => {
       Array.isArray(rule.userAgent) ? rule.userAgent : [rule.userAgent]
     );
     expect(new Set(named).size).toBe(named.length);
-    expect(robots().sitemap).toBe("https://kenet.app/sitemap.xml");
+    expect(robots().sitemap).toBe("https://www.kenet.app/sitemap.xml");
   });
 });
 
@@ -64,12 +64,12 @@ describe("sitemap.xml", () => {
   it("lists every page in both languages", () => {
     expect(entries.map((entry) => entry.url).sort()).toEqual(
       [
-        "https://kenet.app/",
-        "https://kenet.app/en",
-        "https://kenet.app/gizlilik",
-        "https://kenet.app/en/privacy",
-        "https://kenet.app/destek",
-        "https://kenet.app/en/support",
+        "https://www.kenet.app/",
+        "https://www.kenet.app/en",
+        "https://www.kenet.app/gizlilik",
+        "https://www.kenet.app/en/privacy",
+        "https://www.kenet.app/destek",
+        "https://www.kenet.app/en/support",
       ].sort()
     );
   });
