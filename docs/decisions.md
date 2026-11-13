@@ -7,7 +7,7 @@
 | 2026-11-10 | Yığın Next.js 16, next-intl, Tailwind 4, vitest; dogancanyildiz.com düzeni, kuralları, CI ve Dockerfile taşınır | Kullanıcı kararı. Bilinen düzen, hazır kalite kapıları; iki site aynı bakım ritmini paylaşır |
 | 2026-11-10 | Barındırma Coolify, Dockerfile build pack, Traefik ve Cloudflare proxy; kişisel site ile aynı sunucu düzeni | Kullanıcı kararı. Mevcut panel ve runbook'lar kullanılır |
 | 2026-11-10 | İlk kapsam: ana sayfa, `/gizlilik`, `/destek`; TR ve EN | Kullanıcı kararı. Mağaza kaydı (Kenet Aşama 12) bu iki adresi ister |
-| 2026-11-10 | Kanonik host apex `kenet.app`; `www` yok | Mağaza kaydındaki adres kısa kalır; `.app` alan adları HSTS preload listesindedir, https zorunludur |
+| 2026-11-10 | Kanonik host apex `kenet.app`; `www` yok (yerini 2026-11-13 kararı aldı) | Mağaza kaydındaki adres kısa kalır; `.app` alan adları HSTS preload listesindedir, https zorunludur |
 | 2026-11-10 | Türkçe kökte, İngilizce `/en` altında; dil tespiti ve çerez kapalı | Kişisel site ile aynı kural: URL tek sinyal, her sayfa önbelleğe alınabilir |
 | 2026-11-10 | Yasal yollar `/gizlilik` ve `/destek`; iç rota adları `privacy` ve `support` | Kenet kararı 2026-10-21. next-intl `pathnames` eşler |
 | 2026-11-10 | Şafak tasarım dili aynen; site sistem görünümünü izler, tema anahtarı yok; parıltı KA ve Saydamlığı Azalt'ta kapanır | Kenet design.md kuralları 3 ve "Parıltı" bölümü. Ürün ve site aynı görünür |
@@ -35,3 +35,4 @@
 | 2026-11-11 | SoftwareApplication `offers` ve `aggregateRating` taşımaz; Search Console "Yazılım uygulamaları" raporunda geçersiz öğe görünmesi beklenir | Fiyat kararı yok, puan uydurulmaz. Fiyat kararı çıkınca `offers` eklenir |
 | 2026-11-11 | Paylaşım kartının dosya adı sürüm taşır (`kenet-2026-11.png`); kart yeniden üretilince ad değişir | Sosyal ağlar ve Cloudflare aynı adı uzun süre önbellekte tutar |
 | 2026-11-11 | `/privacy` ve `/support` 308 ile Türkçe sayfalara gider; İngilizce arayüzden gelen kullanıcı dili sayfada değiştirir. Uygulama İngilizce arayüzde `/en/privacy` ve `/en/support` adreslerini kullanır | URL tek dil sinyalidir; yönlendirme eski uygulama sabitleri için güvenlik payıdır |
+| 2026-11-13 | Kanonik host `www.kenet.app`; `kenet.app` (apex) yolu koruyarak 301 ile www'ye gider. `NEXT_PUBLIC_SITE_URL=https://www.kenet.app` | Sahibin kararı; Coolify'daki öteki siteler (kokluhukuk.com, dogancanyildiz.com) aynı düzende. Mağaza kaydındaki ve uygulamadaki apex adresler yönlendirmeyle aynı sayfaya varır; yasal yollar değişmez |

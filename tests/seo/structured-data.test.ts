@@ -35,7 +35,7 @@ describe("home structured data", () => {
     const tr = await homeStructuredData("tr");
     const en = await homeStructuredData("en");
     expect(byType(tr, "WebSite")).toMatchObject({
-      url: "https://kenet.app/",
+      url: "https://www.kenet.app/",
       name: "Kenet",
       inLanguage: "tr",
     });
@@ -49,12 +49,15 @@ describe("home structured data", () => {
       const home = (await loadMessages(locale)).home as { lead: string };
       expect(graph["@context"]).toBe("https://schema.org");
       expect(byType(graph, "SoftwareApplication")).toMatchObject({
-        "@id": "https://kenet.app/#app",
+        "@id": "https://www.kenet.app/#app",
         name: "Kenet",
         description: home.lead,
         operatingSystem: "iOS, iPadOS",
-        url: locale === "tr" ? "https://kenet.app/" : "https://kenet.app/en",
-        author: { "@id": "https://kenet.app/#developer" },
+        url:
+          locale === "tr"
+            ? "https://www.kenet.app/"
+            : "https://www.kenet.app/en",
+        author: { "@id": "https://www.kenet.app/#developer" },
       });
     }
   );
@@ -78,7 +81,7 @@ describe("home structured data", () => {
     const graph = await homeStructuredData("tr");
     expect(byType(graph, "Person")).toEqual({
       "@type": "Person",
-      "@id": "https://kenet.app/#developer",
+      "@id": "https://www.kenet.app/#developer",
       name: site.ownerName,
       url: site.ownerUrl,
       sameAs: ["https://github.com/dogancanyildiz"],
@@ -102,13 +105,13 @@ describe("FAQPage", () => {
   it("maps each visible question and answer one to one", () => {
     const page = buildFaqPage({
       locale: "en",
-      url: "https://kenet.app/en/support",
+      url: "https://www.kenet.app/en/support",
       items: [{ question: "Q?", answer: "A." }],
     });
     expect(page).toEqual({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      url: "https://kenet.app/en/support",
+      url: "https://www.kenet.app/en/support",
       inLanguage: "en",
       mainEntity: [
         {

@@ -46,7 +46,7 @@ jobs:
         run: npm run build
         env:
           # Build time only; inlined into the client bundle, never a secret.
-          NEXT_PUBLIC_SITE_URL: https://kenet.app
+          NEXT_PUBLIC_SITE_URL: https://www.kenet.app
           NEXT_PUBLIC_BUILD_SHA: ${{ github.sha }}
           NEXT_PUBLIC_BUILD_DATE: ${{ github.event.head_commit.timestamp || github.event.repository.updated_at }}
       - name: Test compiled CSS
@@ -79,7 +79,7 @@ jobs:
           load: true
           tags: kenet-app-ci:${{ github.sha }}
           build-args: |
-            NEXT_PUBLIC_SITE_URL=https://kenet.app
+            NEXT_PUBLIC_SITE_URL=https://www.kenet.app
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Start the smoke container

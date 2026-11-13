@@ -12,7 +12,7 @@
 |---|---|---|---|
 | 1 | İskelet | Bitti, 2026-11-10 | Üç sayfa iki dilde statik üretilir; CI, Dockerfile, güvenlik başlıkları ve belirteç testleri yeşil |
 | 2 | Sayfalar | Bitti, 2026-11-10 | Ana sayfa, gizlilik ve destek metinleri iki dilde tamam (PR #1, #4, #7); iki Opus turu, orta bulgular düzeltildi |
-| 3 | Yayın | Aktif | `kenet.app` Coolify'da yayında, TLS ve başlıklar canlıda doğrulandı, mağaza kaydı adresleri çalışıyor |
+| 3 | Yayın | Aktif | `www.kenet.app` Coolify'da yayında, TLS ve başlıklar canlıda doğrulandı, mağaza kaydı adresleri çalışıyor |
 | 4 | Mağaza sonrası | Açık | App Store bağlantısı, ekran görüntüleri, sürüm notları sayfası |
 
 ## Aşama 1: İskelet
@@ -40,10 +40,10 @@
 
 ## Aşama 3: Yayın
 
-- [ ] Alan adı alınır (kullanıcı), Cloudflare'a taşınır
-- [ ] Coolify kaynağı: GitHub App, Dockerfile build pack, `NEXT_PUBLIC_SITE_URL` build değişkeni, sağlık kontrolü
-- [ ] Cloudflare: DNS, SSL Full (strict), `www` yok
-- [ ] Canlı doğrulama: başlıklar, hreflang, sitemap, 404
+- [x] Alan adı alınır (kullanıcı), Cloudflare'a taşınır
+- [x] Coolify kaynağı: GitHub App, Dockerfile build pack, `NEXT_PUBLIC_SITE_URL` build değişkeni, sağlık kontrolü
+- [x] Cloudflare: DNS, SSL Full (strict), `www` CNAME; apex 301 ile www'ye (2026-11-13)
+- [x] Canlı doğrulama: başlıklar, hreflang, sitemap, 404 (2026-11-13)
 - [ ] Dal koruması: `main` ve `dev` için zorunlu kontroller `Quality checks`, `Docker image`, `CodeQL analysis`
 
 ## Sonraki fikirler

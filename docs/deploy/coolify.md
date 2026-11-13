@@ -4,21 +4,21 @@
 
 ## Ön koşul
 
-- [ ] `kenet.app` alınır (kullanıcı). Alınamazsa `kenetapp.com`; o durumda `NEXT_PUBLIC_SITE_URL`, `.env.example`, CI ve bu belge güncellenir.
+- [x] `kenet.app` alındı; kanonik host `www.kenet.app` (karar 2026-11-13).
 - [ ] Alan adı Cloudflare'a taşınır, proxied kipte.
 
 ## Coolify
 
 1. Yeni kaynak: GitHub App ile `dogancanyildiz/kenet.app`, dal `main`, build pack **Dockerfile**.
-2. Build değişkenleri: `NEXT_PUBLIC_SITE_URL=https://kenet.app`. `NEXT_PUBLIC_BUILD_SHA` ve `NEXT_PUBLIC_BUILD_DATE` boş bırakılır; Dockerfile `SOURCE_COMMIT` ve derleme saatine düşer.
+2. Build değişkenleri: `NEXT_PUBLIC_SITE_URL=https://www.kenet.app`. `NEXT_PUBLIC_BUILD_SHA` ve `NEXT_PUBLIC_BUILD_DATE` boş bırakılır; Dockerfile `SOURCE_COMMIT` ve derleme saatine düşer.
 3. Port 3000; sağlık kontrolü imajın kendi `HEALTHCHECK` komutudur (`/api/health`).
-4. Alan adı `https://kenet.app`. "Redirect to www" kapalı; `www` kaydı yok.
+4. Alan adları `https://www.kenet.app,https://kenet.app`. "Redirect to www" açık, kalıcı (301).
 5. Preview Deployments kapalı: tek geliştirici, her PR CI'dan geçer.
-6. İlk yayın sonrası `curl -I https://kenet.app` ile `Strict-Transport-Security`, `Content-Security-Policy` ve `Cache-Control` başlıkları doğrulanır.
+6. İlk yayın sonrası `curl -I https://www.kenet.app` ile `Strict-Transport-Security`, `Content-Security-Policy` ve `Cache-Control` başlıkları doğrulanır.
 
 ## Cloudflare
 
-1. DNS: `kenet.app` A ya da CNAME kaydı origin'e, proxied.
+1. DNS: `kenet.app` A kaydı origin'e, `www` CNAME `kenet.app`'e; ikisi de proxied.
 2. SSL/TLS: Full (strict). Always Use HTTPS açık.
 3. `.app` üst alan adı HSTS preload listesindedir; tarayıcı https'i zaten zorlar. Uygulama katmanındaki HSTS başlığı kalır.
 4. Cache: HTML için kural yok; uygulama `s-maxage=300` gönderir. `/_next/static/*` zaten `immutable`.
@@ -33,9 +33,9 @@
 ## Canlı doğrulama
 
 ```bash
-curl -sI https://kenet.app | grep -i -E "strict-transport|content-security|cache-control"
-curl -s -o /dev/null -w '%{http_code}\n' https://kenet.app/gizlilik
-curl -s -o /dev/null -w '%{http_code}\n' https://kenet.app/en/support
-curl -s https://kenet.app/sitemap.xml | head -20
-curl -s -o /dev/null -w '%{http_code}\n' https://kenet.app/olmayan-sayfa   # 404
+curl -sI https://www.kenet.app | grep -i -E "strict-transport|content-security|cache-control"
+curl -s -o /dev/null -w '%{http_code}\n' https://www.kenet.app/gizlilik
+curl -s -o /dev/null -w '%{http_code}\n' https://www.kenet.app/en/support
+curl -s https://www.kenet.app/sitemap.xml | head -20
+curl -s -o /dev/null -w '%{http_code}\n' https://www.kenet.app/olmayan-sayfa   # 404
 ```

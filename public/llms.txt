@@ -8,12 +8,12 @@ This site has every page in Turkish on the root and in English under /en.
 
 ## Pages
 
-- [Kenet](https://kenet.app/en): Home page in English
-- [Kenet](https://kenet.app/): Home page in Turkish
-- [Privacy](https://kenet.app/en/privacy): Privacy policy in English
-- [Gizlilik](https://kenet.app/gizlilik): Privacy policy in Turkish
-- [Support](https://kenet.app/en/support): Support channels and frequently asked questions in English
-- [Destek](https://kenet.app/destek): Support channels and frequently asked questions in Turkish
+- [Kenet](https://www.kenet.app/en): Home page in English
+- [Kenet](https://www.kenet.app/): Home page in Turkish
+- [Privacy](https://www.kenet.app/en/privacy): Privacy policy in English
+- [Gizlilik](https://www.kenet.app/gizlilik): Privacy policy in Turkish
+- [Support](https://www.kenet.app/en/support): Support channels and frequently asked questions in English
+- [Destek](https://www.kenet.app/destek): Support channels and frequently asked questions in Turkish
 
 ## Optional
 

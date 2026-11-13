@@ -18,7 +18,7 @@
 | Sayfalar     | Ana sayfa, gizlilik politikası, destek. Mağaza kaydı `kenet.app/gizlilik` ve `kenet.app/destek` adreslerini ister; bu yollar değişmez.                                |
 | Tasarım      | Şafak tasarım dili, kaynak `kenet/docs/design.md`. Site sistem görünümünü izler; tema anahtarı yoktur.                                                                |
 | Barındırma   | Coolify, Dockerfile build pack, önde Traefik ve Cloudflare proxy. `main` dalından yayın.                                                                              |
-| Kanonik host | `kenet.app` (apex). `www` yoktur.                                                                                                                                     |
+| Kanonik host | `www.kenet.app`. `kenet.app` (apex) yolu koruyarak 301 ile www'ye gider (karar 2026-11-13).                                                                           |
 
 ## Başlangıç akışı
 
@@ -63,7 +63,7 @@ Her PR'dan önce sırayla:
 npm run lint
 npm run typecheck
 npm run test
-NEXT_PUBLIC_SITE_URL=https://kenet.app npm run build
+NEXT_PUBLIC_SITE_URL=https://www.kenet.app npm run build
 npm run verify:routes
 npm run format
 ```
