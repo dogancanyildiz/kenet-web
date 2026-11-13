@@ -62,6 +62,49 @@ describe("compiled CSS after build", () => {
     );
   });
 
+  run("keeps Reduce Transparency above the dark theme selectors", () => {
+    // A bare :root (0,1,0) would lose to the (0,2,0) dark blocks and bring
+    // the glow back in dark.
+    expect(css).toMatch(
+      /prefers-reduced-transparency:reduce\)\{:root,:root:not\(\[data-theme=light\]\),:root\[data-theme\]\{--glow:none/
+    );
+  });
+
+  run("scopes the pinned dark KA palette to Increase Contrast", () => {
+    const kaPaper = /:root\[data-theme=dark\]\{--paper:#08090a/g;
+    const all = [...css!.matchAll(kaPaper)];
+    expect(all.length).toBe(1);
+    expect(css).toMatch(
+      /@media \(prefers-contrast:more\)\{:root\[data-theme=dark\]\{--paper:#08090a/
+    );
+  });
+
+  run("pins color-scheme with the theme", () => {
+    expect(css).toMatch(/:root\[data-theme=dark\]\{[^}]*color-scheme:dark\}/);
+    expect(css).toMatch(/:root\[data-theme=light\]\{[^}]*color-scheme:light\}/);
+  });
+
+  run(
+    "shows the theme glyph for the theme on screen, hidden without JS",
+    () => {
+      expect(css).toMatch(
+        /:root:not\(\[data-js\]\) \.theme-toggle[,{][^}]*display:none/
+      );
+      expect(css).toMatch(
+        /@media \(prefers-color-scheme:dark\)\{:root:not\(\[data-theme=light\]\) \.theme-toggle \.theme-icon-moon\{display:none/
+      );
+      expect(css).toMatch(
+        /:root:not\(\[data-theme=light\]\) \.theme-toggle \.theme-icon-sun\{display:block/
+      );
+      expect(css).toMatch(
+        /:root\[data-theme=dark\] \.theme-toggle \.theme-icon-moon\{display:none/
+      );
+      expect(css).toMatch(
+        /:root\[data-theme=dark\] \.theme-toggle \.theme-icon-sun\{display:block/
+      );
+    }
+  );
+
   run(
     "draws .link-place with a dotted and .link-person with a solid underline",
     () => {

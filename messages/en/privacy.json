@@ -61,7 +61,7 @@
     "notCollected5": "Third-party SDKs for any of the above. The only outside library in the app is GRDB, which manages the SQLite index on your device.",
     "notCollectedNote": "The privacy manifest inside the app package also states that there is no tracking and no collected data.",
     "siteTitle": "This site",
-    "site1": "kenet.app uses no cookies.",
+    "site1": "kenet.app uses no cookies. It keeps your light or dark theme choice in your browser only; it is never sent to the server.",
     "site2": "It creates no accounts; there is no sign up or sign in.",
     "site3": "It loads no third-party scripts, fonts or analytics.",
     "site4": "Access logs of requests to the site are produced by the hosting stack: Cloudflare in front, the site's own server behind it. The logs are not used for analytics.",

@@ -61,7 +61,7 @@
     "notCollected5": "Bu işler için üçüncü taraf SDK. Uygulamadaki tek dış kitaplık, cihazdaki SQLite indeksini yöneten GRDB'dir.",
     "notCollectedNote": "Uygulama paketindeki gizlilik bildirimi de izleme ve toplanan veri olmadığını yazar.",
     "siteTitle": "Bu site",
-    "site1": "kenet.app çerez kullanmaz.",
+    "site1": "kenet.app çerez kullanmaz. Açık ya da koyu tema seçimini yalnız tarayıcında saklar; bu bilgi sunucuya gönderilmez.",
     "site2": "Hesap açmaz; giriş ya da kayıt yoktur.",
     "site3": "Üçüncü taraf betik, yazı tipi ya da ölçüm aracı yüklemez.",
     "site4": "Siteye gelen isteklerin erişim günlükleri barındırma altyapısında oluşur: önde Cloudflare, arkada sitenin kendi sunucusu. Günlükler ölçüm için kullanılmaz.",

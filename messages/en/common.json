@@ -17,7 +17,8 @@
     "skipToContent": "Skip to content",
     "languageSwitcher": "Language",
     "localeTr": "Türkçe",
-    "localeEn": "English"
+    "localeEn": "English",
+    "themeToggle": "Switch between light and dark theme"
   },
   "footer": {
     "madeBy": "Kenet is developed by <link>{name}</link>.",

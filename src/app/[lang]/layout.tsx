@@ -16,6 +16,7 @@ import {
   smartAppBanner,
 } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
@@ -121,7 +122,12 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   const clientMessages = pickMessages(messages, CLIENT_MESSAGE_NAMESPACES);
 
   return (
-    <html lang={lang}>
+    // The boot script sets data-theme before hydration, so the attribute
+    // is expected to differ from the server render.
+    <html lang={lang} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body className="flex min-h-dvh flex-col font-sans text-text">
         <NextIntlClientProvider messages={clientMessages}>
           <a href="#main" className="skip-link">

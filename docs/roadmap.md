@@ -44,7 +44,7 @@
 - [x] Coolify kaynağı: GitHub App, Dockerfile build pack, `NEXT_PUBLIC_SITE_URL` build değişkeni, sağlık kontrolü
 - [x] Cloudflare: DNS, SSL Full (strict), `www` CNAME; apex 301 ile www'ye (2026-11-13)
 - [x] Canlı doğrulama: başlıklar, hreflang, sitemap, 404 (2026-11-13)
-- [ ] Dal koruması: `main` ve `dev` için zorunlu kontroller `Quality checks`, `Docker image`, `CodeQL analysis`
+- [x] Dal koruması: `main` ve `dev` için zorunlu kontroller `Quality checks`, `Docker image`, `CodeQL analysis` (2026-11-13)
 
 ## Sonraki fikirler
 

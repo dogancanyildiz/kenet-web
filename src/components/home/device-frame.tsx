@@ -117,7 +117,9 @@ export function DeviceFrame({
           className={`${size.aspect} overflow-hidden bg-paper ${size.screen}`}
         >
           <picture>
+            {/* The theme boot script may re-point media before hydration. */}
             <source
+              suppressHydrationWarning
               media="(prefers-color-scheme: dark)"
               srcSet={darkSrcSet ?? darkSrc}
             />

@@ -23,22 +23,47 @@ function tokensIn(blockSource: string): Block {
   return tokens;
 }
 
-/** The :root block that follows a given media query (or the bare :root). */
-function block(after: string | null): Block {
+/**
+ * Body of the first `selector {` rule after `after` (a media query), or
+ * from the top of the file when `after` is null.
+ */
+function ruleBody(after: string | null, selector: string): string {
   const start = after ? css.indexOf(after) : 0;
-  if (start < 0) throw new Error(`block not found: ${after}`);
-  const rootStart = css.indexOf(":root {", start);
-  const rootEnd = css.indexOf("}", rootStart);
-  return tokensIn(css.slice(rootStart, rootEnd));
+  if (start < 0) throw new Error(`media query not found: ${after}`);
+  const ruleStart = css.indexOf(`${selector} {`, start);
+  if (ruleStart < 0) throw new Error(`rule not found: ${selector}`);
+  const bodyStart = css.indexOf("{", ruleStart) + 1;
+  let depth = 1;
+  let index = bodyStart;
+  while (depth > 0 && index < css.length) {
+    if (css[index] === "{") depth += 1;
+    if (css[index] === "}") depth -= 1;
+    index += 1;
+  }
+  return css.slice(bodyStart, index - 1);
 }
 
+function block(after: string | null, selector = ":root"): Block {
+  return tokensIn(ruleBody(after, selector));
+}
+
+const SYSTEM_DARK = ':root:not([data-theme="light"])';
+const PINNED_DARK = ':root[data-theme="dark"]';
+const DARK_QUERY = "@media (prefers-color-scheme: dark) {";
+const KA_QUERY = "@media (prefers-contrast: more) {";
+const KA_DARK_QUERY =
+  "@media (prefers-contrast: more) and (prefers-color-scheme: dark) {";
+
 const light = block(null);
-const dark = { ...light, ...block("@media (prefers-color-scheme: dark)") };
-const lightKa = { ...light, ...block("@media (prefers-contrast: more) {") };
+const dark = { ...light, ...block(DARK_QUERY, SYSTEM_DARK) };
+const lightKa = { ...light, ...block(KA_QUERY) };
+// Light KA (:root) still applies in dark for any token the dark blocks do
+// not set, so it sits under them here as it does in the cascade.
 const darkKa = {
+  ...light,
+  ...lightKa,
   ...dark,
-  ...block("@media (prefers-contrast: more) {"),
-  ...block("@media (prefers-contrast: more) and (prefers-color-scheme: dark)"),
+  ...block(KA_DARK_QUERY, SYSTEM_DARK),
 };
 
 const variants = { light, dark, lightKa, darkKa };
@@ -93,6 +118,19 @@ describe("Şafak colour tokens", () => {
       expect(ratio(tokens, "on-accent", "accent")).toBeGreaterThanOrEqual(4.5);
     }
   );
+
+  it("pins the same dark values the system query uses", () => {
+    const normalise = (body: string) => body.replace(/\s+/g, " ").trim();
+    // Pinned dark sits at the top level, the KA copy inside the KA query.
+    expect(normalise(ruleBody(null, PINNED_DARK))).toBe(
+      normalise(ruleBody(DARK_QUERY, SYSTEM_DARK))
+    );
+    // The KA copy for the pinned theme is the first one after the KA dark
+    // query.
+    expect(normalise(ruleBody(KA_DARK_QUERY, PINNED_DARK))).toBe(
+      normalise(ruleBody(KA_DARK_QUERY, SYSTEM_DARK))
+    );
+  });
 
   it("mirrors the page background in the layout's theme-color", () => {
     const layout = readFileSync(
