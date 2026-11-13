@@ -9,7 +9,7 @@
 
 ## Coolify
 
-1. Yeni kaynak: GitHub App ile `dogancanyildiz/kenet-web`, dal `main`, build pack **Dockerfile**.
+1. Yeni kaynak: GitHub App ile `dogancanyildiz/kenet.app`, dal `main`, build pack **Dockerfile**.
 2. Build değişkenleri: `NEXT_PUBLIC_SITE_URL=https://kenet.app`. `NEXT_PUBLIC_BUILD_SHA` ve `NEXT_PUBLIC_BUILD_DATE` boş bırakılır; Dockerfile `SOURCE_COMMIT` ve derleme saatine düşer.
 3. Port 3000; sağlık kontrolü imajın kendi `HEALTHCHECK` komutudur (`/api/health`).
 4. Alan adı `https://kenet.app`. "Redirect to www" kapalı; `www` kaydı yok.
@@ -22,7 +22,7 @@
 2. SSL/TLS: Full (strict). Always Use HTTPS açık.
 3. `.app` üst alan adı HSTS preload listesindedir; tarayıcı https'i zaten zorlar. Uygulama katmanındaki HSTS başlığı kalır.
 4. Cache: HTML için kural yok; uygulama `s-maxage=300` gönderir. `/_next/static/*` zaten `immutable`.
-5. Bot ve WAF: varsayılan; site form taşımaz.
+5. Bot ve WAF: varsayılan; site form taşımaz. **Bot Fight Mode ve meydan okuma kapalı kalır:** açılırsa Cloudflare `__cf_bm` ya da `cf_clearance` çerezi koyar ve gizlilik sayfasındaki "çerez kullanmaz" cümlesi yanlış olur.
 
 ## GitHub
 

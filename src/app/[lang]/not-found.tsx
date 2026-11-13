@@ -19,7 +19,10 @@ export default function LocaleNotFound() {
         lead={t("description")}
       />
       <PageSection>
-        <Link href="/" className="prose-link font-medium">
+        <Link
+          href="/"
+          className="prose-link inline-flex min-h-11 items-center font-medium"
+        >
           {t("backHome")}
         </Link>
       </PageSection>

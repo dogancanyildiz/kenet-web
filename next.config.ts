@@ -99,13 +99,32 @@ const ICON_CORP = {
 
 const NO_STORE = { key: "Cache-Control", value: "no-store" };
 
+/**
+ * The Kenet app has kenet.app/privacy and kenet.app/support written into its
+ * settings screen. Unprefixed, those are English slugs on the Turkish root, so
+ * they redirect permanently to the Turkish legal pages. Exact sources only:
+ * /en/privacy and /en/support are real pages and never match. Next runs these
+ * before the proxy, so next-intl never sees the request. The destinations
+ * mirror pathnames in src/i18n/routing.ts; tests/deploy/redirects.test.ts
+ * keeps the two in step.
+ */
+const LEGACY_REDIRECTS = [
+  { source: "/privacy", destination: "/gizlilik", permanent: true },
+  { source: "/support", destination: "/destek", permanent: true },
+];
+
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Standalone image has no sharp; screens are already small WebP files.
+  images: { unoptimized: true },
   poweredByHeader: false,
   experimental: {
     // Lets src/app/global-not-found.tsx handle requests that never reach the
     // [lang] segment, with a stylesheet and an html lang attribute.
     globalNotFound: true,
+  },
+  async redirects() {
+    return LEGACY_REDIRECTS;
   },
   async headers() {
     const isProduction = process.env.NODE_ENV === "production";
@@ -125,6 +144,10 @@ const nextConfig: NextConfig = {
       { source: "/icon.svg", headers: [ONE_DAY_CACHE, ICON_CORP] },
       { source: "/icon.png", headers: [ONE_DAY_CACHE, ICON_CORP] },
       { source: "/apple-icon.png", headers: [ONE_DAY_CACHE, ICON_CORP] },
+      // Link previews fetch the share card server side; CORP only matters to
+      // browsers, but a card that another site shows inline must not be
+      // blocked either.
+      { source: "/og/:path*", headers: [ONE_DAY_CACHE, ICON_CORP] },
       { source: "/_next/static/:path*", headers: [IMMUTABLE_BUILD_OUTPUT] },
       { source: "/api/:path*", headers: [NO_STORE] },
     ];

@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { resolveLocale } from "@/lib/route-params";
-import { buildPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/lib/json-ld";
+import { absoluteUrl, buildPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
+import { buildFaqPage } from "@/lib/structured-data";
 import { PageHeader } from "@/components/layout/page-header";
+import { SectionHeading } from "@/components/layout/section-heading";
+import { ReportCard } from "@/components/support/report-card";
+import { FaqCard } from "@/components/support/faq-card";
 import { PageSection } from "@/components/layout/page-section";
+import { IconArrowUpRight } from "@/components/ui/icons";
 
 type PageProps = { params: Promise<{ lang: string }> };
 
@@ -39,27 +45,71 @@ export default async function SupportPage({ params }: PageProps) {
     },
   ];
 
+  const reportItems = [
+    t("reportDevice"),
+    t("reportSystem"),
+    t("reportApp"),
+    t("reportDid"),
+    t("reportExpected"),
+    t("reportHappened"),
+    t("reportScreenshot"),
+  ];
+
+  const faqItems = [
+    { question: t("faqVaultQ"), answer: t("faqVaultA") },
+    { question: t("faqObsidianQ"), answer: t("faqObsidianA") },
+    { question: t("faqBackupQ"), answer: t("faqBackupA") },
+    { question: t("faqIcloudQ"), answer: t("faqIcloudA") },
+  ];
+
+  // FAQPage carries the same array the page renders, so the markup can only
+  // ever describe questions a reader sees.
+  const faqStructuredData = buildFaqPage({
+    locale,
+    url: absoluteUrl(locale, "/support"),
+    items: faqItems,
+  });
+
   return (
     <>
+      <JsonLd data={faqStructuredData} />
       <PageHeader title={t("title")} lead={t("lead")} />
       <PageSection>
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <SectionHeading title={t("channelsTitle")} />
+        <ul className="mt-6 grid gap-4 sm:grid-cols-2">
           {channels.map((channel) => (
-            <li key={channel.title} className="card p-6">
-              <h2 className="text-lg font-semibold">{channel.title}</h2>
-              <p className="mt-2 leading-7 text-text-secondary">
+            <li key={channel.title} className="card flex flex-col p-6">
+              <h3 className="text-lg font-semibold">{channel.title}</h3>
+              <p className="mt-2 flex-1 leading-7 text-text-secondary">
                 {channel.body}
               </p>
               <a
                 href={channel.href}
                 rel="noopener noreferrer"
-                className="prose-link mt-4 inline-block font-medium"
+                className="prose-link mt-4 inline-flex min-h-11 items-center gap-1.5 self-start font-medium"
               >
                 {channel.label}
+                <IconArrowUpRight className="shrink-0 text-text-secondary" />
               </a>
             </li>
           ))}
         </ul>
+      </PageSection>
+      <PageSection id="report">
+        <SectionHeading title={t("reportTitle")} />
+        <div className="mt-6">
+          <ReportCard
+            intro={t("reportIntro")}
+            items={reportItems}
+            privacy={t("reportPrivacy")}
+          />
+        </div>
+      </PageSection>
+      <PageSection>
+        <SectionHeading title={t("faqTitle")} />
+        <div className="mt-6">
+          <FaqCard items={faqItems} />
+        </div>
       </PageSection>
     </>
   );

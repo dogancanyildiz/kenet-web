@@ -12,8 +12,8 @@ services:
         NEXT_PUBLIC_SITE_URL: http://localhost:3000
         NEXT_PUBLIC_BUILD_SHA: "${NEXT_PUBLIC_BUILD_SHA:-}"
         NEXT_PUBLIC_BUILD_DATE: "${NEXT_PUBLIC_BUILD_DATE:-}"
-    image: kenet-web-local:latest
-    container_name: kenet-web-local
+    image: kenet-app-local:latest
+    container_name: kenet-app-local
     ports:
       - "3000:3000"
     environment:

@@ -5,7 +5,7 @@
   "metadata": {
     "siteName": "Kenet",
     "defaultTitle": "Kenet: a personal journal built on people, places and time",
-    "defaultDescription": "Write; let who, where and when link themselves. Tasks and goals live in the same place. Your data stays yours as Obsidian compatible plain Markdown files. iPhone, iPad and Mac."
+    "defaultDescription": "Kenet is a personal journal that needs no account and keeps everything in plain Markdown files. It links the short entries you write during the day to people, places and time on its own, in a vault Obsidian can open."
   },
   "nav": {
     "home": "Home",
@@ -16,13 +16,17 @@
   "a11y": {
     "skipToContent": "Skip to content",
     "languageSwitcher": "Language",
-    "switchTo": "Türkçe"
+    "localeTr": "Türkçe",
+    "localeEn": "English"
   },
   "footer": {
-    "madeBy": "Kenet is developed by {name}.",
+    "madeBy": "Kenet is developed by <link>{name}</link>.",
     "source": "Source code",
     "build": "Build {sha}, {date}",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "pagesLabel": "Pages",
+    "projectLabel": "Project",
+    "issues": "Report a bug"
   },
   "notFound": {
     "code": "404",

@@ -24,6 +24,7 @@
   --color-danger: var(--danger);
   --color-person: var(--person);
   --color-place: var(--place);
+  --color-device-bezel: var(--device-bezel);
   --font-sans: var(--font-sans-stack);
   --radius-card: 1.25rem;
   --radius-control: 0.75rem;
@@ -35,6 +36,7 @@
   --font-sans-stack:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", ui-sans-serif, system-ui,
     "Segoe UI", Roboto, sans-serif;
+  --font-mono-stack: ui-monospace, "SF Mono", Menlo, monospace;
   color-scheme: light dark;
 
   /* Light */
@@ -55,10 +57,19 @@
   --danger: #a11e1e;
   --person: #2d5ba6;
   --place: #1b6b43;
-  /* Glow: soft plum light rising from the top left of the root page. It is
-     not glass (no blur, no translucent layer): a gradient painted on the
-     background. Static, never animated (design rule 13). */
-  --glow: rgb(122 44 110 / 10%);
+  --device-bezel: #000000;
+  --device-shadow: 0 24px 80px -32px rgb(0 0 0 / 0.3);
+  /* Glow: two-tone plum + amber wash from the top left. Fixed paint box
+     (background-size) so the ellipse is not scaled to page height.
+     Values from kenet/docs/design.md "Parıltı". */
+  --glow-a: #8e3f80;
+  --glow-b: #c98b2f;
+  --glow: radial-gradient(
+    900px 600px at 12% 0,
+    color-mix(in srgb, var(--glow-a) 16%, transparent) 0%,
+    color-mix(in srgb, var(--glow-b) 16%, transparent) 38%,
+    transparent 70%
+  );
 }
 
 @media (prefers-color-scheme: dark) {
@@ -80,7 +91,13 @@
     --danger: #ff6b6b;
     --person: #8fb3f0;
     --place: #7fd1a6;
-    --glow: rgb(208 139 196 / 18%);
+    --device-shadow: 0 24px 80px -32px rgb(0 0 0 / 0.6);
+    --glow: radial-gradient(
+      900px 600px at 12% 0,
+      color-mix(in srgb, var(--glow-a) 45%, transparent) 0%,
+      color-mix(in srgb, var(--glow-b) 14%, transparent) 38%,
+      transparent 70%
+    );
   }
 }
 
@@ -100,7 +117,7 @@
     --danger: #7a1010;
     --person: #1d4689;
     --place: #11522f;
-    --glow: transparent;
+    --glow: none;
   }
 }
 
@@ -120,14 +137,19 @@
     --danger: #ffb4b4;
     --person: #b8d0f8;
     --place: #aee5c6;
-    --glow: transparent;
+    --glow: none;
   }
 }
 
 /* Reduce Transparency removes the glow as well (design.md, "Parıltı"). */
 @media (prefers-reduced-transparency: reduce) {
   :root {
-    --glow: transparent;
+    --glow: none;
+  }
+
+  .site-header {
+    background-color: var(--paper);
+    backdrop-filter: none;
   }
 }
 
@@ -138,19 +160,18 @@
     font-family: var(--font-sans-stack);
     -webkit-font-smoothing: antialiased;
     text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
   }
 
   body {
     min-height: 100dvh;
     background-color: var(--paper);
-    /* The glow sits only in the upper region of the page and scrolls with
-       the content: a fixed-size gradient anchored to the top left. */
-    background-image: radial-gradient(
-      60rem 36rem at 0% 0%,
-      var(--glow),
-      transparent 70%
-    );
+    /* Fixed-height paint box: the ellipse stays in the upper region even
+       when the page is tall. Center at 12% 0 (top edge), not -8% of height. */
+    background-image: var(--glow);
+    background-size: 100% 900px;
     background-repeat: no-repeat;
+    background-position: top left;
   }
 
   :focus-visible {
@@ -160,6 +181,26 @@
 
   ::selection {
     background-color: var(--accent-soft);
+  }
+
+  /* Line breaking: headings balance their lines, running text avoids a
+     single orphaned word on the last line. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Every control here draws its own hover and focus state; the grey tap
+     flash on iOS would be a second, unrelated one. */
+  a,
+  button,
+  summary {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -200,6 +241,59 @@
     top: 1rem;
   }
 
+  /* Section label above an h2 and the page label above an h1: one size,
+     one weight, one colour on every page. */
+  .eyebrow {
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  /* Reading measure for running text: about 68 characters a line. */
+  .measure {
+    max-width: 68ch;
+  }
+
+  /* Navigation links (header and footer): secondary text, the text colour
+     on hover. The current page keeps the text colour and an accent
+     underline, so the state is not carried by colour alone. */
+  .nav-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    border-radius: var(--radius-control);
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .nav-link:hover {
+    color: var(--text);
+  }
+
+  .nav-link[aria-current] {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.5rem;
+  }
+
+  /* Disclosure rows (support FAQ): the native marker is replaced by a
+     chevron that turns when the row is open. No transition (design rule 5). */
+  .disclosure > summary {
+    list-style: none;
+  }
+
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .disclosure[open] .disclosure-chevron {
+    rotate: 180deg;
+  }
+
   /* Links inside running text: text colour, meaning carried by the
      underline (Şafak rule 4). */
   .prose-link {
@@ -212,5 +306,78 @@
 
   .prose-link:hover {
     text-decoration-thickness: 2px;
+  }
+
+  /* Person and place links mirror the app (Şafak rule 4 / InkLinkStyle). */
+  .link-person {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--person);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+
+  .link-place {
+    color: var(--text);
+    text-decoration: underline dotted;
+    text-decoration-color: var(--place);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+
+  /* Pair of theme-specific images: show the one that matches the system. */
+  .only-light {
+    display: block;
+  }
+
+  .only-dark {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .only-light {
+      display: none;
+    }
+
+    .only-dark {
+      display: block;
+    }
+  }
+
+  .site-header {
+    background-color: color-mix(in srgb, var(--paper) 85%, transparent);
+    backdrop-filter: blur(12px);
+  }
+}
+
+/* Utility so max-md:device-mask-mobile generates a real rule under the
+   breakpoint. @layer components classes do not receive Tailwind variants. */
+@utility device-mask-mobile {
+  mask-image: linear-gradient(to bottom, black 70%, transparent);
+}
+
+/* Forced colours (Windows High Contrast) repaint surfaces from the system
+   palette: token borders vanish into the background and the glow becomes a
+   flat block. Unlayered, so it outranks every component and utility. */
+@media (forced-colors: active) {
+  body {
+    background-image: none;
+  }
+
+  .card,
+  .skip-link {
+    border: 1px solid CanvasText;
+  }
+
+  .site-header {
+    border-bottom-color: CanvasText;
+  }
+
+  :focus-visible {
+    outline-color: Highlight;
+  }
+
+  .nav-link[aria-current] {
+    text-decoration-color: Highlight;
   }
 }

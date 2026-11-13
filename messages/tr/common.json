@@ -5,7 +5,7 @@
   "metadata": {
     "siteName": "Kenet",
     "defaultTitle": "Kenet: kişiler, konumlar ve zaman üzerine kurulu kişisel günlük",
-    "defaultDescription": "Yaz; kim, nerede ve ne zaman kendiliğinden bağlansın. Görevler ve hedefler aynı yerde. Verin Obsidian uyumlu düz Markdown dosyaları olarak hep senin. iPhone, iPad ve Mac."
+    "defaultDescription": "Kenet, hesap gerektirmeyen ve verisini düz Markdown dosyalarında tutan kişisel bir günlüktür. Gün içinde yazdığın kısa olayları kişilere, konumlara ve zamana kendiliğinden bağlar; kasan Obsidian ile uyumludur."
   },
   "nav": {
     "home": "Ana sayfa",
@@ -16,13 +16,17 @@
   "a11y": {
     "skipToContent": "İçeriğe geç",
     "languageSwitcher": "Dil",
-    "switchTo": "English"
+    "localeTr": "Türkçe",
+    "localeEn": "English"
   },
   "footer": {
-    "madeBy": "Kenet, {name} tarafından geliştirilir.",
+    "madeBy": "Kenet, <link>{name}</link> tarafından geliştirilir.",
     "source": "Kaynak kodu",
     "build": "Derleme {sha}, {date}",
-    "rights": "Tüm hakları saklıdır."
+    "rights": "Tüm hakları saklıdır.",
+    "pagesLabel": "Sayfalar",
+    "projectLabel": "Proje",
+    "issues": "Hata bildir"
   },
   "notFound": {
     "code": "404",
