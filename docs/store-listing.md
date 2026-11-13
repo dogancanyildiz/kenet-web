@@ -4,7 +4,7 @@
 
 **Durum:** Taslak, 2026-11-11. Mağazaya girmeden önce sahibin onayı gerekir. İlk mağaza sürümü iPhone ve iPad içindir; Mac sonra gelir, bu yüzden metin Mac'i anmaz.
 
-Kurallar: fiyat, "ücretsiz", "açık kaynak", şifreleme ve puan iddiası yok; kilit ekranı ve hızlı giriş widget'ları anılmaz: kodda varlar (kenet `Widgets/JournalWidgets.swift`, `docs/roadmap.md` Aşama 11) ama gerçek cihazda denenmediler. Anahtar sözcükler ad ve alt başlıktaki sözcükleri tekrar etmez, başka uygulama ya da marka adı taşımaz (App Store kuralı 2.3.7); virgülle ayrılır, boşluk yoktur.
+Kurallar: fiyat, "ücretsiz", "açık kaynak", şifreleme ve puan iddiası yok; kilit ekranı ve hızlı giriş widget'ları anılmaz: kodda varlar (kenet `Widgets/KenetWidgetBundle.swift`, `docs/roadmap.md` Aşama 11) ama gerçek cihazda denenmediler. Anahtar sözcükler ad ve alt başlıktaki sözcükleri tekrar etmez, başka uygulama ya da marka adı taşımaz (App Store kuralı 2.3.7); virgülle ayrılır, boşluk yoktur.
 
 ## Sınırlar ve ölçüm
 
